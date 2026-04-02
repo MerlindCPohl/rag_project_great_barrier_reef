@@ -233,4 +233,7 @@ pyrightconfig.json
 pyvenv.cfg
 pip-selfcheck.json
 
+###excel-drafts-snapshots###
+~$*.xlsx
+
 # End of https://www.toptal.com/developers/gitignore/api/macos,venv,python,git
