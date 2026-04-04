@@ -1,0 +1,719 @@
+
+================================================================================
+Question 1:
+How many people work in the Great Barrier Reef industry in the whole of Australia?
+================================================================================
+
+Answer:
+----------------------------------------
+About 56,000 persons (full-time equivalent basis).
+----------------------------------------
+
+Retrieved chunks:
+========================================
+
+[Chunk 1]
+Source: Access Economics 2007 Economic contribution of Great Barrier Reef Marine Park 2005-2006 Kopie.pdf | Score: 0.562
+--------------------
+For employment (full time equivalent basis), about 44,000 persons. The corresponding estimates for Queensland are: For value-added, around $4.5 billion per annum. For gross product, around $5.4 billion per annum. For employment (full time equivalent basis), about 56,000 persons. The corresponding estimates for Australia are: For value-added, around $5.7 billion per annum. For gross product, around $6.9 billion per annum.
+--------------------
+
+[Chunk 2]
+Source: Access Economics 2007 Economic contribution of Great Barrier Reef Marine Park 2005-2006 Kopie.pdf | Score: 0.559
+--------------------
+For employment (full time equivalent basis), about 44,000 persons. The corresponding estimates for Queensland are: For value-added, about $4.5 billion per annum. For gross product, about $5.4 billion per annum. For employment (full time equivalent basis), about 56,000 persons. The corresponding estimates for Australia are: For value-added, about $5.7 billion per annum. For gross product, about $6.9 billion per annum.
+--------------------
+
+[Chunk 3]
+Source: Access Economics 2007 Economic contribution of Great Barrier Reef Marine Park 2005-2006 Kopie.pdf | Score: 0.54
+--------------------
+They are also, at present at least, largely masked by broader economic drivers such as real income growth, the value of the Australian dollar, oil prices and associated effects on airfares, geopolitical uncertainty and conflict, and the like. Substitution effects are even harder to discern. In part, they depend literally on what climate change is doing to competing reef destinations world-wide. While this cannot be quantified at this stage, Australia’s relatively cautious and pre-emptive approach to Reef preservation (including the 1 July rezoning) may be setting up the conditions for a substantial demand switch away from less cautiously-managed reef destinations towards Australia. If this effect is significant it may mask, for the GBRMP, underlying adverse effects of climate change on reef visitation demand around the world. As a relatively diversified region, GBRCA may also be relatively well insulated from adverse reef-related tourism effects because of substitution into other tourism activities within the Area. There is some overseas evidence that all of these sorts of effects may operate in the real world.
+--------------------
+
+[Chunk 4]
+Source: Access Economics 2007 Economic contribution of Great Barrier Reef Marine Park 2005-2006 Kopie.pdf | Score: 0.531
+--------------------
+44 7. TOTAL ECONOMIC VALUE OF CATCHMENT AREA The total economic contributions of tourism, commercial fishing and cultural & recreational activity to the GBRCA are the sums of the direct contributions and the indirect contributions that have been presented in sections 5 and 6 above. There are different sets of results depending on whether the calculations are for contributions to the GBRCA, Queensland or Australia. Contributions of value added, gross regional product and employment for the GBRCA are summarised for-05 and-06 in Table 7.1 below. Tourism is the dominant component, accounting for 83% of both value added and employment in-06. Tourism has very approximately equal contributions from international visitors, interstate visitors and visitors from Queensland, with around 56% of the Queensland contribution being from visitors living within the GBRCA. The other value added contributions are commercial fishing 3% and recreational activity 14%, after netting out duplication with tourism. The total economic contributions for Queensland (Table 7.2) and for Australia (Table 7.3) show much the same proportions of tourism, commercial fishing and cultural & recreational activity as for the GBRCA. All the estimates are larger in absolute terms than for GBRCA because the larger geographical areas include inputs additional to those provided within the GBRCA alone. Total value added for the selected activities in-06 is 21% greater for Queensland than for the GBRCA and 55% greater for Australia than for the GBRCA. The additional contributions include not only direct inputs such as food, petrol, souvenirs and the remaining shares of airfares, but also indirect inputs such as business services and (wholesale) trade. One of the employment entries in Table 7.2 for Queensland is slightly larger than that in Table 7.3 for Australia, contrary to expectations.
+--------------------
+
+[Chunk 5]
+Source: Access Economics 2007 Economic contribution of Great Barrier Reef Marine Park 2005-2006 Kopie.pdf | Score: 0.523
+--------------------
+The third possibility is that there are deficiencies in the methodology we have used for scaling production data from-97 to-06. TSA data show that for Australia in-05 tourism value added was $26,479 million, tourism GDP was $32,562, tourism employment was 550,100 and tourism expenditure was $74,682 million (ABS.0,, Tables 1, 10 and 6). These are direct contributions. TSA employment is measured in persons employed and it is estimated that the corresponding employment in full-time equivalent persons, as used throughout this report, is approximately two thirds of this. The total corresponding tourism results in Table 5.2.1 above and in Table A.4 below for visitors to the GBRCA, as proportions of tourism values for Australia, are 7.7% for value added, 7.5% for GDP, 7.1% for employment and 7.9% for expenditure. For comparison, the GBRCA shares of national totals for total economic activity are value added 4.5% (derived from IO tables for-97, using ABS and Office of the Government Statistician), and employment 4.4% (ABS.0.55.001, Table 16). The GBRCA thus accounts for a much higher proportion of Australian tourism economic activity than its share of economic activity generally. The last row of expenditure data in Table 5.1.1 indicates that this increased proportion is attributable to international and domestic overnight visitors. 5.3 DIRECT ECONOMIC CONTRIBUTION: OTHER INDUSTRIES The other major activities within the GBRMP are commercial fishing and cultural and recreational activities by local residents. The estimates for these have also been presented in tables 5.2.1 – 5.2.4 above.
+--------------------
+
+Highest Confidence Score: 0.562
+================================================================================
+
+
+================================================================================
+Question 2:
+How many people work locally at the Great Barrier Reef?
+================================================================================
+
+Answer:
+----------------------------------------
+About 66,000 persons (full-time equivalent basis) work locally in the Great Barrier Reef region, with tourism dominating these contributions.
+----------------------------------------
+
+Retrieved chunks:
+========================================
+
+[Chunk 1]
+Source: Access Economics 2007 Economic contribution of Great Barrier Reef Marine Park 2005-2006 Kopie.pdf | Score: 0.508
+--------------------
+Most residents in the GBRCA live relatively close to the GBRMP and can use it for recreational purposes. However, travel distances from the western borders of the Catchment Area to the are 400 kilometres in some cases. The BTR, in its Assessment of tourism activity in the GBR Region (), used a stricter definition of accessibility for recreational purposes that excluded some of the western parts of the Catchment Area. Use of a water catchment area that includes all rivers that flow into the GBRMP is appropriate for studies of the effects on the Reef of water run-off from the land, and from industrial activity, commercial activity and households. The rivers collect chemicals and sediments that can affect marine life on the Reef.
+--------------------
+
+[Chunk 2]
+Source: Access Economics 2007 Economic contribution of Great Barrier Reef Marine Park 2005-2006 Kopie.pdf | Score: 0.492
+--------------------
+For employment (full time equivalent basis), about 66,000 persons. Tourism dominates these contributions: For value-added and gross product, tourism’s share is about 84%-87%.
+--------------------
+
+[Chunk 3]
+Source: Access Economics 2007 Economic contribution of Great Barrier Reef Marine Park 2005-2006 Kopie.pdf | Score: 0.491
+--------------------
+GBRMPA does not record numbers of visitors in private boats. CHART 5.1.1: NUMBER OF VISITS PER YEAR, BY GBRMPA MANAGEMENT REGION 0 500,000 1,000,000 1,500,000 2,000,000 2,500,000-94-95-96-97-98-99-00-01-02-03-04-05-06 number of visitors per year Far North Cairns Central Mackay GBRMP Source: GBRMPA, February, with-06 data understood to be substantially complete. Total reef visits increased from 1.4 million in-94 to just under 2 million visits in-05. However there was a reduction of around 95,000 in-06, with this fall being experienced in both major tourism regions of Cairns and Central (including Townsville).
+--------------------
+
+[Chunk 4]
+Source: Access Economics 2007 Economic contribution of Great Barrier Reef Marine Park 2005-2006 Kopie.pdf | Score: 0.49
+--------------------
+For employment (full time equivalent basis), about 44,000 persons. The corresponding estimates for Queensland are: For value-added, around $4.5 billion per annum. For gross product, around $5.4 billion per annum. For employment (full time equivalent basis), about 56,000 persons. The corresponding estimates for Australia are: For value-added, around $5.7 billion per annum. For gross product, around $6.9 billion per annum.
+--------------------
+
+[Chunk 5]
+Source: Access Economics 2007 Economic contribution of Great Barrier Reef Marine Park 2005-2006 Kopie.pdf | Score: 0.488
+--------------------
+For employment (full time equivalent basis), about 44,000 persons. The corresponding estimates for Queensland are: For value-added, about $4.5 billion per annum. For gross product, about $5.4 billion per annum. For employment (full time equivalent basis), about 56,000 persons. The corresponding estimates for Australia are: For value-added, about $5.7 billion per annum. For gross product, about $6.9 billion per annum.
+--------------------
+
+Highest Confidence Score: 0.508
+================================================================================
+
+
+================================================================================
+Question 3:
+How many persons in Queensland work at the Great Barrier Reef?
+================================================================================
+
+Answer:
+----------------------------------------
+About 56,000 persons.
+----------------------------------------
+
+Retrieved chunks:
+========================================
+
+[Chunk 1]
+Source: Access Economics 2007 Economic contribution of Great Barrier Reef Marine Park 2005-2006 Kopie.pdf | Score: 0.602
+--------------------
+For employment (full time equivalent basis), about 44,000 persons. The corresponding estimates for Queensland are: For value-added, around $4.5 billion per annum. For gross product, around $5.4 billion per annum. For employment (full time equivalent basis), about 56,000 persons. The corresponding estimates for Australia are: For value-added, around $5.7 billion per annum. For gross product, around $6.9 billion per annum.
+--------------------
+
+[Chunk 2]
+Source: Access Economics 2007 Economic contribution of Great Barrier Reef Marine Park 2005-2006 Kopie.pdf | Score: 0.6
+--------------------
+For employment (full time equivalent basis), about 44,000 persons. The corresponding estimates for Queensland are: For value-added, about $4.5 billion per annum. For gross product, about $5.4 billion per annum. For employment (full time equivalent basis), about 56,000 persons. The corresponding estimates for Australia are: For value-added, about $5.7 billion per annum. For gross product, about $6.9 billion per annum.
+--------------------
+
+[Chunk 3]
+Source: Access Economics 2007 Economic contribution of Great Barrier Reef Marine Park 2005-2006 Kopie.pdf | Score: 0.544
+--------------------
+44 7. TOTAL ECONOMIC VALUE OF CATCHMENT AREA The total economic contributions of tourism, commercial fishing and cultural & recreational activity to the GBRCA are the sums of the direct contributions and the indirect contributions that have been presented in sections 5 and 6 above. There are different sets of results depending on whether the calculations are for contributions to the GBRCA, Queensland or Australia. Contributions of value added, gross regional product and employment for the GBRCA are summarised for-05 and-06 in Table 7.1 below. Tourism is the dominant component, accounting for 83% of both value added and employment in-06. Tourism has very approximately equal contributions from international visitors, interstate visitors and visitors from Queensland, with around 56% of the Queensland contribution being from visitors living within the GBRCA. The other value added contributions are commercial fishing 3% and recreational activity 14%, after netting out duplication with tourism. The total economic contributions for Queensland (Table 7.2) and for Australia (Table 7.3) show much the same proportions of tourism, commercial fishing and cultural & recreational activity as for the GBRCA. All the estimates are larger in absolute terms than for GBRCA because the larger geographical areas include inputs additional to those provided within the GBRCA alone. Total value added for the selected activities in-06 is 21% greater for Queensland than for the GBRCA and 55% greater for Australia than for the GBRCA. The additional contributions include not only direct inputs such as food, petrol, souvenirs and the remaining shares of airfares, but also indirect inputs such as business services and (wholesale) trade. One of the employment entries in Table 7.2 for Queensland is slightly larger than that in Table 7.3 for Australia, contrary to expectations.
+--------------------
+
+[Chunk 4]
+Source: Access Economics 2007 Economic contribution of Great Barrier Reef Marine Park 2005-2006 Kopie.pdf | Score: 0.538
+--------------------
+GAP, GSP and GDP are fractions of the appropriate GVP. 26 TABLE 5.2.1: DIRECT CONTRIBUTIONS OF SELECTED ACTIVITIES TO THE GBRCA,-05 &-06-05-05-05-06-06-06 Direct contribution Direct Direct Direct Direct Direct Direct Value Added GAP Employment Value Added GAP Employment ($m) ($m) (FTE 000) ($m) ($m) (FTE 000) Total tourism within the GBRCA Visitors from GBRCA 420 524 6 392 493 5 Visitors from rest of Queensland 324 399 4 311 386 4 Interstate visitors 575 709 7 740 912 9 by GBRCA residents for travel outside GBRCA 122 147 1 126 153 1 International visitors 589 726 8 628 773 8 Total tourism 2,030 2,504 26.11 2,197 2,716 27 Commercial fishing 133 137 1 116 119 1 Recreational activity (net of tourism) 301 372 6 301 371 5 Total contribution to GBRCA 2,465 3,012 34 2,614 3,206 33 Source: Access Economics. All magnitudes are to the nearest $million.
+--------------------
+
+[Chunk 5]
+Source: Access Economics 2007 Economic contribution of Great Barrier Reef Marine Park 2005-2006 Kopie.pdf | Score: 0.527
+--------------------
+Prospects for Queensland’s Primary Industries-07, p. 48) implies that Queensland production was $70 million in-06. We have assumed that GBRMP aquaculture production was $50 million in-05 and-06. RECREATIONAL USE The distinction between tourism and recreational activity depends on the distance travelled. Tourism relates to one-way overnight travel of more than 40 kilometres from home or one- way day travel of more than 25 kilometres from home, excluding for the purposes of work or school. Many recreational activities by local residents are thus classified as recreational use. The contribution of recreational activity to the GBRCA is calculated as the sum of (a) contributions from the Cultural & recreational services industry (sport, gambling, movies, theatre, art galleries) and (b) contributions associated with recreational fishing by local residents. Cultural & recreational services include tours to look at the reef and watch whales but do not include recreational fishing. On the other hand, many activities included in cultural and recreational activities are not related to the GBRMP. Total expenditure on Cultural & recreational services in the GBRCA was $555 million in-97 which scales to $1,095 in-05 and $1,162 million in-06, on the basis of Queensland value added for cultural and recreational services (ABS.0,). There is some overlap between Cultural & recreational services and tourism, and we report results for recreational activity net of contributions already estimated for tourism.
+--------------------
+
+Highest Confidence Score: 0.602
+================================================================================
+
+
+================================================================================
+Question 4:
+What is the value of the gross product which the Great Barrier Reef generates for Queensland? 
+================================================================================
+
+Answer:
+----------------------------------------
+Around $5.4 billion per annum.
+----------------------------------------
+
+Retrieved chunks:
+========================================
+
+[Chunk 1]
+Source: Access Economics 2007 Economic contribution of Great Barrier Reef Marine Park 2005-2006 Kopie.pdf | Score: 0.623
+--------------------
+44 7. TOTAL ECONOMIC VALUE OF CATCHMENT AREA The total economic contributions of tourism, commercial fishing and cultural & recreational activity to the GBRCA are the sums of the direct contributions and the indirect contributions that have been presented in sections 5 and 6 above. There are different sets of results depending on whether the calculations are for contributions to the GBRCA, Queensland or Australia. Contributions of value added, gross regional product and employment for the GBRCA are summarised for-05 and-06 in Table 7.1 below. Tourism is the dominant component, accounting for 83% of both value added and employment in-06. Tourism has very approximately equal contributions from international visitors, interstate visitors and visitors from Queensland, with around 56% of the Queensland contribution being from visitors living within the GBRCA. The other value added contributions are commercial fishing 3% and recreational activity 14%, after netting out duplication with tourism. The total economic contributions for Queensland (Table 7.2) and for Australia (Table 7.3) show much the same proportions of tourism, commercial fishing and cultural & recreational activity as for the GBRCA. All the estimates are larger in absolute terms than for GBRCA because the larger geographical areas include inputs additional to those provided within the GBRCA alone. Total value added for the selected activities in-06 is 21% greater for Queensland than for the GBRCA and 55% greater for Australia than for the GBRCA. The additional contributions include not only direct inputs such as food, petrol, souvenirs and the remaining shares of airfares, but also indirect inputs such as business services and (wholesale) trade. One of the employment entries in Table 7.2 for Queensland is slightly larger than that in Table 7.3 for Australia, contrary to expectations.
+--------------------
+
+[Chunk 2]
+Source: Access Economics 2007 Economic contribution of Great Barrier Reef Marine Park 2005-2006 Kopie.pdf | Score: 0.613
+--------------------
+GAP, GSP and GDP are fractions of the appropriate GVP. 26 TABLE 5.2.1: DIRECT CONTRIBUTIONS OF SELECTED ACTIVITIES TO THE GBRCA,-05 &-06-05-05-05-06-06-06 Direct contribution Direct Direct Direct Direct Direct Direct Value Added GAP Employment Value Added GAP Employment ($m) ($m) (FTE 000) ($m) ($m) (FTE 000) Total tourism within the GBRCA Visitors from GBRCA 420 524 6 392 493 5 Visitors from rest of Queensland 324 399 4 311 386 4 Interstate visitors 575 709 7 740 912 9 by GBRCA residents for travel outside GBRCA 122 147 1 126 153 1 International visitors 589 726 8 628 773 8 Total tourism 2,030 2,504 26.11 2,197 2,716 27 Commercial fishing 133 137 1 116 119 1 Recreational activity (net of tourism) 301 372 6 301 371 5 Total contribution to GBRCA 2,465 3,012 34 2,614 3,206 33 Source: Access Economics. All magnitudes are to the nearest $million.
+--------------------
+
+[Chunk 3]
+Source: Access Economics 2007 Economic contribution of Great Barrier Reef Marine Park 2005-2006 Kopie.pdf | Score: 0.612
+--------------------
+For employment (full time equivalent basis), about 44,000 persons. The corresponding estimates for Queensland are: For value-added, around $4.5 billion per annum. For gross product, around $5.4 billion per annum. For employment (full time equivalent basis), about 56,000 persons. The corresponding estimates for Australia are: For value-added, around $5.7 billion per annum. For gross product, around $6.9 billion per annum.
+--------------------
+
+[Chunk 4]
+Source: Access Economics 2007 Economic contribution of Great Barrier Reef Marine Park 2005-2006 Kopie.pdf | Score: 0.611
+--------------------
+For employment (full time equivalent basis), about 44,000 persons. The corresponding estimates for Queensland are: For value-added, about $4.5 billion per annum. For gross product, about $5.4 billion per annum. For employment (full time equivalent basis), about 56,000 persons. The corresponding estimates for Australia are: For value-added, about $5.7 billion per annum. For gross product, about $6.9 billion per annum.
+--------------------
+
+[Chunk 5]
+Source: Access Economics 2007 Economic contribution of Great Barrier Reef Marine Park 2005-2006 Kopie.pdf | Score: 0.603
+--------------------
+Prospects for Queensland’s Primary Industries-07, p. 48) implies that Queensland production was $70 million in-06. We have assumed that GBRMP aquaculture production was $50 million in-05 and-06. RECREATIONAL USE The distinction between tourism and recreational activity depends on the distance travelled. Tourism relates to one-way overnight travel of more than 40 kilometres from home or one- way day travel of more than 25 kilometres from home, excluding for the purposes of work or school. Many recreational activities by local residents are thus classified as recreational use. The contribution of recreational activity to the GBRCA is calculated as the sum of (a) contributions from the Cultural & recreational services industry (sport, gambling, movies, theatre, art galleries) and (b) contributions associated with recreational fishing by local residents. Cultural & recreational services include tours to look at the reef and watch whales but do not include recreational fishing. On the other hand, many activities included in cultural and recreational activities are not related to the GBRMP. Total expenditure on Cultural & recreational services in the GBRCA was $555 million in-97 which scales to $1,095 in-05 and $1,162 million in-06, on the basis of Queensland value added for cultural and recreational services (ABS.0,). There is some overlap between Cultural & recreational services and tourism, and we report results for recreational activity net of contributions already estimated for tourism.
+--------------------
+
+Highest Confidence Score: 0.623
+================================================================================
+
+
+================================================================================
+Question 5:
+What are the symptoms of the climate change at the Great Barrier Reef?
+================================================================================
+
+Answer:
+----------------------------------------
+The symptoms of climate change at the Great Barrier Reef include:
+
+* Lower species diversity and numbers
+* Less coral cover
+* More specialisation on more hardy coral species
+* Higher algae concentrations
+----------------------------------------
+
+Retrieved chunks:
+========================================
+
+[Chunk 1]
+Source: Access Economics 2007 Economic contribution of Great Barrier Reef Marine Park 2005-2006 Kopie.pdf | Score: 0.603
+--------------------
+While the reef may not be completely destroyed, its nature will change: towards lower species diversity and numbers; towards less coral cover; towards more specialisation on more hardy coral species; and including higher algae concentrations. 9.5 PHYSICAL REEF EFFECTS: ECONOMIC FLOW-ON EFFECTS The economic flow-on effects from climate change involve changes in economic activity within the GBRCA that are directly attributable to the effects of climate change, plus induced changes in economic activity that flow from these direct effects, and that are therefore indirectly attributable to climate change. The drivers of these economic effects, summarising sections 9.2 and 9.3 above, are: Atmospheric and cryospheric warming, with the former possibly concentrated in tropical regions. Ocean warming, sea level increases and changes in ocean composition, possibly especially in tropical regions.
+--------------------
+
+[Chunk 2]
+Source: Access Economics 2007 Economic contribution of Great Barrier Reef Marine Park 2005-2006 Kopie.pdf | Score: 0.578
+--------------------
+More extreme weather events, including cyclones (which will be concentrated in tropical regions). Increased incidence of tropical diseases within the GBRCA, and migration of disease vectors away from the equator and towards the poles. Specific to the GBRMP, increased frequency of mass coral bleaching events, threatening reef diversity, coral cover and ultimately reef eco-systems. For the purposes of this report, the economic activities of most interest are tourism, commercial fishing, and recreational activities. That said, other industries, such as primary industries, within the GBRCA can also be affected by, for example, extreme weather events (eg, cyclone Larry and banana production). The effects listed above presumably will have their effects over different time frames: Average atmospheric warming and cryospheric changes, and sea level rises and changes in composition, will presumably occur relatively slowly (albeit possibly on an accelerating path). The same conclusion presumably applies to the movement of disease vectors.
+--------------------
+
+[Chunk 3]
+Source: Access Economics 2007 Economic contribution of Great Barrier Reef Marine Park 2005-2006 Kopie.pdf | Score: 0.571
+--------------------
+As part of this focus, one related question is: how well can the adapt to climate change? 9.2.2 CLIMATE CHANGE #2: ATMOSPHERIC AND CRYOSPHERIC WARMING The most widely reported evidence of climate change is the estimated increase in global average near-surface atmospheric temperatures between the mid-s and, and evidence of ice melting:7 Since the start of the 20th century, the global average surface temperature has risen between 0.6 and 0.7 degrees Celsius. Since, the global average surface temperature has increased by 0.18 degrees Celsius per decade. In thes, the increase in average global surface temperatures was even faster. Australia has experienced similar conditions – indeed, if anything, temperature increases have been larger. As to the cryosphere, the area of the Arctic polar floating ice cap has decreased by about 20% compared with the- average. On some projections, the Arctic Ocean could be ice-free, or nearly so, by the end of the 21st century. The Greenland ice sheet has a larger area of ice that is melting, especially around its edges (although this is accompanied by greater snowfalls in the interior). In Antarctica, a similar pattern to that recorded in Greenland is evident: loss of ice-shelves and 6 Whether or not this time-frame is appropriate is not something Access Economics is competent to judge. That said, Access Economics is aware of evidence suggesting atmospheric carbon concentrations well in excess of current levels (about 385 parts per million) using time-frames going back tens or hundreds of millions of years. These clearly had natural causes.
+--------------------
+
+[Chunk 4]
+Source: Access Economics 2007 Economic contribution of Great Barrier Reef Marine Park 2005-2006 Kopie.pdf | Score: 0.571
+--------------------
+They are also, at present at least, largely masked by broader economic drivers such as real income growth, the value of the Australian dollar, oil prices and associated effects on airfares, geopolitical uncertainty and conflict, and the like. Substitution effects are even harder to discern. In part, they depend literally on what climate change is doing to competing reef destinations world-wide. While this cannot be quantified at this stage, Australia’s relatively cautious and pre-emptive approach to Reef preservation (including the 1 July rezoning) may be setting up the conditions for a substantial demand switch away from less cautiously-managed reef destinations towards Australia. If this effect is significant it may mask, for the GBRMP, underlying adverse effects of climate change on reef visitation demand around the world. As a relatively diversified region, GBRCA may also be relatively well insulated from adverse reef-related tourism effects because of substitution into other tourism activities within the Area. There is some overseas evidence that all of these sorts of effects may operate in the real world.
+--------------------
+
+[Chunk 5]
+Source: Access Economics 2007 Economic contribution of Great Barrier Reef Marine Park 2005-2006 Kopie.pdf | Score: 0.543
+--------------------
+56 9.3.5 CLIMATE CHANGE EFFECTS #5: RUNAWAY GREENHOUSE? There has been a substantial amount of popular media coverage of ‘tipping points’ and so- called ‘runaway greenhouse effects’. These appear to be based on the general proposition that the Earth’s atmosphere, land masses and oceans are likely to respond to initial global warming with ‘positive feedback’ effects that increase and accelerate the process (eg, the so-called aerosol cooling effect, that may be masking global warming now, but which will, when aerosol emissions are reduced, allow a faster warming process to occur). An alternative view is that responses from the Earth’s atmosphere, land masses and oceans may also include significant ‘negative feedback’ effects that, ultimately, will limit the extent of, and then reverse, the warming process. Unfortunately, at least one of these hypotheses seems to involve the emergence of general conditions unsuitable for most life, and mass extinctions.13 For the purposes of this report, the likely time periods for either of these alternatives to emerge is probably too long to be of immediate practical concern – or to be sufficiently limited to allow practical responses. Runaway global warming, or reversal via the aftermath of mass extinctions are not considered further in this report.
+--------------------
+
+Highest Confidence Score: 0.603
+================================================================================
+
+
+================================================================================
+Question 6:
+Whats the geografical range of the Great Barrier Reef?
+================================================================================
+
+Answer:
+----------------------------------------
+The geographical scope of the Great Barrier Reef (GBRMP) ranges from the tip of Cape York in Queensland, extending south past the Tropic of Capricorn almost to Bundaberg. It covers an area of approximately 345,400 square kilometres and stretches more than 2,300 kilometres along the northeast coast of Queensland.
+----------------------------------------
+
+Retrieved chunks:
+========================================
+
+[Chunk 1]
+Source: Access Economics 2007 Economic contribution of Great Barrier Reef Marine Park 2005-2006 Kopie.pdf | Score: 0.602
+--------------------
+11 2. GEOGRAPHIC SCOPE OF THE ANALYSIS 2.1 DEFINING THE The (GBRMP) ranges from the tip of Cape York in Queensland in the north extending south past the Tropic of Capricorn almost to Bundaberg. It covers an area of approximately 345,400 square kilometres and stretches more than 2,300 kilometres along the northeast coast of Queensland.
+--------------------
+
+[Chunk 2]
+Source: Access Economics 2007 Economic contribution of Great Barrier Reef Marine Park 2005-2006 Kopie.pdf | Score: 0.566
+--------------------
+Its width varies from around 90 kilometres to around 300 kilometres. The Park extends eastwards from the Queensland shoreline (defined as the mean low water mark) and its outer boundaries are defined in terms of coordinates of latitude and longitude. It includes reef and wrecks within these boundaries.
+--------------------
+
+[Chunk 3]
+Source: Access Economics 2007 Economic contribution of Great Barrier Reef Marine Park 2005-2006 Kopie.pdf | Score: 0.544
+--------------------
+Most residents in the GBRCA live relatively close to the GBRMP and can use it for recreational purposes. However, travel distances from the western borders of the Catchment Area to the are 400 kilometres in some cases. The BTR, in its Assessment of tourism activity in the GBR Region (), used a stricter definition of accessibility for recreational purposes that excluded some of the western parts of the Catchment Area. Use of a water catchment area that includes all rivers that flow into the GBRMP is appropriate for studies of the effects on the Reef of water run-off from the land, and from industrial activity, commercial activity and households. The rivers collect chemicals and sediments that can affect marine life on the Reef.
+--------------------
+
+[Chunk 4]
+Source: Access Economics 2007 Economic contribution of Great Barrier Reef Marine Park 2005-2006 Kopie.pdf | Score: 0.524
+--------------------
+There are considerable risks of oil spills, but the costs of recovery from damage are seen as an insurance matter. 2.2 DEFINING THE CATCHMENT AREA The boundary of the Catchment Area (GBRCA) is shown in Figure 2.1 below (OESR,). It is essentially the catchment area for waters that flow from Australia into the (GBRMP). It is defined geographically as a set of Local Government Areas (LGAs) where these LGAs have rivers that flow into the GBRMP. The western boundary more or less follows the Great Dividing Range peaks.
+--------------------
+
+[Chunk 5]
+Source: Access Economics 2007 Economic contribution of Great Barrier Reef Marine Park 2005-2006 Kopie.pdf | Score: 0.516
+--------------------
+At the northern end, the Catchment Area extends further west to the Gulf of Carpentaria because the relevant LGAs cover the whole width of the Cape York Peninsular. 13 FIGURE 2.1: CATCHMENT AREA AND INCLUDED LGAS 0 kilometres 150 300 Kolan (S) Duaringa (S) Broadsound (S) Sarina (S) Mackay (C) Whitsunday (S) Monto (S) Livingstone (S) Taroom (S) Nebo (S) Mirani (S) Dalrymple (S) Charters Towers (C) Townsville (C) Thuringowa (C) Burdekin (S) Hinchinbrook (S) Cook (S) Bowen (S) Belyando (S) Eacham (S) Johnstone (S) Cardwell (S) Atherton (S) Cairns (C) Herberton (S) Mareeba (S) Douglas (S) Bauhinia (S) Peak Downs (S) Bungil (S) Emerald (S) Jericho (S) Aurukun (S) Torres (S) Bundaberg (C) Burnett (S) Kolan (S) Monto (S) Miriam Vale (S) Gladstone (C) Calliope (S) Banana (S) Mount Morgan (S) Rockhampton (C) Fitzroy (S) Livingstone (S) Bundaberg (C) Insert one: LGAs in south of the GBRCA Coral Sea SOUTH PACIFIC OCEAN Source: OESR (). 14 The Great Dividing Range becomes more poorly defined moving south.
+--------------------
+
+Highest Confidence Score: 0.602
+================================================================================
+
+
+================================================================================
+Question 7:
+How big is the Great Barrier Reef?
+================================================================================
+
+Answer:
+----------------------------------------
+The Great Barrier Reef covers an area of approximately 345,400 square kilometres and stretches more than 2,300 kilometres along the northeast coast of Queensland. Its width varies from around 90 kilometres to around 300 kilometres.
+----------------------------------------
+
+Retrieved chunks:
+========================================
+
+[Chunk 1]
+Source: Access Economics 2007 Economic contribution of Great Barrier Reef Marine Park 2005-2006 Kopie.pdf | Score: 0.552
+--------------------
+Its width varies from around 90 kilometres to around 300 kilometres. The Park extends eastwards from the Queensland shoreline (defined as the mean low water mark) and its outer boundaries are defined in terms of coordinates of latitude and longitude. It includes reef and wrecks within these boundaries.
+--------------------
+
+[Chunk 2]
+Source: Access Economics 2007 Economic contribution of Great Barrier Reef Marine Park 2005-2006 Kopie.pdf | Score: 0.528
+--------------------
+11 2. GEOGRAPHIC SCOPE OF THE ANALYSIS 2.1 DEFINING THE The (GBRMP) ranges from the tip of Cape York in Queensland in the north extending south past the Tropic of Capricorn almost to Bundaberg. It covers an area of approximately 345,400 square kilometres and stretches more than 2,300 kilometres along the northeast coast of Queensland.
+--------------------
+
+[Chunk 3]
+Source: Access Economics 2007 Economic contribution of Great Barrier Reef Marine Park 2005-2006 Kopie.pdf | Score: 0.498
+--------------------
+Most residents in the GBRCA live relatively close to the GBRMP and can use it for recreational purposes. However, travel distances from the western borders of the Catchment Area to the are 400 kilometres in some cases. The BTR, in its Assessment of tourism activity in the GBR Region (), used a stricter definition of accessibility for recreational purposes that excluded some of the western parts of the Catchment Area. Use of a water catchment area that includes all rivers that flow into the GBRMP is appropriate for studies of the effects on the Reef of water run-off from the land, and from industrial activity, commercial activity and households. The rivers collect chemicals and sediments that can affect marine life on the Reef.
+--------------------
+
+[Chunk 4]
+Source: Access Economics 2007 Economic contribution of Great Barrier Reef Marine Park 2005-2006 Kopie.pdf | Score: 0.484
+--------------------
+At the northern end, the Catchment Area extends further west to the Gulf of Carpentaria because the relevant LGAs cover the whole width of the Cape York Peninsular. 13 FIGURE 2.1: CATCHMENT AREA AND INCLUDED LGAS 0 kilometres 150 300 Kolan (S) Duaringa (S) Broadsound (S) Sarina (S) Mackay (C) Whitsunday (S) Monto (S) Livingstone (S) Taroom (S) Nebo (S) Mirani (S) Dalrymple (S) Charters Towers (C) Townsville (C) Thuringowa (C) Burdekin (S) Hinchinbrook (S) Cook (S) Bowen (S) Belyando (S) Eacham (S) Johnstone (S) Cardwell (S) Atherton (S) Cairns (C) Herberton (S) Mareeba (S) Douglas (S) Bauhinia (S) Peak Downs (S) Bungil (S) Emerald (S) Jericho (S) Aurukun (S) Torres (S) Bundaberg (C) Burnett (S) Kolan (S) Monto (S) Miriam Vale (S) Gladstone (C) Calliope (S) Banana (S) Mount Morgan (S) Rockhampton (C) Fitzroy (S) Livingstone (S) Bundaberg (C) Insert one: LGAs in south of the GBRCA Coral Sea SOUTH PACIFIC OCEAN Source: OESR (). 14 The Great Dividing Range becomes more poorly defined moving south.
+--------------------
+
+[Chunk 5]
+Source: Access Economics 2007 Economic contribution of Great Barrier Reef Marine Park 2005-2006 Kopie.pdf | Score: 0.473
+--------------------
+There are considerable risks of oil spills, but the costs of recovery from damage are seen as an insurance matter. 2.2 DEFINING THE CATCHMENT AREA The boundary of the Catchment Area (GBRCA) is shown in Figure 2.1 below (OESR,). It is essentially the catchment area for waters that flow from Australia into the (GBRMP). It is defined geographically as a set of Local Government Areas (LGAs) where these LGAs have rivers that flow into the GBRMP. The western boundary more or less follows the Great Dividing Range peaks.
+--------------------
+
+Highest Confidence Score: 0.552
+================================================================================
+
+
+================================================================================
+Question 8:
+Does the licence for ocean fishing cost a fee?
+================================================================================
+
+Answer:
+----------------------------------------
+No, there are no recreational fishing licence fees for ocean fishing in Queensland.
+----------------------------------------
+
+Retrieved chunks:
+========================================
+
+[Chunk 1]
+Source: Access Economics 2007 Economic contribution of Great Barrier Reef Marine Park 2005-2006 Kopie.pdf | Score: 0.628
+--------------------
+This is not strictly correct because we have not allowed for fishing licence fees and boat registration fees which should be additional contributions for Queensland and Australia.
+--------------------
+
+[Chunk 2]
+Source: Access Economics 2007 Economic contribution of Great Barrier Reef Marine Park 2005-2006 Kopie.pdf | Score: 0.611
+--------------------
+While these categories may be adequate for some studies, they do not include expenditure on other recreational activities within the GBRMP such as fishing, boating, sailing and snorkelling (some of which is also distributed across industries such as transport equipment, sporting goods, services to transport, and boat rentals). There are no recreational fishing licence fees for ocean fishing in Queensland. Power boat registration fees (of the order of $100 per annum, depending on boat length) and boat trailer fees are paid to the Department of Transport. Major expenditures associated with GBRMP activities are on boats, fishing equipment, and scuba and snorkelling equipment.
+--------------------
+
+[Chunk 3]
+Source: Access Economics 2007 Economic contribution of Great Barrier Reef Marine Park 2005-2006 Kopie.pdf | Score: 0.602
+--------------------
+It receives no income from boat registration fees, or for freight shipping moving through the Park. (There are no Queensland licence fees for ocean recreational fishing.) Commercial fishing licence fees are paid to the Queensland Fisheries Service and boat registration fees are paid to Queensland Transport Services, while shipping charges including pilot fees are paid to port authorities. Permits are required for freight ships to move through the Park but GBRMPA receives no corresponding income.
+--------------------
+
+[Chunk 4]
+Source: Access Economics 2007 Economic contribution of Great Barrier Reef Marine Park 2005-2006 Kopie.pdf | Score: 0.582
+--------------------
+COMMERCIAL FISHING Commercial fishing consists mainly of ‘wild-harvest’ fishery production, although there is also some aquaculture, which is addressed at the end of this section. Most of the expenditures on GBRMP commercial fishing occur within the GBRCA, with little additional expenditure in the rest of Queensland. Commercial fishing licence fees are paid directly to State Government authorities rather than to local authorities, and hence contribute to Queensland and Australian value added but not to GBRCA value added. (We have not allowed for this.) The Queensland Department of Primary Industries & Fisheries (QDPI&F) assessed prospects for the Queensland fishing industry in September. Forecasts for-07 suggest that the decline in the value of wild-harvest fisheries will continue to around $180 million. This is due to the declining terms of trade for fishing businesses, difficulties in obtaining and retaining skilled labour and changes in management arrangements impacting on access arrangements in a range of fisheries. The Queensland managed commercial fishing industry remains in a transition phase because of major changes to management practice, implemented to ensure the sustainability of the fishery and to meet other ecological goals related to the fishery environment. (QDPI&F, September, p. 45) QDPI&F explains that the reasons for the decline include lower priced seafood imports, the strong Australian dollar, higher fuel prices, the effects of drought and cyclones, a lack of available and willing labour, the introduction of tighter restrictions on catches, numbers of boats and fishing effort, and restrictions on fishing areas introduced by rezoning of the GBRMP on 1 July. These have resulted in reduced fishing effort in most sectors of the commercial fishing industry.
+--------------------
+
+[Chunk 5]
+Source: Access Economics 2007 Economic contribution of Great Barrier Reef Marine Park 2005-2006 Kopie.pdf | Score: 0.559
+--------------------
+Shipping requires permits if operating outside designated shipping lanes General Use Zones. 12 TABLE 2.1: ALLOWED ACTIVITIES IN GBRMP ZONES, SIMPLIFIED SUMMARY Activity General Use Zone Habitat Protection Zone Conservation Park Zone Buffer Zone Scientific Research Zone Marine National Park Zone Preservation Zone no take no go Trawling yes Netting (other than bait netting) yes yes Bait netting, crabbing yes yes yes Limited spearfishing (snorkel only), line fishing yes yes yes Limited collecting yes yes yes Trolling yes yes yes yes Boating, diving, photography yes yes yes yes yes yes Traditional uses of marine resources yes yes yes yes yes yes Limited impact research yes yes yes yes yes yes permit Dive-based fishing (sea cucumber, permit permit trochus, tropical rock lobster) Aquaculture, dive-based fishing (aquarium fish, permit permit permit coral, beachworm) Shipping (other than in designated shipping area) yes permit permit permit permit permit Tourism program permit permit permit permit permit permit Research (other than limited impact) permit permit permit permit permit permit permit Source: GBRMPA. GBRMPA receives limited income from the issue of permits to commercial operators.
+--------------------
+
+Highest Confidence Score: 0.628
+================================================================================
+
+
+================================================================================
+Question 9:
+How much will the Earth warm up?
+================================================================================
+
+Answer:
+----------------------------------------
+The estimated increase in global average surface temperature since the start of the 20th century is between 0.6 and 0.7 degrees Celsius. Since then, the global average surface temperature has increased by 0.18 degrees Celsius per decade.
+
+Additionally, some projections suggest that the Arctic Ocean could be ice-free or nearly so by the end of the 21st century.
+----------------------------------------
+
+Retrieved chunks:
+========================================
+
+[Chunk 1]
+Source: Access Economics 2007 Economic contribution of Great Barrier Reef Marine Park 2005-2006 Kopie.pdf | Score: 0.666
+--------------------
+As part of this focus, one related question is: how well can the adapt to climate change? 9.2.2 CLIMATE CHANGE #2: ATMOSPHERIC AND CRYOSPHERIC WARMING The most widely reported evidence of climate change is the estimated increase in global average near-surface atmospheric temperatures between the mid-s and, and evidence of ice melting:7 Since the start of the 20th century, the global average surface temperature has risen between 0.6 and 0.7 degrees Celsius. Since, the global average surface temperature has increased by 0.18 degrees Celsius per decade. In thes, the increase in average global surface temperatures was even faster. Australia has experienced similar conditions – indeed, if anything, temperature increases have been larger. As to the cryosphere, the area of the Arctic polar floating ice cap has decreased by about 20% compared with the- average. On some projections, the Arctic Ocean could be ice-free, or nearly so, by the end of the 21st century. The Greenland ice sheet has a larger area of ice that is melting, especially around its edges (although this is accompanied by greater snowfalls in the interior). In Antarctica, a similar pattern to that recorded in Greenland is evident: loss of ice-shelves and 6 Whether or not this time-frame is appropriate is not something Access Economics is competent to judge. That said, Access Economics is aware of evidence suggesting atmospheric carbon concentrations well in excess of current levels (about 385 parts per million) using time-frames going back tens or hundreds of millions of years. These clearly had natural causes.
+--------------------
+
+[Chunk 2]
+Source: Access Economics 2007 Economic contribution of Great Barrier Reef Marine Park 2005-2006 Kopie.pdf | Score: 0.621
+--------------------
+56 9.3.5 CLIMATE CHANGE EFFECTS #5: RUNAWAY GREENHOUSE? There has been a substantial amount of popular media coverage of ‘tipping points’ and so- called ‘runaway greenhouse effects’. These appear to be based on the general proposition that the Earth’s atmosphere, land masses and oceans are likely to respond to initial global warming with ‘positive feedback’ effects that increase and accelerate the process (eg, the so-called aerosol cooling effect, that may be masking global warming now, but which will, when aerosol emissions are reduced, allow a faster warming process to occur). An alternative view is that responses from the Earth’s atmosphere, land masses and oceans may also include significant ‘negative feedback’ effects that, ultimately, will limit the extent of, and then reverse, the warming process. Unfortunately, at least one of these hypotheses seems to involve the emergence of general conditions unsuitable for most life, and mass extinctions.13 For the purposes of this report, the likely time periods for either of these alternatives to emerge is probably too long to be of immediate practical concern – or to be sufficiently limited to allow practical responses. Runaway global warming, or reversal via the aftermath of mass extinctions are not considered further in this report.
+--------------------
+
+[Chunk 3]
+Source: Access Economics 2007 Economic contribution of Great Barrier Reef Marine Park 2005-2006 Kopie.pdf | Score: 0.562
+--------------------
+cit., page 9. 55 Migratory timing, and shooting and flowering of plants, are occurring earlier in the spring. 9.3.3 CLIMATE CHANGE EFFECTS #3: MORE EXTREME WEATHER EVENTS There is evidence that the number of extreme (by historical standards) weather events is increasing, and this is consistent with what would be expected as a result of global warming. These include:10 More frequent heatwaves.
+--------------------
+
+[Chunk 4]
+Source: Access Economics 2007 Economic contribution of Great Barrier Reef Marine Park 2005-2006 Kopie.pdf | Score: 0.527
+--------------------
+More extreme weather events, including cyclones (which will be concentrated in tropical regions). Increased incidence of tropical diseases within the GBRCA, and migration of disease vectors away from the equator and towards the poles. Specific to the GBRMP, increased frequency of mass coral bleaching events, threatening reef diversity, coral cover and ultimately reef eco-systems. For the purposes of this report, the economic activities of most interest are tourism, commercial fishing, and recreational activities. That said, other industries, such as primary industries, within the GBRCA can also be affected by, for example, extreme weather events (eg, cyclone Larry and banana production). The effects listed above presumably will have their effects over different time frames: Average atmospheric warming and cryospheric changes, and sea level rises and changes in composition, will presumably occur relatively slowly (albeit possibly on an accelerating path). The same conclusion presumably applies to the movement of disease vectors.
+--------------------
+
+[Chunk 5]
+Source: Access Economics 2007 Economic contribution of Great Barrier Reef Marine Park 2005-2006 Kopie.pdf | Score: 0.502
+--------------------
+59 But extreme warming events could occur more rapidly as one-off occurrences, even though their average incidence might grow more slowly. These could begin doing considerable damage sooner.
+--------------------
+
+Highest Confidence Score: 0.666
+================================================================================
+
+
+================================================================================
+Question 10:
+How will the climate change affect the tourism?
+================================================================================
+
+Answer:
+----------------------------------------
+The climate change mechanisms directly affecting tourism are:
+
+* Atmospheric and cryospheric warming
+* Changes in ocean composition (increased acidification), which may lead to mass coral bleaching
+* Increased extreme weather frequency
+* Disease vector movements
+
+These effects will influence the attractiveness of the destination, risks of visiting, and spending within the Great Barrier Reef Catchment Area.
+----------------------------------------
+
+Retrieved chunks:
+========================================
+
+[Chunk 1]
+Source: Access Economics 2007 Economic contribution of Great Barrier Reef Marine Park 2005-2006 Kopie.pdf | Score: 0.658
+--------------------
+Induced effects flowing from these impact effects are the focus of section 9.5.2 below. 9.5.1.1 TOURISM The climate change mechanisms directly affecting tourism are: Atmospheric and cryospheric warming, and changes in ocean composition (increased acidification, both of which may lead to mass coral bleaching. Increased extreme weather frequency Disease vector movements.
+--------------------
+
+[Chunk 2]
+Source: Access Economics 2007 Economic contribution of Great Barrier Reef Marine Park 2005-2006 Kopie.pdf | Score: 0.623
+--------------------
+The emphasis is on tourism.
+--------------------
+
+[Chunk 3]
+Source: Access Economics 2007 Economic contribution of Great Barrier Reef Marine Park 2005-2006 Kopie.pdf | Score: 0.618
+--------------------
+The challenge is to marshall the data in ways amenable to general equilibrium modelling. Quantifying the direct economic impacts of climate change is the real challenge. Data requirements for tourism Climate change is (probably) just beginning to have effects on the GBRMP and the wider GBRCA. Behavioural responses to these changes, and expectations that they will continue and even intensify, are, at best, only now beginning to emerge.
+--------------------
+
+[Chunk 4]
+Source: Access Economics 2007 Economic contribution of Great Barrier Reef Marine Park 2005-2006 Kopie.pdf | Score: 0.605
+--------------------
+These effects influence (i) the attractiveness of the as a destination per se; (ii) the attractiveness and risks of visiting the GBRCA more generally. Scientific research can presumably be used to obtain current assessments and forecasts of the physical manifestations of climate change under the headings listed above. But translating these into impacts on tourism-related visitation to, and spending within, the GBRCA is much more difficult.
+--------------------
+
+[Chunk 5]
+Source: Access Economics 2007 Economic contribution of Great Barrier Reef Marine Park 2005-2006 Kopie.pdf | Score: 0.599
+--------------------
+They are also, at present at least, largely masked by broader economic drivers such as real income growth, the value of the Australian dollar, oil prices and associated effects on airfares, geopolitical uncertainty and conflict, and the like. Substitution effects are even harder to discern. In part, they depend literally on what climate change is doing to competing reef destinations world-wide. While this cannot be quantified at this stage, Australia’s relatively cautious and pre-emptive approach to Reef preservation (including the 1 July rezoning) may be setting up the conditions for a substantial demand switch away from less cautiously-managed reef destinations towards Australia. If this effect is significant it may mask, for the GBRMP, underlying adverse effects of climate change on reef visitation demand around the world. As a relatively diversified region, GBRCA may also be relatively well insulated from adverse reef-related tourism effects because of substitution into other tourism activities within the Area. There is some overseas evidence that all of these sorts of effects may operate in the real world.
+--------------------
+
+Highest Confidence Score: 0.658
+================================================================================
+
+
+================================================================================
+Question 11:
+How many visits does the Great Barrier Reef get on average per year?
+================================================================================
+
+Answer:
+----------------------------------------
+On average, the Great Barrier Reef gets around 2 million visits per year.
+----------------------------------------
+
+Retrieved chunks:
+========================================
+
+[Chunk 1]
+Source: Access Economics 2007 Economic contribution of Great Barrier Reef Marine Park 2005-2006 Kopie.pdf | Score: 0.637
+--------------------
+GBRMPA does not record numbers of visitors in private boats. CHART 5.1.1: NUMBER OF VISITS PER YEAR, BY GBRMPA MANAGEMENT REGION 0 500,000 1,000,000 1,500,000 2,000,000 2,500,000-94-95-96-97-98-99-00-01-02-03-04-05-06 number of visitors per year Far North Cairns Central Mackay GBRMP Source: GBRMPA, February, with-06 data understood to be substantially complete. Total reef visits increased from 1.4 million in-94 to just under 2 million visits in-05. However there was a reduction of around 95,000 in-06, with this fall being experienced in both major tourism regions of Cairns and Central (including Townsville).
+--------------------
+
+[Chunk 2]
+Source: Access Economics 2007 Economic contribution of Great Barrier Reef Marine Park 2005-2006 Kopie.pdf | Score: 0.586
+--------------------
+There have been changes over time in the composition of visits across regions. The numbers of visits to the Cairns region have been fairly constant, declining slightly over the last decade, but those to the Central region have increased, so that the visit shares in- 06 were Cairns 47%, Central 44%, Mackay 8% and Far North 0.4% compared with 60%, 31%, 9% and 0.5% respectively in-94. 24 The recorded reductions in numbers of visitors to the reef in the Cairns and Central management regions between-05 and-06 are not reflected in the increases in GBRCA tourism expenditure (Table 5.1.1), numbers of visitors (Table A.2) or number of stopover nights (Table A.2), except for reductions in the number of day visitors to the Tropical Far North and the number of international visitor nights for the Central region. There are 20 million tourism visits to the GBRCA each year (Table A.2) but only 2 million visits to the reef.
+--------------------
+
+[Chunk 3]
+Source: Access Economics 2007 Economic contribution of Great Barrier Reef Marine Park 2005-2006 Kopie.pdf | Score: 0.522
+--------------------
+GAP, GSP and GDP are fractions of the appropriate GVP. 26 TABLE 5.2.1: DIRECT CONTRIBUTIONS OF SELECTED ACTIVITIES TO THE GBRCA,-05 &-06-05-05-05-06-06-06 Direct contribution Direct Direct Direct Direct Direct Direct Value Added GAP Employment Value Added GAP Employment ($m) ($m) (FTE 000) ($m) ($m) (FTE 000) Total tourism within the GBRCA Visitors from GBRCA 420 524 6 392 493 5 Visitors from rest of Queensland 324 399 4 311 386 4 Interstate visitors 575 709 7 740 912 9 by GBRCA residents for travel outside GBRCA 122 147 1 126 153 1 International visitors 589 726 8 628 773 8 Total tourism 2,030 2,504 26.11 2,197 2,716 27 Commercial fishing 133 137 1 116 119 1 Recreational activity (net of tourism) 301 372 6 301 371 5 Total contribution to GBRCA 2,465 3,012 34 2,614 3,206 33 Source: Access Economics. All magnitudes are to the nearest $million.
+--------------------
+
+[Chunk 4]
+Source: Access Economics 2007 Economic contribution of Great Barrier Reef Marine Park 2005-2006 Kopie.pdf | Score: 0.52
+--------------------
+It recognises the value of regional tourism satellite accounts, as developed by Queensland’s Office of Economic and Statistical Research. It draws attention to the distinction between international, interstate and intrastate visitors, and there is sympathy with the position that visits to the reef are predominantly by tourists on holidays. It describes differences in tourist expenditure between the different regions. It addresses the problem of separating reef- 50 interested tourists from other tourists (p.142) by linking regional tourism data to other surveys that inquire about reef visits. This provides information about reef-interested visits, although there is still the problem of which proportion of this to attribute to reef visits. It is reported that three studies that summed expenditures across trips on vessels, mainland accommodation and island resort holidays, found that 15%, 23% and 15% of total tourism expenditure (excluding airfares) was by reef-interested tourists, whether or not they actually visited the reef. The discussion of commercial fishing has been superseded by changes subsequent to the rezoning of the park.
+--------------------
+
+[Chunk 5]
+Source: Access Economics 2007 Economic contribution of Great Barrier Reef Marine Park 2005-2006 Kopie.pdf | Score: 0.52
+--------------------
+Most residents in the GBRCA live relatively close to the GBRMP and can use it for recreational purposes. However, travel distances from the western borders of the Catchment Area to the are 400 kilometres in some cases. The BTR, in its Assessment of tourism activity in the GBR Region (), used a stricter definition of accessibility for recreational purposes that excluded some of the western parts of the Catchment Area. Use of a water catchment area that includes all rivers that flow into the GBRMP is appropriate for studies of the effects on the Reef of water run-off from the land, and from industrial activity, commercial activity and households. The rivers collect chemicals and sediments that can affect marine life on the Reef.
+--------------------
+
+Highest Confidence Score: 0.637
+================================================================================
+
+
+================================================================================
+Question 12:
+What does happen to the fish if the reef gets in a bad condition?
+================================================================================
+
+Answer:
+----------------------------------------
+The fish and other organisms dependent on the living coral also die (if they cannot move elsewhere). In turn, the fish and other animals higher up the food chain (including the top predators) also either die or move elsewhere.
+----------------------------------------
+
+Retrieved chunks:
+========================================
+
+[Chunk 1]
+Source: Access Economics 2007 Economic contribution of Great Barrier Reef Marine Park 2005-2006 Kopie.pdf | Score: 0.627
+--------------------
+The fish and other organisms dependent on the living coral also die (if they cannot move elsewhere). In turn, the fish and other animals higher up the food chain (including the top predators) also either die or move elsewhere. In this situation, the whole reef eco-system may change.
+--------------------
+
+[Chunk 2]
+Source: Access Economics 2007 Economic contribution of Great Barrier Reef Marine Park 2005-2006 Kopie.pdf | Score: 0.565
+--------------------
+While the reef may not be completely destroyed, its nature will change: towards lower species diversity and numbers; towards less coral cover; towards more specialisation on more hardy coral species; and including higher algae concentrations. 9.5 PHYSICAL REEF EFFECTS: ECONOMIC FLOW-ON EFFECTS The economic flow-on effects from climate change involve changes in economic activity within the GBRCA that are directly attributable to the effects of climate change, plus induced changes in economic activity that flow from these direct effects, and that are therefore indirectly attributable to climate change. The drivers of these economic effects, summarising sections 9.2 and 9.3 above, are: Atmospheric and cryospheric warming, with the former possibly concentrated in tropical regions. Ocean warming, sea level increases and changes in ocean composition, possibly especially in tropical regions.
+--------------------
+
+[Chunk 3]
+Source: Access Economics 2007 Economic contribution of Great Barrier Reef Marine Park 2005-2006 Kopie.pdf | Score: 0.553
+--------------------
+In, GBRMPA estimated that 60% to 95% of the was affected by bleaching to some extent. In-06, warmer waters around the Keppel Islands caused as much as 98% of the corals to bleach (although subsequent cooler weather allowed more than half to survive).20 9.4.2 EXPECTED PHYSICAL REEF EFFECTS #2: ECO-SYSTEM IMPACTS Bleaching occurs when zooxanthellae, the microscopic plants that nourish the corals and give them colour, are expelled, leaving the corals white. This may reduce the attractiveness of the corals as perceived by some tourists. If the warming that induced this effect is sustained for long enough, or repeated frequently enough, the zooxanthellae do not return, either enough or at all, to recolonise the corals. In turn, the corals cannot recover quickly enough or sufficiently, and they die. 15 See, for example, Our Precious Coasts: Marine Pollution, Climate Change and the Resilience of Coastal Ecosystems Christian Nellemann and Emily Corcoran (Editors), United Nations Environment Programme,, pages 12 and 14. 16 See, for example, Coral Reef Resilience and Resistance to Bleaching GD Grimsditch and RV Salm, IUCN Resilience Science Group Working Paper Series – No. 1,, page 8.
+--------------------
+
+[Chunk 4]
+Source: Access Economics 2007 Economic contribution of Great Barrier Reef Marine Park 2005-2006 Kopie.pdf | Score: 0.547
+--------------------
+These induced economic effects would comprise direct effects (eg, on Reef tourism and fishing activities), and indirect effects. While general equilibrium modelling, by definition, is not involved (as far as Access Economics is aware, suitable data are not available), Access Economics would not be concluding that Reef deterioration would produce large negative effects for Australia, or even, perhaps, Queensland, because of significant effects in a direct sense on tourism or fishing. Rather, we would be pointing to displacement of activity into other areas.
+--------------------
+
+[Chunk 5]
+Source: Access Economics 2007 Economic contribution of Great Barrier Reef Marine Park 2005-2006 Kopie.pdf | Score: 0.517
+--------------------
+COMMERCIAL FISHING Commercial fishing consists mainly of ‘wild-harvest’ fishery production, although there is also some aquaculture, which is addressed at the end of this section. Most of the expenditures on GBRMP commercial fishing occur within the GBRCA, with little additional expenditure in the rest of Queensland. Commercial fishing licence fees are paid directly to State Government authorities rather than to local authorities, and hence contribute to Queensland and Australian value added but not to GBRCA value added. (We have not allowed for this.) The Queensland Department of Primary Industries & Fisheries (QDPI&F) assessed prospects for the Queensland fishing industry in September. Forecasts for-07 suggest that the decline in the value of wild-harvest fisheries will continue to around $180 million. This is due to the declining terms of trade for fishing businesses, difficulties in obtaining and retaining skilled labour and changes in management arrangements impacting on access arrangements in a range of fisheries. The Queensland managed commercial fishing industry remains in a transition phase because of major changes to management practice, implemented to ensure the sustainability of the fishery and to meet other ecological goals related to the fishery environment. (QDPI&F, September, p. 45) QDPI&F explains that the reasons for the decline include lower priced seafood imports, the strong Australian dollar, higher fuel prices, the effects of drought and cyclones, a lack of available and willing labour, the introduction of tighter restrictions on catches, numbers of boats and fishing effort, and restrictions on fishing areas introduced by rezoning of the GBRMP on 1 July. These have resulted in reduced fishing effort in most sectors of the commercial fishing industry.
+--------------------
+
+Highest Confidence Score: 0.627
+================================================================================
+
+
+================================================================================
+Question 13:
+What happens to the octopus?
+================================================================================
+
+Answer:
+----------------------------------------
+The text does not mention what happens to the octopus. It only discusses the effects of climate change on coral reefs and the organisms that depend on them, including fish and other animals higher up the food chain.
+----------------------------------------
+
+Retrieved chunks:
+========================================
+
+[Chunk 1]
+Source: Access Economics 2007 Economic contribution of Great Barrier Reef Marine Park 2005-2006 Kopie.pdf | Score: 0.525
+--------------------
+The fish and other organisms dependent on the living coral also die (if they cannot move elsewhere). In turn, the fish and other animals higher up the food chain (including the top predators) also either die or move elsewhere. In this situation, the whole reef eco-system may change.
+--------------------
+
+[Chunk 2]
+Source: Access Economics 2007 Economic contribution of Great Barrier Reef Marine Park 2005-2006 Kopie.pdf | Score: 0.458
+--------------------
+In, GBRMPA estimated that 60% to 95% of the was affected by bleaching to some extent. In-06, warmer waters around the Keppel Islands caused as much as 98% of the corals to bleach (although subsequent cooler weather allowed more than half to survive).20 9.4.2 EXPECTED PHYSICAL REEF EFFECTS #2: ECO-SYSTEM IMPACTS Bleaching occurs when zooxanthellae, the microscopic plants that nourish the corals and give them colour, are expelled, leaving the corals white. This may reduce the attractiveness of the corals as perceived by some tourists. If the warming that induced this effect is sustained for long enough, or repeated frequently enough, the zooxanthellae do not return, either enough or at all, to recolonise the corals. In turn, the corals cannot recover quickly enough or sufficiently, and they die. 15 See, for example, Our Precious Coasts: Marine Pollution, Climate Change and the Resilience of Coastal Ecosystems Christian Nellemann and Emily Corcoran (Editors), United Nations Environment Programme,, pages 12 and 14. 16 See, for example, Coral Reef Resilience and Resistance to Bleaching GD Grimsditch and RV Salm, IUCN Resilience Science Group Working Paper Series – No. 1,, page 8.
+--------------------
+
+[Chunk 3]
+Source: Access Economics 2007 Economic contribution of Great Barrier Reef Marine Park 2005-2006 Kopie.pdf | Score: 0.424
+--------------------
+More destructive cyclones (the power of which depends importantly on the warmth of the ocean surface waters over which they form). 9.3.4 CLIMATE CHANGE EFFECTS #4: OCEAN COMPOSITION/CIRCULATION Rising atmospheric concentration of carbon dioxide increases upper ocean uptake of this greenhouse gas.11 This increases ocean acidity (reduces the pH) of the ocean, and there is evidence of this change occurring. In turn, this decreases the concentration of carbonate ions in the oceans.
+--------------------
+
+[Chunk 4]
+Source: Access Economics 2007 Economic contribution of Great Barrier Reef Marine Park 2005-2006 Kopie.pdf | Score: 0.424
+--------------------
+While the reef may not be completely destroyed, its nature will change: towards lower species diversity and numbers; towards less coral cover; towards more specialisation on more hardy coral species; and including higher algae concentrations. 9.5 PHYSICAL REEF EFFECTS: ECONOMIC FLOW-ON EFFECTS The economic flow-on effects from climate change involve changes in economic activity within the GBRCA that are directly attributable to the effects of climate change, plus induced changes in economic activity that flow from these direct effects, and that are therefore indirectly attributable to climate change. The drivers of these economic effects, summarising sections 9.2 and 9.3 above, are: Atmospheric and cryospheric warming, with the former possibly concentrated in tropical regions. Ocean warming, sea level increases and changes in ocean composition, possibly especially in tropical regions.
+--------------------
+
+[Chunk 5]
+Source: Access Economics 2007 Economic contribution of Great Barrier Reef Marine Park 2005-2006 Kopie.pdf | Score: 0.417
+--------------------
+More extreme weather events, including cyclones (which will be concentrated in tropical regions). Increased incidence of tropical diseases within the GBRCA, and migration of disease vectors away from the equator and towards the poles. Specific to the GBRMP, increased frequency of mass coral bleaching events, threatening reef diversity, coral cover and ultimately reef eco-systems. For the purposes of this report, the economic activities of most interest are tourism, commercial fishing, and recreational activities. That said, other industries, such as primary industries, within the GBRCA can also be affected by, for example, extreme weather events (eg, cyclone Larry and banana production). The effects listed above presumably will have their effects over different time frames: Average atmospheric warming and cryospheric changes, and sea level rises and changes in composition, will presumably occur relatively slowly (albeit possibly on an accelerating path). The same conclusion presumably applies to the movement of disease vectors.
+--------------------
+
+Highest Confidence Score: 0.525
+================================================================================
+
+
+================================================================================
+Question 14:
+Where is Nemo?
+================================================================================
+
+Answer:
+----------------------------------------
+There is no mention of Nemo in the provided context.
+----------------------------------------
+
+Retrieved chunks:
+========================================
+
+[Chunk 1]
+Source: Access Economics 2007 Economic contribution of Great Barrier Reef Marine Park 2005-2006 Kopie.pdf | Score: 0.403
+--------------------
+The only ‘no go area’ is the Preservation Zone. The ‘no-take area’ corresponds to the Marine National Park Zone plus the Preservation Zone. In summary, individuals are allowed access to most areas of the Park for boating, diving and photography, but there are varying restrictions on what they can catch or collect. Commercial operations require permits, and they are not allowed to engage in extractive activities in some zones. Tourism programs are allowed in all zones except the Preservation Zone, but subject to permits that specify which activities are allowed.
+--------------------
+
+[Chunk 2]
+Source: Access Economics 2007 Economic contribution of Great Barrier Reef Marine Park 2005-2006 Kopie.pdf | Score: 0.399
+--------------------
+At the northern end, the Catchment Area extends further west to the Gulf of Carpentaria because the relevant LGAs cover the whole width of the Cape York Peninsular. 13 FIGURE 2.1: CATCHMENT AREA AND INCLUDED LGAS 0 kilometres 150 300 Kolan (S) Duaringa (S) Broadsound (S) Sarina (S) Mackay (C) Whitsunday (S) Monto (S) Livingstone (S) Taroom (S) Nebo (S) Mirani (S) Dalrymple (S) Charters Towers (C) Townsville (C) Thuringowa (C) Burdekin (S) Hinchinbrook (S) Cook (S) Bowen (S) Belyando (S) Eacham (S) Johnstone (S) Cardwell (S) Atherton (S) Cairns (C) Herberton (S) Mareeba (S) Douglas (S) Bauhinia (S) Peak Downs (S) Bungil (S) Emerald (S) Jericho (S) Aurukun (S) Torres (S) Bundaberg (C) Burnett (S) Kolan (S) Monto (S) Miriam Vale (S) Gladstone (C) Calliope (S) Banana (S) Mount Morgan (S) Rockhampton (C) Fitzroy (S) Livingstone (S) Bundaberg (C) Insert one: LGAs in south of the GBRCA Coral Sea SOUTH PACIFIC OCEAN Source: OESR (). 14 The Great Dividing Range becomes more poorly defined moving south.
+--------------------
+
+[Chunk 3]
+Source: Access Economics 2007 Economic contribution of Great Barrier Reef Marine Park 2005-2006 Kopie.pdf | Score: 0.395
+--------------------
+The emphasis is on tourism.
+--------------------
+
+[Chunk 4]
+Source: Access Economics 2007 Economic contribution of Great Barrier Reef Marine Park 2005-2006 Kopie.pdf | Score: 0.391
+--------------------
+2.3 WHY FOCUS ON THE CATCHMENT AREA?
+--------------------
+
+[Chunk 5]
+Source: Access Economics 2007 Economic contribution of Great Barrier Reef Marine Park 2005-2006 Kopie.pdf | Score: 0.387
+--------------------
+More severe storms and floods.
+--------------------
+
+Highest Confidence Score: 0.403
+================================================================================
+
+
+================================================================================
+Question 15:
+Can we calculate the total population of Australia?
+================================================================================
+
+Answer:
+----------------------------------------
+No, the provided context does not mention the total population of Australia. It only provides information on the economic value and employment figures for the Great Barrier Reef Marine Park (GBRMP) in Queensland and Australia.
+----------------------------------------
+
+Retrieved chunks:
+========================================
+
+[Chunk 1]
+Source: Access Economics 2007 Economic contribution of Great Barrier Reef Marine Park 2005-2006 Kopie.pdf | Score: 0.585
+--------------------
+For employment (full time equivalent basis), about 44,000 persons. The corresponding estimates for Queensland are: For value-added, about $4.5 billion per annum. For gross product, about $5.4 billion per annum. For employment (full time equivalent basis), about 56,000 persons. The corresponding estimates for Australia are: For value-added, about $5.7 billion per annum. For gross product, about $6.9 billion per annum.
+--------------------
+
+[Chunk 2]
+Source: Access Economics 2007 Economic contribution of Great Barrier Reef Marine Park 2005-2006 Kopie.pdf | Score: 0.584
+--------------------
+For employment (full time equivalent basis), about 44,000 persons. The corresponding estimates for Queensland are: For value-added, around $4.5 billion per annum. For gross product, around $5.4 billion per annum. For employment (full time equivalent basis), about 56,000 persons. The corresponding estimates for Australia are: For value-added, around $5.7 billion per annum. For gross product, around $6.9 billion per annum.
+--------------------
+
+[Chunk 3]
+Source: Access Economics 2007 Economic contribution of Great Barrier Reef Marine Park 2005-2006 Kopie.pdf | Score: 0.555
+--------------------
+If the resources were available, the Australian Bureau of Statistics is best equipped to do the job. 7 PREAMBLE: THIS REPORT IN CONTEXT There have been several attempts, on varying bases, to measure the economic, financial and social value of the (GBRMP).1 These sometimes entail combining a variety of methodologies and value imputations covering activities and perceived values that are not readily amenable to objective, or market price-based, quantification. Where these generate quantitative estimates that are then added together to (i) generate a ‘total’ estimate which, in some cases (ii) is compared with Australia’s GDP or Queensland’s Gross State Product (GSP), there arises a major risk that ‘apples and oranges’ are being compared. This report is much less ambitious: It only looks at national accounts-based flows for which market transactions can readily be estimated or imputed and for which associated input-output tables (Australian, Queensland and regional) can be compiled.
+--------------------
+
+[Chunk 4]
+Source: Access Economics 2007 Economic contribution of Great Barrier Reef Marine Park 2005-2006 Kopie.pdf | Score: 0.529
+--------------------
+46 TABLE 7.4: TOTAL VALUE ADDED FOR SELECTED INDUSTRIES,-05 &-06, $ MILLION-05-05-05-05-06-06-06-06 direct indirect combined indirect/direct direct indirect combined indirect/direct GBRCA 2,465 979 3,444 0.40 2,614 1,055 3,669 0.40 Queensland 2,585 1,689 4,274 0.65 2,669 1,780 4,450 0.67 Australia 2,952 2,383 5,335 0.81 3,148 2,564 5,712 0.81 GBRCA/Australia 83% 41% 65% 83% 41% 64% Queensland/Australia 88% 71% 80% 85% 69% 78% Source: Access Economics. Totals may differ from sums of components due to rounding.
+--------------------
+
+[Chunk 5]
+Source: Access Economics 2007 Economic contribution of Great Barrier Reef Marine Park 2005-2006 Kopie.pdf | Score: 0.504
+--------------------
+These are best described and quantified by using input-output tables. The Queensland Office of the Government Statistician has prepared-97 input-output tables for Queensland and ten Queensland Regions (Office of the Government Statistician). The regions correspond to the Queensland Statistical Divisions, as at, with the exception of the Brisbane and Moreton Bay Statistical Divisions, which have been combined. As noted in section 2 above, the GBRCA is approximated by the sum of five regions – all of Fitzroy, Mackay, Northern, and Far North, and part of Wide Bay-Burnett. Although the ABS has compiled national input-output tables for-02, the national input-output tables for-97 (ABS.0,) have been used in order to maintain consistency with the Queensland tables.
+--------------------
+
+Highest Confidence Score: 0.585
+================================================================================
+

@@ -3,8 +3,19 @@ from src import get_answer
 
 st.set_page_config(page_title="ReefGuide", page_icon="🌊")
 
+
+USER_AVATAR = ["🐠"]
+BOT_AVATAR= ["🐙"]
+
+
+if "user_avatar" not in st.session_state:
+    st.session_state.user_avatar = USER_AVATAR
+
+if "bot_avatar" not in st.session_state:
+    st.session_state.bot_avatar = BOT_AVATAR
+
 # title and description
-st.title("G’day mate! 🐠 ")
+st.title("G’day mate! 🪸 ")
 st.subheader("Curious about the Great Barrier Reef?")
 st.markdown(
     "Ask me anything — from marine life and conservation to travel tips and local insights!  \n"
