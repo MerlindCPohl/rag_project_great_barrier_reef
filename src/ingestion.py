@@ -16,7 +16,7 @@ from langchain_community.embeddings import HuggingFaceBgeEmbeddings
 from typing import Optional, Dict, Any
 from src.embedding_manager import EmbeddingManager
 from src.utils import extract_text_from_pdf, clean_text_for_bge, remove_duplicate_chunks, get_chunk_hash, load_metadata_from_config, detect_language, load_config, setup_logger
-from src.vector_store import FaissVectorStore
+from src.faiss_vector_store import FaissVectorStore
 
 # Initialize logging
 logger = setup_logger(__name__)

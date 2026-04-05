@@ -1,14 +1,10 @@
-# %%
-#1. Retrieval: gives results from vector store based on query
-# Retrieve relevant documents from the vector store in form of a list of dictionaries 
-# query is tranformed into an embedding and then used to search the vector store for similar documents
-
 import sys
 sys.path.insert(0, '../')
 
 from typing import List, Dict, Any, Optional
 from src.embedding_manager import EmbeddingManager
-from src.vector_store import FaissVectorStore
+from src.faiss_vector_store import FaissVectorStore
+from src.retriever import RAGRetriever
 from src.utils import load_config
 from src.utils import setup_logger
 import time
@@ -19,92 +15,9 @@ config = load_config()
 # Initialize logging
 logger = setup_logger(__name__)
 
-class RAGRetriever:
-    def __init__(self, vector_store: FaissVectorStore, embedding_manager: EmbeddingManager):
-        self.vector_store = vector_store
-        self.embedding_manager = embedding_manager
-
-    def retrieve(self, query: str, top_k: int = 5, score_threshold: float = 0.0) -> List[Dict[str, Any]]:
-       
-        start_time = time.time()
-        logger.debug(f"Retrieving documents for query: '{query}' with top_k={top_k} and score_threshold={score_threshold}")
-        
-        try:
-            # Generate embedding for the query with retry logic
-            try:
-                query_embeddings = self.embedding_manager.generate_embeddings([query], max_retries=2)
-                query_embedding = query_embeddings[0]
-            except RuntimeError as e:
-                logger.error(f"Failed to embed query after retries: {e}")
-                return []
-            
-            # Search the vector store - returns list of tuples (metadata, distance)
-            try:
-                results = self.vector_store.search(query_embedding, top_k=top_k)
-            except Exception as e:
-                logger.error(f"Vector store search failed: {e}")
-                raise
-            
-            retrieved_docs = []
-            
-            for rank, (metadata, distance) in enumerate(results, 1):
-                similarity_score = distance
-                
-                if similarity_score >= score_threshold:
-                    retrieved_docs.append({
-                        'id': rank,
-                        'content': metadata.get('content', ''),
-                        'source': metadata.get('source', ''),
-                        'similarity_score': float(similarity_score),
-                        'metadata': metadata,
-                        'rank': rank
-                    })
-            
-            if retrieved_docs:
-                logger.info(f"Retrieved {len(retrieved_docs)} documents above threshold of {score_threshold}")
-            else:
-                logger.debug(f"No documents above threshold {score_threshold}")
-            
-            return retrieved_docs
-            
-        except Exception as e:
-            logger.error(f"Retrieval error: {str(e)[:100]}")
-            return []
 
 # %%
-#2. Initialize vector store and embedding manager (load from disk)
-
-try:
-    embedding_manager = EmbeddingManager()
-    logger.info("EmbeddingManager initialized successfully")
-except Exception as e:
-    logger.error(f"Failed to initialize EmbeddingManager: {e}")
-    embedding_manager = None
-
-try:
-    vector_store = FaissVectorStore(embedding_dim=embedding_manager.get_embedding_dimension())
-    logger.info(f"Vector store loaded with {len(vector_store.id_to_metadata)} chunks")
-except Exception as e:
-    logger.error(f"Failed to initialize Vector Store: {e}")
-    vector_store = None
-
-# %%
-# 3. Initialize RAGRetriever with instances from ingestion.ipynb
-
-rag_retriever = RAGRetriever(vector_store=vector_store, embedding_manager=embedding_manager)
-
-query = "What is the economic contribution of the Great Barrier Reef?"
-results = rag_retriever.retrieve(query=query, top_k=5, score_threshold=0.0)
-
-for doc in results:
-    
-    logger.info(f"\nRank {doc['rank']}: {doc['similarity_score']:.4f}")
-    logger.info(f"Source: {doc['source']}")
-    logger.info(f"Content preview: {doc['content'][:200]}...")
-
-
-# %%
-#4. LLM integration with Ollama
+#1. LLM integration with Ollama
 
 from langchain_ollama import OllamaLLM
 from dotenv import load_dotenv
@@ -119,7 +32,7 @@ llm = OllamaLLM(
 
 
 # %%
-#5. RAG function for information retrieval with minimal instructions
+#2. RAG function for information retrieval with minimal instructions
 
 
 def invoke_llm_with_retry(llm: OllamaLLM, prompt: str, max_retries: int = 2, timeout: int = 60) -> str:
@@ -156,7 +69,7 @@ def invoke_llm_with_retry(llm: OllamaLLM, prompt: str, max_retries: int = 2, tim
                 raise RuntimeError(f"LLM invocation failed after {max_retries + 1} attempts: {str(e)}")
 
 
-def retrieval_query(query: str, retriever: RAGRetriever, llm: OllamaLLM, top_k: Optional[int] = None, score_threshold: Optional[float] = None, return_context: bool = False) -> Dict[str, Any] | str:
+def retrieval_query(query: str, retriever: RAGRetriever, top_k: Optional[int] = None, score_threshold: Optional[float] = None, return_context: bool = False) -> Dict[str, Any] | str:
 
     # Use config defaults if not provided
     if top_k is None:
@@ -227,54 +140,13 @@ def retrieval_query(query: str, retriever: RAGRetriever, llm: OllamaLLM, top_k: 
         output['context'] = context
     
     return output
-  
-
-# %%
-#6. Output query with sources and confidence score
-# Note: This test code is commented out to prevent execution on module import
-
-# result = retrieval_query("How much will the Earth still warm up?", rag_retriever, llm, return_context=True)
-
-# print("\n" + "_"*100)
-# print("")
-# print("Answer:")
-# print("")
-# print(result['response'] if isinstance(result, dict) else result)
-
-# print("\n" + "_"*100)
-# print("")
-# print("Sources:")
-# print("")
-# if isinstance(result, dict):
-#     for i, source in enumerate(result['sources'], 1):
-#         print(f"\n[Source {i}]")
-#         print(f"File: {source['source']}")
-#         print(f"Score: {source['score']}")
-#         print(f"Preview:{source['preview']}")
-
-# print("\n" + "_"*100)
-# if isinstance(result, dict):
-#     print(f"Confidence Score: {result['confidence']}")
-# print("_"*100)
 
 
 # %%
-# 7. Answering user queries via Streamlit 
+# 3. Answering user queries via Streamlit 
 
 def get_answer(query: str, top_k: Optional[int] = None, score_threshold: Optional[float] = None) -> Dict[str, Any]:
-    """
-    Main entry point for answering user queries.
-    
-    Handles initialization, error recovery, and graceful degradation.
-    
-    Args:
-        query: User question
-        top_k: Number of documents to retrieve (uses config default if None)
-        score_threshold: Similarity threshold (uses config default if None)
-        
-    Returns:
-        Dictionary with 'response', 'sources', and 'confidence' keys
-    """
+   
     # Use config defaults if not provided
     if top_k is None:
         top_k = config['retrieval']['top_k']
@@ -308,7 +180,7 @@ def get_answer(query: str, top_k: Optional[int] = None, score_threshold: Optiona
         retriever = RAGRetriever(vector_store, embedding_manager)
         
         # Use retrieval function with error handling
-        result = retrieval_query(query, retriever, llm, top_k, score_threshold, return_context=True)
+        result = retrieval_query(query, retriever, top_k, score_threshold, return_context=True)
         
         # Normalize result
         if isinstance(result, str):
