@@ -17,7 +17,10 @@ from typing import Optional, Dict, Any
 from src.embedding_manager import EmbeddingManager
 from src.utils import extract_text_from_pdf, clean_text_for_bge, remove_duplicate_chunks, get_chunk_hash, load_metadata_from_config, detect_language, load_config
 from src.vector_store import FaissVectorStore
+from src.logging_config import setup_logger
 
+# Initialize logging
+logger = setup_logger(__name__)
 
 # Load configuration
 config = load_config()
@@ -63,16 +66,19 @@ for doc in docs:
 
 
 test = "Text... © Great Barrier Reef Marine Park Authority Page 5 of 10"
-print(clean_text_for_bge(test))
+logger.info(clean_text_for_bge(test))
 
 
 # %%
 # 5. Language detection (tags each document with the language code)
 
+language_counts = {}
 for doc in docs:
     language = detect_language(doc.page_content)
     doc.metadata['language'] = language
-    print(f"Detected language: {language}")
+    language_counts[language] = language_counts.get(language, 0) + 1
+
+logger.info(f"Language detection complete. Distribution={language_counts}")
 
 
 # %%
@@ -100,12 +106,12 @@ total_chars = sum(len(doc.page_content) for doc in docs)
 total_words = sum(len(doc.page_content.split()) for doc in docs)
 doc_lengths = [len(doc.page_content) for doc in docs]
 
-print("=== Data Overview ===")
-print(f"Total documents: {len(docs)}")
-print(f"Total characters: {total_chars:,}")
-print(f"Total words: {total_words:,}")
-print(f"Avg doc length: {statistics.mean(doc_lengths):,.0f} chars")
-print(f"Min/Max doc length: {min(doc_lengths):,} / {max(doc_lengths):,} chars")
+logger.info("=== Data Overview ===")
+logger.info(f"Total documents: {len(docs)}")
+logger.info(f"Total characters: {total_chars:,}")
+logger.info(f"Total words: {total_words:,}")
+logger.info(f"Avg doc length: {statistics.mean(doc_lengths):,.0f} chars")
+logger.info(f"Min/Max doc length: {min(doc_lengths):,} / {max(doc_lengths):,} chars")
 
 # Extract meaningful keywords (filtered)
 print("\n=== Top 10 Keywords (filtered) ===")
@@ -167,9 +173,9 @@ import os
 vector_store_path = "../data/vector_store"
 if os.path.exists(vector_store_path):
     shutil.rmtree(vector_store_path)
-    print(f"✓ Deleted old vector store at {vector_store_path}")
+    logger.info(f"Deleted old vector store at {vector_store_path}")
 else:
-    print("ℹ No existing vector store found (will create new one)")
+    logger.debug("No existing vector store found (will create new one)")
 
 
 # %%
@@ -216,16 +222,16 @@ for metadata in vector_store.id_to_metadata.values():
 chunks_to_add = [chunk for chunk_hash, chunk in new_chunk_hashes.items() 
                  if chunk_hash not in existing_hashes]
 
-print(f"Total chunks: {len(chunks)}")
-print(f"Already in vector store: {len(chunks) - len(chunks_to_add)}")
-print(f"New chunks to add: {len(chunks_to_add)}")
+logger.info(f"Total chunks: {len(chunks)}")
+logger.info(f"Already in vector store: {len(chunks) - len(chunks_to_add)}")
+logger.info(f"New chunks to add: {len(chunks_to_add)}")
 
 
 # %%
 #14. embed remaining chunks after removal of duplicates into created vector store and save to disk
 
 if len(chunks_to_add) == 0:
-    print("No new chunks to add (all chunks already in vector store)")
+    logger.debug("No new chunks to add (all chunks already in vector store)")
 else:
     chunk_texts = [chunk.page_content for chunk in chunks_to_add]
     embeddings = embedding_manager.generate_embeddings(chunk_texts) 
@@ -245,8 +251,8 @@ else:
     ]
     vector_store.add_embeddings(embeddings, metadatas)
 
-    print(f"Created {len(chunks_to_add)} chunks from {len(docs)} documents")
-    print(f"Chunk sizes: min={min(len(c.page_content) for c in chunks_to_add)}, max={max(len(c.page_content) for c in chunks_to_add)}")
+    logger.info(f"Created {len(chunks_to_add)} chunks from {len(docs)} documents")
+    logger.info(f"Chunk sizes: min={min(len(c.page_content) for c in chunks_to_add)}, max={max(len(c.page_content) for c in chunks_to_add)}")
 
 # %%
 #15. Repeat steps 1 - 12 automaticallyin case that new documents are added 
@@ -261,7 +267,7 @@ def process_new_documents(pdf_directory: Optional[str] = None, vector_store: Opt
         pdf_directory = os.path.join(project_root, "data")
     
     if vector_store is None or embedding_manager is None:
-        print("Error: vector_store and embedding_manager must be provided")
+        logger.error("Error: vector_store and embedding_manager must be provided")
         return {"status": "failed", "message": "Missing vector_store or embedding_manager"}
     
     # Find all PDF files
@@ -270,7 +276,7 @@ def process_new_documents(pdf_directory: Optional[str] = None, vector_store: Opt
     if not pdf_files:
         return {"status": "skipped", "message": "No PDF files found", "files_processed": 0}
     
-    print(f"Found {len(pdf_files)} PDF files")
+    logger.info(f"Found {len(pdf_files)} PDF files")
     
     # Get existing file hashes from metadata
     existing_sources = set()
@@ -284,13 +290,13 @@ def process_new_documents(pdf_directory: Optional[str] = None, vector_store: Opt
     if not new_pdfs:
         return {"status": "skipped", "message": "All PDFs already in vector store", "files_processed": 0}
     
-    print(f"Processing {len(new_pdfs)} new PDF(s)...")
+    logger.info(f"Processing {len(new_pdfs)} new PDF(s)...")
     
     total_chunks_added = 0
     
     # Process each new PDF
     for pdf_path in new_pdfs:
-        print(f"\nProcessing: {os.path.basename(pdf_path)}")
+        logger.info(f"\nProcessing: {os.path.basename(pdf_path)}")
         
         try:
             # Extract text
@@ -359,16 +365,16 @@ def process_new_documents(pdf_directory: Optional[str] = None, vector_store: Opt
                 ]
                 vector_store.add_embeddings(embeddings, metadatas)
                 total_chunks_added += len(chunks_to_add)
-                print(f"Added {len(chunks_to_add)} chunks from {os.path.basename(pdf_path)}")
+                logger.info(f"Added {len(chunks_to_add)} chunks from {os.path.basename(pdf_path)}")
             else:
-                print(f"No new chunks to add from {os.path.basename(pdf_path)}")
+                logger.info(f"No new chunks to add from {os.path.basename(pdf_path)}")
             
             # Clean up temp file
             if os.path.exists(temp_output):
                 os.remove(temp_output)
                 
         except Exception as e:
-            print(f"Error processing {os.path.basename(pdf_path)}: {e}")
+            logger.error(f"Error processing {os.path.basename(pdf_path)}: {e}")
             continue
     
     return {

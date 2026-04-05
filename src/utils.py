@@ -9,6 +9,7 @@ import pymupdf as pdf
 from typing import List, Dict, Any, Optional
 from langchain_core.documents import Document
 from langdetect import detect, LangDetectException
+import logging
 
 
 def load_config(config_path: str = "config.yaml") -> Dict[str, Any]:
@@ -186,4 +187,20 @@ def detect_language(text: str, default_language: str = "en") -> str:
     except Exception as e:
         print(f"Warning: Language detection error: {e}")
         return default_language
+    
+def setup_logger(name: str, level: int = logging.INFO) -> logging.Logger:
+
+    logger = logging.getLogger(name)
+    logger.setLevel(level)
+    
+    if not logger.handlers:
+        handler = logging.StreamHandler()
+        formatter = logging.Formatter(
+            fmt='%(asctime)s | %(name)-20s | %(levelname)-8s | %(message)s',
+            datefmt='%Y-%m-%d %H:%M:%S'
+        )
+        handler.setFormatter(formatter)
+        logger.addHandler(handler)
+    
+    return logger
 

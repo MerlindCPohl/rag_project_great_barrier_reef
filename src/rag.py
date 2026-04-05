@@ -10,10 +10,14 @@ from typing import List, Dict, Any, Optional
 from src.embedding_manager import EmbeddingManager
 from src.vector_store import FaissVectorStore
 from src.utils import load_config
+from src.logging_config import setup_logger
 import time
 
 # Load configuration
 config = load_config()
+
+# Initialize logging
+logger = setup_logger(__name__)
 
 class RAGRetriever:
     def __init__(self, vector_store: FaissVectorStore, embedding_manager: EmbeddingManager):
@@ -22,7 +26,8 @@ class RAGRetriever:
 
     def retrieve(self, query: str, top_k: int = 5, score_threshold: float = 0.0) -> List[Dict[str, Any]]:
        
-        print(f"Retrieving documents for query: '{query}' with top_k={top_k} and score_threshold={score_threshold}")
+        start_time = time.time()
+        logger.debug(f"Retrieving documents for query: '{query}' with top_k={top_k} and score_threshold={score_threshold}")
         
         try:
             # Generate embedding for the query with retry logic
@@ -30,14 +35,14 @@ class RAGRetriever:
                 query_embeddings = self.embedding_manager.generate_embeddings([query], max_retries=2)
                 query_embedding = query_embeddings[0]
             except RuntimeError as e:
-                print(f"Failed to embed query after retries: {e}")
+                logger.error(f"Failed to embed query after retries: {e}")
                 return []
             
             # Search the vector store - returns list of tuples (metadata, distance)
             try:
                 results = self.vector_store.search(query_embedding, top_k=top_k)
             except Exception as e:
-                print(f"Vector store search failed: {e}")
+                logger.error(f"Vector store search failed: {e}")
                 raise
             
             retrieved_docs = []
@@ -56,16 +61,14 @@ class RAGRetriever:
                     })
             
             if retrieved_docs:
-                print(f"Retrieved {len(retrieved_docs)} documents above threshold of {score_threshold}")
+                logger.info(f"Retrieved {len(retrieved_docs)} documents above threshold of {score_threshold}")
             else:
-                print(f"ℹ No documents above threshold of {score_threshold}")
+                logger.debug(f"No documents above threshold {score_threshold}")
             
             return retrieved_docs
             
         except Exception as e:
-            print(f"Error during retrieval: {str(e)[:100]}")
-            import traceback
-            traceback.print_exc()
+            logger.error(f"Retrieval error: {str(e)[:100]}")
             return []
 
 # %%
@@ -73,16 +76,16 @@ class RAGRetriever:
 
 try:
     embedding_manager = EmbeddingManager()
-    print("EmbeddingManager initialized successfully")
+    logger.info("EmbeddingManager initialized successfully")
 except Exception as e:
-    print(f"Failed to initialize EmbeddingManager: {e}")
+    logger.error(f"Failed to initialize EmbeddingManager: {e}")
     embedding_manager = None
 
 try:
     vector_store = FaissVectorStore(embedding_dim=embedding_manager.get_embedding_dimension())
-    print(f"Vector store loaded successfully with {len(vector_store.id_to_metadata)} chunks")
+    logger.info(f"Vector store loaded with {len(vector_store.id_to_metadata)} chunks")
 except Exception as e:
-    print(f"Failed to initialize Vector Store: {e}")
+    logger.error(f"Failed to initialize Vector Store: {e}")
     vector_store = None
 
 # %%
@@ -95,9 +98,9 @@ results = rag_retriever.retrieve(query=query, top_k=5, score_threshold=0.0)
 
 for doc in results:
     
-    print(f"\nRank {doc['rank']}: {doc['similarity_score']:.4f}")
-    print(f"Source: {doc['source']}")
-    print(f"Content preview: {doc['content'][:200]}...")
+    logger.info(f"\nRank {doc['rank']}: {doc['similarity_score']:.4f}")
+    logger.info(f"Source: {doc['source']}")
+    logger.info(f"Content preview: {doc['content'][:200]}...")
 
 
 # %%
@@ -123,33 +126,33 @@ def invoke_llm_with_retry(llm: OllamaLLM, prompt: str, max_retries: int = 2, tim
    
     for attempt in range(max_retries + 1):
         try:
-            print(f"Invoking LLM (attempt {attempt + 1}/{max_retries + 1})...")
+            logger.info(f"Invoking LLM (attempt {attempt + 1}/{max_retries + 1})...")
             start_time = time.time()
             
-            # Invoke LLM (note: langchain_ollama may not support direct timeout, 
-            # but we track it for logging)
             response = llm.invoke(prompt)
             
             elapsed = time.time() - start_time
-            print(f"LLM response received in {elapsed:.1f}s")
+            logger.info(f"LLM response received in {elapsed:.1f}s")
             return response
             
         except TimeoutError as e:
             if attempt < max_retries:
                 wait_time = 2 ** attempt
-                print(f"LLM timeout (attempt {attempt + 1}): exceeded {timeout}s")
-                print(f"Retrying in {wait_time}s...")
+                logger.debug(f"LLM timeout (attempt {attempt + 1}): exceeded {timeout}s")
+                logger.debug(f"Retrying in {wait_time}s...")
                 time.sleep(wait_time)
             else:
+                logger.error(f"LLM timeout after {max_retries + 1} attempts")
                 raise RuntimeError(f"LLM call timed out after {max_retries + 1} attempts")
                 
         except Exception as e:
             if attempt < max_retries:
                 wait_time = 2 ** attempt
-                print(f"LLM error (attempt {attempt + 1}/{max_retries + 1}): {str(e)[:100]}")
-                print(f"Retrying in {wait_time}s...")
+                logger.debug(f"LLM error (attempt {attempt + 1}/{max_retries + 1}): {str(e)[:100]}")
+                logger.debug(f"Retrying in {wait_time}s...")
                 time.sleep(wait_time)
             else:
+                logger.error(f"LLM invocation failed after {max_retries + 1} attempts: {str(e)}")
                 raise RuntimeError(f"LLM invocation failed after {max_retries + 1} attempts: {str(e)}")
 
 
@@ -207,7 +210,7 @@ def retrieval_query(query: str, retriever: RAGRetriever, llm: OllamaLLM, top_k: 
     try:
         response = invoke_llm_with_retry(llm, prompt, max_retries=2)
     except RuntimeError as e:
-        print(f"LLM invocation failed: {e}")
+        logger.error(f"LLM invocation failed: {e}")
         return {
             'answer': f"Error generating answer: {str(e)}",
             'sources': sources,
@@ -278,14 +281,14 @@ def get_answer(query: str, top_k: Optional[int] = None, score_threshold: Optiona
     if score_threshold is None:
         score_threshold = config['retrieval']['score_threshold']
     
+    logger.info(f"Query received | len={len(query)}")
+    
     try:
-        print(f"Processing query: '{query[:50]}...'")
-        
         # Initialize components with error handling
         try:
             embedding_manager = EmbeddingManager()
         except Exception as e:
-            print(f"Critical error: Failed to initialize embedding manager: {e}")
+            logger.critical(f"Failed to initialize embedding manager: {e}")
             return {
                 'response': "Error: Could not initialize embedding system",
                 'sources': [],
@@ -295,7 +298,7 @@ def get_answer(query: str, top_k: Optional[int] = None, score_threshold: Optiona
         try:
             vector_store = FaissVectorStore(embedding_dim=embedding_manager.get_embedding_dimension())
         except Exception as e:
-            print(f"Critical error: Failed to initialize vector store: {e}")
+            logger.critical(f"Failed to initialize vector store: {e}")
             return {
                 'response': "Error: Could not load vector database",
                 'sources': [],
@@ -309,17 +312,19 @@ def get_answer(query: str, top_k: Optional[int] = None, score_threshold: Optiona
         
         # Normalize result
         if isinstance(result, str):
+            logger.warning(f"Retrieval returned: {result[:50]}...")
             return {
                 'response': result,
                 'sources': [],
                 'confidence': 0.0
             }
         
+        logger.info(f"Query completed | confidence={result.get('confidence', 0):.3f}")
         return result
         
     except Exception as e:
-        error_msg = f"Unexpected error processing query: {str(e)[:100]}"
-        print(f"Error: {error_msg}")
+        error_msg = f"Unexpected error: {str(e)[:100]}"
+        logger.error(error_msg)
         return {
             'response': f"Error: {error_msg}",
             'sources': [],

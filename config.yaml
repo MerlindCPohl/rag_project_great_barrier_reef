@@ -45,3 +45,25 @@ data_exploration:
   top_keywords_count: 10
   min_word_length: 2
   short_document_threshold: 100
+
+# ============================================================================
+# COST MANAGEMENT SETTINGS
+# ============================================================================
+cost_management:
+  # Enable query response caching to avoid duplicate LLM calls
+  enable_caching: true
+  
+  # Cache directory for persistent storage
+  cache_dir: ".cache/rag"
+  
+  # Cache expiration time in hours (optional, 0 = never expires)
+  cache_expiration_hours: 0
+  
+  # Enable cost tracking and statistics
+  enable_cost_tracking: true
+  
+  # Log cost statistics after each query
+  log_statistics: false
+  
+  # Maximum cache size in MB (optional, 0 = unlimited)
+  max_cache_size_mb: 0

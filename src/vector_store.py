@@ -5,6 +5,9 @@ import faiss
 import pickle
 import numpy as np
 from typing import List, Dict, Any, Tuple, Optional
+from src.logging_config import setup_logger
+
+logger = setup_logger(__name__)
 
 class FaissVectorStore:
 
@@ -28,19 +31,19 @@ class FaissVectorStore:
             self.index = faiss.read_index(self.index_path)
             # Verify dimension compatibility
             if self.index.d != embedding_dim:
-                print(f"WARNING: Existing index has dimension {self.index.d}, but {embedding_dim} was provided.")
-                print(f"Recreating index with dimension {embedding_dim}...")
+                logger.warning(f"WARNING: Existing index has dimension {self.index.d}, but {embedding_dim} was provided.")
+                logger.info(f"Recreating index with dimension {embedding_dim}...")
                 self.index = faiss.IndexFlatIP(embedding_dim)
                 self.id_to_metadata = {}
-                print("New index created.")
+                logger.info("New index created")
             else:
                 with open(self.metadata_path, "rb") as f:
                     self.id_to_metadata = pickle.load(f)
-                print(f"Loaded index with {len(self.id_to_metadata)} chunks")
+                logger.info(f"Loaded index with {len(self.id_to_metadata)} chunks")
         else:
             self.index = faiss.IndexFlatIP(embedding_dim) # IP = inner Product, equivalent to cosine similarity
             self.id_to_metadata = {}
-            print("New index created.")
+            logger.info("Created new vector index")
 
 
     def normalize_embeddings(self, embeddings: np.ndarray) -> np.ndarray:
@@ -77,7 +80,7 @@ class FaissVectorStore:
         faiss.write_index(self.index, self.index_path)
         with open(self.metadata_path, "wb") as f:
             pickle.dump(self.id_to_metadata, f)
-        print(f"{len(metadatas)} Chunks safed to {self.persist_directory}")
+        logger.debug(f"Saved {len(metadatas)} chunks to vector store ({len(self.id_to_metadata)} total)")
         
 
     def search(self, query_embedding: np.ndarray, top_k: int = 5) -> List[Tuple[Dict[str, Any], float]]:
