@@ -134,17 +134,23 @@ else:
     logger.info("No unusually short documents")
 
 # %%
-# 7. Semantic chunking - creates chunks via semantic sense
+# 7. Initialize embedding manager (before semantic chunking)
+
+try:
+    embedding_manager = EmbeddingManager()
+    logger.info("EmbeddingManager initialized successfully")
+except Exception as e:
+    logger.error(f"Failed to initialize EmbeddingManager: {e}")
+    embedding_manager = None
+
+# %%
+# 8. Semantic chunking - creates chunks via semantic sense
 
 from langchain_experimental.text_splitter import SemanticChunker
-from langchain_community.embeddings import HuggingFaceEmbeddings
 
-# Initialize embeddings for semantic chunking
-embeddings = HuggingFaceBgeEmbeddings(model_name="BAAI/bge-m3")
-
-# Use semantic chunker - breaks at natural semantic boundaries instead of fixed size
+# Use semantic chunker - breaks text into chunks with semnatic coherence 
 semantic_splitter = SemanticChunker(
-    embeddings,
+    embedding_manager.model,
     breakpoint_threshold_type=config['ingestion']['breakpoint_threshold_type'],
     breakpoint_threshold_amount=config['ingestion']['breakpoint_threshold_amount']
 )
@@ -159,7 +165,7 @@ for i, chunk in enumerate(chunks):
 
 
 # %%
-# 8. Delete old vector store before re-embedding with semantic chunks
+# 9. Delete old vector store before re-embedding with semantic chunks
 
 import shutil
 import os
@@ -173,35 +179,18 @@ else:
 
 
 # %%
-# 9. Remove duplicates in data if exist
+# 10. Remove duplicates in data if exist
 
 chunks = remove_duplicate_chunks(chunks)
 
 # %%
-# 10. Initialize embeddings and create vector store
-
-import numpy as np
-from sklearn.metrics.pairwise import cosine_similarity
-
-# %%
-# 11. Initialize embedding manager
-
-try:
-    embedding_manager = EmbeddingManager()
-    logger.info("EmbeddingManager initialized successfully")
-except Exception as e:
-    logger.error(f"Failed to initialize EmbeddingManager: {e}")
-    embedding_manager = None
-
-
-# %%
-# 12. Initialize vector store
+# 11. Initialize vector store
 
 vector_store = FaissVectorStore(embedding_dim=embedding_manager.get_embedding_dimension())
 logger.info("Vector store initialized successfully")
 
 # %%
-# 13. Check for duplicate chunks before embedding
+# 12. Check for duplicate chunks before embedding
 
 # Get hashes of new chunks
 new_chunk_hashes = {get_chunk_hash(chunk.page_content): chunk for chunk in chunks}
@@ -222,7 +211,7 @@ logger.info(f"New chunks to add: {len(chunks_to_add)}")
 
 
 # %%
-#14. embed remaining chunks after removal of duplicates into created vector store and save to disk
+#13. embed remaining chunks after removal of duplicates into created vector store and save to disk
 
 if len(chunks_to_add) == 0:
     logger.debug("No new chunks to add (all chunks already in vector store)")
