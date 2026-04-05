@@ -85,7 +85,7 @@ def _get_default_config() -> Dict[str, Any]:
     }
 
 
-def extract_text_from_pdf(pdf_path: str, selected_pages: list[int], output_file: str) -> None:
+def extract_text_from_pdf(pdf_path: str, selected_pages: List[int], output_file: str) -> None:
 
    
     
