@@ -99,7 +99,7 @@ def retrieval_query(query: str, retriever: RAGRetriever, top_k: Optional[int] = 
     # in case of low confidence,choose to return the sources with a note about low confidence instead of an answer to avoid errors
     if confidence < score_threshold:
         return {
-            'answer': "The found documents are not sufficiently relevant. I refuse to answer to avoid errors.",
+            'response': "The found documents are not sufficiently relevant. I refuse to answer to avoid errors.",
             'sources': sources,
             'confidence': round(float(confidence), 3)
         }
@@ -125,7 +125,7 @@ def retrieval_query(query: str, retriever: RAGRetriever, top_k: Optional[int] = 
     except RuntimeError as e:
         logger.error(f"LLM invocation failed: {e}")
         return {
-            'answer': f"Error generating answer: {str(e)}",
+            'response': f"Error generating answer: {str(e)}",
             'sources': sources,
             'confidence': round(float(confidence), 3)
         }
@@ -165,12 +165,6 @@ def get_answer(query: str, top_k: Optional[int] = None, score_threshold: Optiona
                 'sources': [],
                 'confidence': 0.0
             }
-    
-    # Use config defaults if not provided
-    if top_k is None:
-        top_k = config['retrieval']['top_k']
-    if score_threshold is None:
-        score_threshold = config['retrieval']['score_threshold']
     
     logger.info(f"Query received | len={len(query)}")
     
