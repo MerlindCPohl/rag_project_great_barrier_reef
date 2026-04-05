@@ -14,7 +14,7 @@ from langchain_community.document_loaders import TextLoader
 from langchain_community.vectorstores import FAISS
 from langchain_community.embeddings import HuggingFaceBgeEmbeddings
 from src.embedding_manager import EmbeddingManager
-from src.utils import extract_text_from_pdf, clean_text_for_bge, remove_duplicate_chunks, get_chunk_hash, load_metadata_from_config
+from src.utils import extract_text_from_pdf, clean_text_for_bge, remove_duplicate_chunks, get_chunk_hash, load_metadata_from_config, detect_language
 from src.vector_store import FaissVectorStore
 
 
@@ -61,9 +61,17 @@ test = "Text... © Great Barrier Reef Marine Park Authority Page 5 of 10"
 print(clean_text_for_bge(test))
 
 
+# %%
+# 5. Language detection (tags each document with the language code)
+
+for doc in docs:
+    language = detect_language(doc.page_content)
+    doc.metadata['language'] = language
+    print(f"Detected language: {language}")
+
 
 # %%
-# 5. Data exploration: analyze text before chunking (how often does one word appear, how long are the documents, any outliers?)
+# 6. Data exploration: analyze text before chunking (how often does one word appear, how long are the documents, any outliers?)
 
 from collections import Counter
 import statistics
@@ -119,7 +127,7 @@ else:
     print("No unusually short documents")
 
 # %%
-# 6. Semantic chunking - creates chunks via semantic sense
+# 7. Semantic chunking - creates chunks via semantic sense
 
 from langchain_experimental.text_splitter import SemanticChunker
 from langchain_community.embeddings import HuggingFaceEmbeddings
@@ -144,7 +152,7 @@ for i, chunk in enumerate(chunks):
 
 
 # %%
-# 7. Delete old vector store before re-embedding with semantic chunks
+# 8. Delete old vector store before re-embedding with semantic chunks
 
 import shutil
 import os
@@ -158,18 +166,18 @@ else:
 
 
 # %%
-# 8. Remove duplicates in data if exist
+# 9. Remove duplicates in data if exist
 
 chunks = remove_duplicate_chunks(chunks)
 
 # %%
-# 9. Initialize embeddings and create vector store
+# 10. Initialize embeddings and create vector store
 
 import numpy as np
 from sklearn.metrics.pairwise import cosine_similarity
 
 # %%
-# 10. Initialize embedding manager
+# 11. Initialize embedding manager
 
 try:
     embedding_manager = EmbeddingManager()
@@ -180,13 +188,13 @@ except Exception as e:
 
 
 # %%
-# 11. Initialize vector store
+# 12. Initialize vector store
 
 vector_store = FaissVectorStore(embedding_dim=embedding_manager.get_embedding_dimension())
 print("Vector store initialized successfully")
 
 # %%
-# 12. Check for duplicate chunks before embedding
+# 13. Check for duplicate chunks before embedding
 
 # Get hashes of new chunks
 new_chunk_hashes = {get_chunk_hash(chunk.page_content): chunk for chunk in chunks}
@@ -207,7 +215,7 @@ print(f"New chunks to add: {len(chunks_to_add)}")
 
 
 # %%
-#13. embed remaining chunks after removal of duplicates into created vector store and save to disk
+#14. embed remaining chunks after removal of duplicates into created vector store and save to disk
 
 if len(chunks_to_add) == 0:
     print("No new chunks to add (all chunks already in vector store)")
@@ -223,6 +231,7 @@ else:
             "year": chunk.metadata.get("year", ""),
             "description": chunk.metadata.get("description", ""),
             "categories": chunk.metadata.get("categories", []),
+            "language": chunk.metadata.get("language", "en"),
             "chunk_hash": get_chunk_hash(chunk.page_content)
         } 
         for chunk in chunks_to_add
@@ -233,7 +242,7 @@ else:
     print(f"Chunk sizes: min={min(len(c.page_content) for c in chunks_to_add)}, max={max(len(c.page_content) for c in chunks_to_add)}")
 
 # %%
-#14. Repeat steps 1 - 12 automaticallyin case that new documents are added 
+#15. Repeat steps 1 - 12 automaticallyin case that new documents are added 
 
 
 def process_new_documents(pdf_directory: str = None, vector_store=None, embedding_manager=None):
@@ -290,6 +299,11 @@ def process_new_documents(pdf_directory: str = None, vector_store=None, embeddin
             for doc in new_docs:
                 doc.page_content = clean_text_for_bge(doc.page_content)
             
+            # Detect language and add to metadata
+            for doc in new_docs:
+                language = detect_language(doc.page_content)
+                doc.metadata['language'] = language
+            
             # Load metadata from config and apply to all docs
             document_metadata = load_metadata_from_config(os.path.basename(pdf_path))
             for doc in new_docs:
@@ -331,6 +345,7 @@ def process_new_documents(pdf_directory: str = None, vector_store=None, embeddin
                         "year": document_metadata.get("year", ""),
                         "description": document_metadata.get("description", ""),
                         "categories": document_metadata.get("categories", []),
+                        "language": chunk.metadata.get("language", "en"),
                         "chunk_hash": get_chunk_hash(chunk.page_content)
                     }
                     for chunk in chunks_to_add

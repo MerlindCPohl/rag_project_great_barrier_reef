@@ -7,6 +7,7 @@ import os
 import pymupdf as pdf
 from typing import List, Dict, Any
 from langchain_core.documents import Document
+from langdetect import detect, LangDetectException
 
 
 def extract_text_from_pdf(pdf_path: str, selected_pages: list[int], output_file: str) -> None:
@@ -94,4 +95,21 @@ def remove_duplicate_chunks(chunks: List[Document]) -> List[Document]:
     
     print(f"Removed {len(chunks) - len(unique_chunks)} duplicates. {len(unique_chunks)} chunks remain.")
     return unique_chunks
+
+
+def detect_language(text: str, default_language: str = "en") -> str:
+   
+    if not text or len(text.strip()) < 10:
+        return default_language
+    
+    try:
+        # uses the first 300 chars for quicker detection
+        detected_lang = detect(text[:300])
+        return detected_lang
+    except LangDetectException:
+        # if detection fails 
+        return default_language
+    except Exception as e:
+        print(f"Warning: Language detection error: {e}")
+        return default_language
 

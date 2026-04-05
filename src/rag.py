@@ -117,6 +117,7 @@ def retrieval_query(query: str, retriever: RAGRetriever, llm: OllamaLLM, top_k: 
         sources.append({
             'title': doc['metadata'].get('title', 'Unknown'),
             'source': doc['source'],
+            'language': doc['metadata'].get('language', 'en'),
             'score': round(float(doc['similarity_score']), 3),
             'preview': f"{clean_preview}..."
         })
