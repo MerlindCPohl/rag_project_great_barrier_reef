@@ -10,7 +10,7 @@ from typing import List, Dict, Any, Optional
 from src.embedding_manager import EmbeddingManager
 from src.vector_store import FaissVectorStore
 from src.utils import load_config
-from src.logging_config import setup_logger
+from src.utils import setup_logger
 import time
 
 # Load configuration

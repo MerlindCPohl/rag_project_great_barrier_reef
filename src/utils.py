@@ -6,7 +6,7 @@ import json
 import os
 import yaml
 import pymupdf as pdf
-from typing import List, Dict, Any, Optional
+from typing import List, Dict, Any
 from langchain_core.documents import Document
 from langdetect import detect, LangDetectException
 import logging

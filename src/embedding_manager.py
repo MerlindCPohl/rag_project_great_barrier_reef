@@ -4,7 +4,7 @@ from typing import List, Optional
 import numpy as np
 from sentence_transformers import SentenceTransformer
 import time
-from src.logging_config import setup_logger
+from src.utils import setup_logger
 
 logger = setup_logger(__name__)
 
@@ -22,9 +22,9 @@ class EmbeddingManager:
         try:
             self.model = SentenceTransformer(self.model_name)
             embedding_dim = self.model.get_sentence_embedding_dimension()
-            logger.info(f"Loaded embedding model: {self.model_name} | Dimension: {embedding_dim}")
+            logger.info(f"Loaded embedding model: {self.model_name}. Embedding dimension: {embedding_dim}")
         except Exception as e:
-            logger.error(f"Failed to load model '{self.model_name}': {e}")
+            logger.error(f"Error loading model '{self.model_name}': {e}")
             raise
 
     def generate_embeddings(self, texts: List[str], max_retries: int = 2) -> np.ndarray:
