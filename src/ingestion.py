@@ -15,9 +15,8 @@ from langchain_community.vectorstores import FAISS
 from langchain_community.embeddings import HuggingFaceBgeEmbeddings
 from typing import Optional, Dict, Any
 from src.embedding_manager import EmbeddingManager
-from src.utils import extract_text_from_pdf, clean_text_for_bge, remove_duplicate_chunks, get_chunk_hash, load_metadata_from_config, detect_language, load_config
+from src.utils import extract_text_from_pdf, clean_text_for_bge, remove_duplicate_chunks, get_chunk_hash, load_metadata_from_config, detect_language, load_config, setup_logger
 from src.vector_store import FaissVectorStore
-from src.logging_config import setup_logger
 
 # Initialize logging
 logger = setup_logger(__name__)
@@ -253,135 +252,5 @@ else:
 
     logger.info(f"Created {len(chunks_to_add)} chunks from {len(docs)} documents")
     logger.info(f"Chunk sizes: min={min(len(c.page_content) for c in chunks_to_add)}, max={max(len(c.page_content) for c in chunks_to_add)}")
-
-# %%
-#15. Repeat steps 1 - 12 automaticallyin case that new documents are added 
-
-
-def process_new_documents(pdf_directory: Optional[str] = None, vector_store: Optional[FaissVectorStore] = None, embedding_manager: Optional[EmbeddingManager] = None) -> Dict[str, Any]:
-    
-    if pdf_directory is None:
-        # Use the data directory relative to script location
-        script_dir = os.path.dirname(os.path.abspath(__file__))
-        project_root = os.path.dirname(script_dir)
-        pdf_directory = os.path.join(project_root, "data")
-    
-    if vector_store is None or embedding_manager is None:
-        logger.error("Error: vector_store and embedding_manager must be provided")
-        return {"status": "failed", "message": "Missing vector_store or embedding_manager"}
-    
-    # Find all PDF files
-    pdf_files = glob.glob(os.path.join(pdf_directory, "*.pdf"))
-    
-    if not pdf_files:
-        return {"status": "skipped", "message": "No PDF files found", "files_processed": 0}
-    
-    logger.info(f"Found {len(pdf_files)} PDF files")
-    
-    # Get existing file hashes from metadata
-    existing_sources = set()
-    for metadata in vector_store.id_to_metadata.values():
-        if "source" in metadata:
-            existing_sources.add(metadata["source"])
-    
-    # Filter new PDFs
-    new_pdfs = [pdf for pdf in pdf_files if os.path.basename(pdf) not in existing_sources]
-    
-    if not new_pdfs:
-        return {"status": "skipped", "message": "All PDFs already in vector store", "files_processed": 0}
-    
-    logger.info(f"Processing {len(new_pdfs)} new PDF(s)...")
-    
-    total_chunks_added = 0
-    
-    # Process each new PDF
-    for pdf_path in new_pdfs:
-        logger.info(f"\nProcessing: {os.path.basename(pdf_path)}")
-        
-        try:
-            # Extract text
-            selected_pages = list(range(0, 100))  # Adjust as needed
-            temp_output = f"{os.path.basename(pdf_path)}.txt"
-            extract_text_from_pdf(pdf_path, selected_pages, temp_output)
-            
-            # Load text file
-            loader = TextLoader(temp_output, encoding="utf-8")
-            new_docs = loader.load()
-            
-            # Clean text content
-            for doc in new_docs:
-                doc.page_content = clean_text_for_bge(doc.page_content)
-            
-            # Detect language and add to metadata
-            for doc in new_docs:
-                language = detect_language(doc.page_content)
-                doc.metadata['language'] = language
-            
-            # Load metadata from config and apply to all docs
-            document_metadata = load_metadata_from_config(os.path.basename(pdf_path))
-            for doc in new_docs:
-                doc.metadata.update(document_metadata)
-            
-            # Split into chunks
-            splitter = RecursiveCharacterTextSplitter(
-                chunk_size=1000,
-                chunk_overlap=200,
-                separators=["\n\n", "\n", " ", ""]
-            )
-            new_chunks = splitter.split_documents(new_docs)
-            new_chunks = remove_duplicate_chunks(new_chunks)
-            
-            # Check for duplicates with existing chunks
-            new_chunk_hashes = {get_chunk_hash(chunk.page_content): chunk for chunk in new_chunks}
-            existing_hashes = set()
-            for metadata in vector_store.id_to_metadata.values():
-                if "chunk_hash" in metadata:
-                    existing_hashes.add(metadata["chunk_hash"])
-            
-            chunks_to_add = [chunk for chunk_hash, chunk in new_chunk_hashes.items()
-                           if chunk_hash not in existing_hashes]
-            
-            if chunks_to_add:
-                # Embed and add to vector store
-                chunk_texts = [chunk.page_content for chunk in chunks_to_add]
-                embeddings = embedding_manager.generate_embeddings(chunk_texts)
-                
-                # Load metadata from config for consistent source info
-                document_metadata = load_metadata_from_config(os.path.basename(pdf_path))
-                
-                metadatas = [
-                    {
-                        "content": chunk.page_content,
-                        "source": document_metadata.get("source", os.path.basename(pdf_path)),
-                        "title": document_metadata.get("title", ""),
-                        "author": document_metadata.get("author", ""),
-                        "year": document_metadata.get("year", ""),
-                        "description": document_metadata.get("description", ""),
-                        "categories": document_metadata.get("categories", []),
-                        "language": chunk.metadata.get("language", "en"),
-                        "chunk_hash": get_chunk_hash(chunk.page_content)
-                    }
-                    for chunk in chunks_to_add
-                ]
-                vector_store.add_embeddings(embeddings, metadatas)
-                total_chunks_added += len(chunks_to_add)
-                logger.info(f"Added {len(chunks_to_add)} chunks from {os.path.basename(pdf_path)}")
-            else:
-                logger.info(f"No new chunks to add from {os.path.basename(pdf_path)}")
-            
-            # Clean up temp file
-            if os.path.exists(temp_output):
-                os.remove(temp_output)
-                
-        except Exception as e:
-            logger.error(f"Error processing {os.path.basename(pdf_path)}: {e}")
-            continue
-    
-    return {
-        "status": "success",
-        "files_processed": len(new_pdfs),
-        "total_chunks_added": total_chunks_added,
-        "message": f"Processed {len(new_pdfs)} PDF(s) and added {total_chunks_added} chunks"
-    }
 
 
