@@ -145,8 +145,27 @@ def retrieval_query(query: str, retriever: RAGRetriever, top_k: Optional[int] = 
 # %%
 # 3. Answering user queries via Streamlit 
 
+_embedding_manager = None
+_vector_store = None
+_retriever = None
+
 def get_answer(query: str, top_k: Optional[int] = None, score_threshold: Optional[float] = None) -> Dict[str, Any]:
+    global _embedding_manager, _vector_store, _retriever
    
+    # initialize just once and reuse to save time 
+    if _embedding_manager is None:
+        try:
+            _embedding_manager = EmbeddingManager()
+            _vector_store = FaissVectorStore(embedding_dim=_embedding_manager.get_embedding_dimension())
+            _retriever = RAGRetriever(_vector_store, _embedding_manager)
+        except Exception as e:
+            logger.critical(f"Failed to initialize components: {e}")
+            return {
+                'response': "Error: Could not initialize system",
+                'sources': [],
+                'confidence': 0.0
+            }
+    
     # Use config defaults if not provided
     if top_k is None:
         top_k = config['retrieval']['top_k']
@@ -156,28 +175,7 @@ def get_answer(query: str, top_k: Optional[int] = None, score_threshold: Optiona
     logger.info(f"Query received | len={len(query)}")
     
     try:
-        # Initialize components with error handling
-        try:
-            embedding_manager = EmbeddingManager()
-        except Exception as e:
-            logger.critical(f"Failed to initialize embedding manager: {e}")
-            return {
-                'response': "Error: Could not initialize embedding system",
-                'sources': [],
-                'confidence': 0.0
-            }
-        
-        try:
-            vector_store = FaissVectorStore(embedding_dim=embedding_manager.get_embedding_dimension())
-        except Exception as e:
-            logger.critical(f"Failed to initialize vector store: {e}")
-            return {
-                'response': "Error: Could not load vector database",
-                'sources': [],
-                'confidence': 0.0
-            }
-        
-        retriever = RAGRetriever(vector_store, embedding_manager)
+        retriever = _retriever
         
         # Use retrieval function with error handling
         result = retrieval_query(query, retriever, top_k, score_threshold, return_context=True)
