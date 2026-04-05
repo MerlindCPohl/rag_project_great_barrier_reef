@@ -6,9 +6,13 @@
 import sys
 sys.path.insert(0, '../')
 
-from typing import List, Dict, Any
+from typing import List, Dict, Any, Optional
 from src.embedding_manager import EmbeddingManager
 from src.vector_store import FaissVectorStore
+from src.utils import load_config
+
+# Load configuration
+config = load_config()
 
 class RAGRetriever:
     def __init__(self, vector_store: FaissVectorStore, embedding_manager: EmbeddingManager):
@@ -93,16 +97,25 @@ from langchain_ollama import OllamaLLM
 from dotenv import load_dotenv
 load_dotenv()
 
-#temperature defines how "creative" the model's answers will be --> low value for solid and factual answers
-#top_p defines the diversity of the output ("creativity") --> low value for more deterministic answers (better not 0.0 --> often ignored and set to default)
-llm = OllamaLLM(model="llama3", temperature=0.1, top_p=0.1)
+# Initialize LLM with config values
+llm = OllamaLLM(
+    model=config['llm']['model'],
+    temperature=config['llm']['temperature'],
+    top_p=config['llm']['top_p']
+)
 
 
 # %%
 #5. RAG function for information retrieval with minimal instructions
 
 
-def retrieval_query(query: str, retriever: RAGRetriever, llm: OllamaLLM, top_k: int = 5, score_threshold: float = 0.3, return_context: bool = False) -> Dict[str, Any] | str:
+def retrieval_query(query: str, retriever: RAGRetriever, llm: OllamaLLM, top_k: Optional[int] = None, score_threshold: Optional[float] = None, return_context: bool = False) -> Dict[str, Any] | str:
+
+    # Use config defaults if not provided
+    if top_k is None:
+        top_k = config['retrieval']['top_k']
+    if score_threshold is None:
+        score_threshold = config['retrieval']['score_threshold']
 
     results = retriever.retrieve(query=query, top_k=top_k, score_threshold=score_threshold)
     
@@ -193,14 +206,19 @@ def retrieval_query(query: str, retriever: RAGRetriever, llm: OllamaLLM, top_k: 
 # %%
 # 7. Answering user queries via Streamlit 
 
-def get_answer(query: str, top_k: int = 5, score_threshold: float = 0.3) -> Dict[str, Any]:
+def get_answer(query: str, top_k: Optional[int] = None, score_threshold: Optional[float] = None) -> Dict[str, Any]:
    
+    # Use config defaults if not provided
+    if top_k is None:
+        top_k = config['retrieval']['top_k']
+    if score_threshold is None:
+        score_threshold = config['retrieval']['score_threshold']
+    
     try:
         # initialize components
         embedding_manager = EmbeddingManager()
         vector_store = FaissVectorStore(embedding_dim=embedding_manager.get_embedding_dimension())
         retriever = RAGRetriever(vector_store, embedding_manager)
-        llm = OllamaLLM(model="llama3", temperature=0.1, top_p=0.1)
         
         # use retrieval function 
         result = retrieval_query(query, retriever, llm, top_k, score_threshold, return_context=True)

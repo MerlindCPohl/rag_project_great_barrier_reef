@@ -4,10 +4,84 @@ import re
 import hashlib
 import json
 import os
+import yaml
 import pymupdf as pdf
-from typing import List, Dict, Any
+from typing import List, Dict, Any, Optional
 from langchain_core.documents import Document
 from langdetect import detect, LangDetectException
+
+
+def load_config(config_path: str = "config.yaml") -> Dict[str, Any]:
+    """
+    Load configuration from config.yaml file.
+    Falls back to defaults if config file not found.
+    
+    Args:
+        config_path: Path to config file (relative to project root)
+        
+    Returns:
+        Dictionary with configuration values
+    """
+    # Try to find config.yaml
+    if not os.path.exists(config_path):
+        # Try relative to project root
+        project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+        config_path = os.path.join(project_root, "config.yaml")
+    
+    if os.path.exists(config_path):
+        try:
+            with open(config_path, 'r', encoding='utf-8') as f:
+                config = yaml.safe_load(f)
+                print(f"✓ Configuration loaded from {config_path}")
+                return config
+        except Exception as e:
+            print(f"Warning: Could not load config file: {e}")
+            return _get_default_config()
+    else:
+        print(f"Warning: Config file not found at {config_path}. Using defaults.")
+        return _get_default_config()
+
+
+def _get_default_config() -> Dict[str, Any]:
+    """
+    Return default configuration if config.yaml is not available.
+    """
+    return {
+        'ingestion': {
+            'breakpoint_threshold_amount': 80.0,
+            'breakpoint_threshold_type': 'percentile',
+            'embedding_model': 'BAAI/bge-m3',
+            'default_pages': [5, 87]
+        },
+        'embedding': {
+            'model_name': 'BAAI/bge-m3',
+            'embedding_dimension': 1536
+        },
+        'vector_store': {
+            'persist_directory': 'data/vector_store',
+            'index_type': 'FAISS'
+        },
+        'retrieval': {
+            'score_threshold': 0.3,
+            'top_k': 5,
+            'min_chunk_length': 100
+        },
+        'llm': {
+            'model': 'llama3',
+            'temperature': 0.1,
+            'top_p': 0.1,
+            'max_tokens': 512
+        },
+        'language': {
+            'default_language': 'en',
+            'min_detection_length': 10
+        },
+        'data_exploration': {
+            'top_keywords_count': 10,
+            'min_word_length': 2,
+            'short_document_threshold': 100
+        }
+    }
 
 
 def extract_text_from_pdf(pdf_path: str, selected_pages: list[int], output_file: str) -> None:
