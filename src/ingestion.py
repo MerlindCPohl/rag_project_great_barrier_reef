@@ -14,7 +14,7 @@ from langchain_community.document_loaders import TextLoader
 from langchain_community.vectorstores import FAISS
 from langchain_community.embeddings import HuggingFaceBgeEmbeddings
 from src.embedding_manager import EmbeddingManager
-from src.utils import extract_text_from_pdf, clean_text_for_bge, remove_duplicate_chunks, get_chunk_hash
+from src.utils import extract_text_from_pdf, clean_text_for_bge, remove_duplicate_chunks, get_chunk_hash, load_metadata_from_config
 from src.vector_store import FaissVectorStore
 
 
@@ -25,13 +25,9 @@ document_output_path = "gbr_extracted_text.txt"
 # Page selection: pages 6 – 86 
 selected_pages = list(range(5, 87))
 
-# Defining Metadata for the document
-metadata = {
-    "source": "Access Economics 2007 Economic contribution of Great Barrier Reef Marine Park 2005-2006 Kopie.pdf",
-    "author": "Great Barrier Reef Marine Park Authority",
-    "year": 2007,
-    "description": "A comprehensive study on the economic contribution of the Great Barrier Reef Marine Park for the years 2005-2006.",
-}
+# Load metadata from config file
+filename = os.path.basename(pdf_path)
+metadata = load_metadata_from_config(filename)
 
 
 # %%
@@ -284,14 +280,18 @@ def process_new_documents(pdf_directory: str = None, vector_store=None, embeddin
             temp_output = f"{os.path.basename(pdf_path)}.txt"
             extract_text_from_pdf(pdf_path, selected_pages, temp_output)
             
-            # Load and clean
+            # Load text file
             loader = TextLoader(temp_output, encoding="utf-8")
             new_docs = loader.load()
             
-            # Add metadata and clean
+            # Clean text content
             for doc in new_docs:
-                doc.metadata["source"] = os.path.basename(pdf_path)
                 doc.page_content = clean_text_for_bge(doc.page_content)
+            
+            # Load metadata from config and apply to all docs
+            document_metadata = load_metadata_from_config(os.path.basename(pdf_path))
+            for doc in new_docs:
+                doc.metadata.update(document_metadata)
             
             # Split into chunks
             splitter = RecursiveCharacterTextSplitter(
@@ -316,13 +316,17 @@ def process_new_documents(pdf_directory: str = None, vector_store=None, embeddin
                 # Embed and add to vector store
                 chunk_texts = [chunk.page_content for chunk in chunks_to_add]
                 embeddings = embedding_manager.generate_embeddings(chunk_texts)
+                
+                # Load metadata from config for consistent source info
+                document_metadata = load_metadata_from_config(os.path.basename(pdf_path))
+                
                 metadatas = [
                     {
                         "content": chunk.page_content,
-                        "source": os.path.basename(pdf_path),
-                        "author": chunk.metadata.get("author", ""),
-                        "year": chunk.metadata.get("year", ""),
-                        "description": chunk.metadata.get("description", ""),
+                        "source": document_metadata.get("source", os.path.basename(pdf_path)),
+                        "author": document_metadata.get("author", ""),
+                        "year": document_metadata.get("year", ""),
+                        "description": document_metadata.get("description", ""),
                         "chunk_hash": get_chunk_hash(chunk.page_content)
                     }
                     for chunk in chunks_to_add

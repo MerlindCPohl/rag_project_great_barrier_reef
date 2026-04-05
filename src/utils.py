@@ -2,8 +2,10 @@
 
 import re
 import hashlib
+import json
+import os
 import pymupdf as pdf
-from typing import List
+from typing import List, Dict, Any
 from langchain_core.documents import Document
 
 
@@ -44,6 +46,32 @@ def clean_text_for_bge(text: str) -> str:
 def get_chunk_hash(chunk_content: str) -> str:
 
     return hashlib.md5(chunk_content.encode()).hexdigest()
+
+
+def load_metadata_from_config(filename: str, config_path: str = "../data/metadata.json") -> Dict[str, Any]:
+   
+    default_metadata = {
+        "source": filename,
+        "author": "Unknown",
+        "year": None,
+        "description": "Document processed for RAG"
+    }
+    
+    # Try to load from config file
+    config_file = os.path.join(os.path.dirname(os.path.dirname(__file__)), "data", "metadata.json")
+    
+    if os.path.exists(config_file):
+        try:
+            with open(config_file, 'r', encoding='utf-8') as f:
+                config = json.load(f)
+                if filename in config:
+                    metadata = default_metadata.copy()
+                    metadata.update(config[filename])
+                    return metadata
+        except Exception as e:
+            print(f"Warning: Could not load metadata config: {e}")
+    
+    return default_metadata
 
 
 def remove_duplicate_chunks(chunks: List[Document]) -> List[Document]:
