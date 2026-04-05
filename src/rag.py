@@ -136,6 +136,8 @@ def retrieval_query(query: str, retriever: RAGRetriever, llm: OllamaLLM, top_k: 
     Use the following context to answer the question concisely and factually. 
     Do not say where the information comes from, just give the answer. 
     If the provided texts mention different numbers or information for the same topic, list them separately. 
+    If the context does not contain the answer, say: "I don't know based on the provided context."
+    Keep the answer to 1–3 sentences.
 
         Context: {context}
 
