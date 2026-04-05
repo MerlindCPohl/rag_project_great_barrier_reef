@@ -1,6 +1,3 @@
-import sys
-sys.path.insert(0, '../')
-
 from typing import List, Dict, Any, Optional
 from src.embedding_manager import EmbeddingManager
 from src.faiss_vector_store import FaissVectorStore

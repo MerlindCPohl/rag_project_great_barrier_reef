@@ -12,8 +12,26 @@ from langdetect import detect, LangDetectException
 import logging
 
 
-def load_config(config_path: str = "config.yaml") -> Dict[str, Any]:
+def setup_logger(name: str, level: int = logging.INFO) -> logging.Logger:
+    logger = logging.getLogger(name)
+    logger.setLevel(level)
+    
+    if not logger.handlers:
+        handler = logging.StreamHandler()
+        formatter = logging.Formatter(
+            fmt='%(asctime)s | %(name)-20s | %(levelname)-8s | %(message)s',
+            datefmt='%Y-%m-%d %H:%M:%S'
+        )
+        handler.setFormatter(formatter)
+        logger.addHandler(handler)
+    
+    return logger
 
+
+logger = setup_logger(__name__)
+
+
+def load_config(config_path: str = "config.yaml") -> Dict[str, Any]:
     # Try to find config.yaml
     if not os.path.exists(config_path):
         # Try relative to project root
@@ -36,7 +54,7 @@ def extract_text_from_pdf(pdf_path: str, selected_pages: List[int], output_file:
                 out.write(b"\n\n")
     doc.close()
 
-    print(f"Extracted {len(selected_pages)} pages to {output_file}")
+    logger.info(f"Extracted {len(selected_pages)} pages to {output_file}")
 
 
 def clean_text_for_bge(text: str) -> str:
@@ -84,7 +102,7 @@ def load_metadata_from_config(filename: str, config_path: str = "../data/metadat
                     metadata.update(config[filename])
                     return metadata
         except Exception as e:
-            print(f"Warning: Could not load metadata config: {e}")
+            logger.warning(f"Could not load metadata config: {e}")
     
     return default_metadata
 
@@ -103,7 +121,7 @@ def remove_duplicate_chunks(chunks: List[Document]) -> List[Document]:
             seen.add(content_hash)
             unique_chunks.append(chunk)
     
-    print(f"Removed {len(chunks) - len(unique_chunks)} duplicates. {len(unique_chunks)} chunks remain.")
+    logger.info(f"Removed {len(chunks) - len(unique_chunks)} duplicates. {len(unique_chunks)} chunks remain.")
     return unique_chunks
 
 
@@ -120,7 +138,7 @@ def detect_language(text: str, default_language: str = "en") -> str:
         # if detection fails 
         return default_language
     except Exception as e:
-        print(f"Warning: Language detection error: {e}")
+        logger.warning(f"Language detection error: {e}")
         return default_language
     
 def setup_logger(name: str, level: int = logging.INFO) -> logging.Logger:

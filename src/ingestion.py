@@ -4,15 +4,11 @@
 import pymupdf as pdf
 import re
 import os
-import glob
 import sys
 sys.path.insert(0, '../')  
 
-from langchain_text_splitters import RecursiveCharacterTextSplitter
 from langchain_core.documents import Document
 from langchain_community.document_loaders import TextLoader
-from langchain_community.vectorstores import FAISS
-from langchain_community.embeddings import HuggingFaceBgeEmbeddings
 from typing import Optional, Dict, Any
 from src.embedding_manager import EmbeddingManager
 from src.utils import extract_text_from_pdf, clean_text_for_bge, remove_duplicate_chunks, get_chunk_hash, load_metadata_from_config, detect_language, load_config, setup_logger
