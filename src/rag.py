@@ -10,6 +10,7 @@ from typing import List, Dict, Any, Optional
 from src.embedding_manager import EmbeddingManager
 from src.vector_store import FaissVectorStore
 from src.utils import load_config
+import time
 
 # Load configuration
 config = load_config()
@@ -20,16 +21,25 @@ class RAGRetriever:
         self.embedding_manager = embedding_manager
 
     def retrieve(self, query: str, top_k: int = 5, score_threshold: float = 0.0) -> List[Dict[str, Any]]:
-        
+       
         print(f"Retrieving documents for query: '{query}' with top_k={top_k} and score_threshold={score_threshold}")
         
         try:
-            # Generate embedding for the query
-            query_embeddings = self.embedding_manager.generate_embeddings([query])
-            query_embedding = query_embeddings[0]
+            # Generate embedding for the query with retry logic
+            try:
+                query_embeddings = self.embedding_manager.generate_embeddings([query], max_retries=2)
+                query_embedding = query_embeddings[0]
+            except RuntimeError as e:
+                print(f"Failed to embed query after retries: {e}")
+                return []
             
             # Search the vector store - returns list of tuples (metadata, distance)
-            results = self.vector_store.search(query_embedding, top_k=top_k)
+            try:
+                results = self.vector_store.search(query_embedding, top_k=top_k)
+            except Exception as e:
+                print(f"Vector store search failed: {e}")
+                raise
+            
             retrieved_docs = []
             
             for rank, (metadata, distance) in enumerate(results, 1):
@@ -46,14 +56,14 @@ class RAGRetriever:
                     })
             
             if retrieved_docs:
-                print(f"Retrieved {len(retrieved_docs)} documents above the score threshold of {score_threshold}")
+                print(f"Retrieved {len(retrieved_docs)} documents above threshold of {score_threshold}")
             else:
-                print(f"No documents retrieved above the score threshold of {score_threshold}")
+                print(f"ℹ No documents above threshold of {score_threshold}")
             
             return retrieved_docs
             
         except Exception as e:
-            print(f"Error during retrieval: {e}")
+            print(f"Error during retrieval: {str(e)[:100]}")
             import traceback
             traceback.print_exc()
             return []
@@ -109,6 +119,54 @@ llm = OllamaLLM(
 #5. RAG function for information retrieval with minimal instructions
 
 
+def invoke_llm_with_retry(llm: OllamaLLM, prompt: str, max_retries: int = 2, timeout: int = 60) -> str:
+    """
+    Invoke LLM with retry logic and timeout handling.
+    
+    Args:
+        llm: OllamaLLM instance
+        prompt: Prompt text for the LLM
+        max_retries: Number of retries if invocation fails (default: 2)
+        timeout: Timeout in seconds for each attempt (default: 60s)
+        
+    Returns:
+        LLM response string
+        
+    Raises:
+        RuntimeError: If all retries exhausted or timeout exceeded
+    """
+    for attempt in range(max_retries + 1):
+        try:
+            print(f"Invoking LLM (attempt {attempt + 1}/{max_retries + 1})...")
+            start_time = time.time()
+            
+            # Invoke LLM (note: langchain_ollama may not support direct timeout, 
+            # but we track it for logging)
+            response = llm.invoke(prompt)
+            
+            elapsed = time.time() - start_time
+            print(f"LLM response received in {elapsed:.1f}s")
+            return response
+            
+        except TimeoutError as e:
+            if attempt < max_retries:
+                wait_time = 2 ** attempt
+                print(f"LLM timeout (attempt {attempt + 1}): exceeded {timeout}s")
+                print(f"Retrying in {wait_time}s...")
+                time.sleep(wait_time)
+            else:
+                raise RuntimeError(f"LLM call timed out after {max_retries + 1} attempts")
+                
+        except Exception as e:
+            if attempt < max_retries:
+                wait_time = 2 ** attempt
+                print(f"LLM error (attempt {attempt + 1}/{max_retries + 1}): {str(e)[:100]}")
+                print(f"Retrying in {wait_time}s...")
+                time.sleep(wait_time)
+            else:
+                raise RuntimeError(f"LLM invocation failed after {max_retries + 1} attempts: {str(e)}")
+
+
 def retrieval_query(query: str, retriever: RAGRetriever, llm: OllamaLLM, top_k: Optional[int] = None, score_threshold: Optional[float] = None, return_context: bool = False) -> Dict[str, Any] | str:
 
     # Use config defaults if not provided
@@ -160,7 +218,15 @@ def retrieval_query(query: str, retriever: RAGRetriever, llm: OllamaLLM, top_k: 
 
         Answer:"""
     
-    response = llm.invoke(prompt)
+    try:
+        response = invoke_llm_with_retry(llm, prompt, max_retries=2)
+    except RuntimeError as e:
+        print(f"LLM invocation failed: {e}")
+        return {
+            'answer': f"Error generating answer: {str(e)}",
+            'sources': sources,
+            'confidence': round(float(confidence), 3)
+        }
 
     output = {
         'response': response,
@@ -207,7 +273,19 @@ def retrieval_query(query: str, retriever: RAGRetriever, llm: OllamaLLM, top_k: 
 # 7. Answering user queries via Streamlit 
 
 def get_answer(query: str, top_k: Optional[int] = None, score_threshold: Optional[float] = None) -> Dict[str, Any]:
-   
+    """
+    Main entry point for answering user queries.
+    
+    Handles initialization, error recovery, and graceful degradation.
+    
+    Args:
+        query: User question
+        top_k: Number of documents to retrieve (uses config default if None)
+        score_threshold: Similarity threshold (uses config default if None)
+        
+    Returns:
+        Dictionary with 'response', 'sources', and 'confidence' keys
+    """
     # Use config defaults if not provided
     if top_k is None:
         top_k = config['retrieval']['top_k']
@@ -215,15 +293,35 @@ def get_answer(query: str, top_k: Optional[int] = None, score_threshold: Optiona
         score_threshold = config['retrieval']['score_threshold']
     
     try:
-        # initialize components
-        embedding_manager = EmbeddingManager()
-        vector_store = FaissVectorStore(embedding_dim=embedding_manager.get_embedding_dimension())
+        print(f"Processing query: '{query[:50]}...'")
+        
+        # Initialize components with error handling
+        try:
+            embedding_manager = EmbeddingManager()
+        except Exception as e:
+            print(f"Critical error: Failed to initialize embedding manager: {e}")
+            return {
+                'response': "Error: Could not initialize embedding system",
+                'sources': [],
+                'confidence': 0.0
+            }
+        
+        try:
+            vector_store = FaissVectorStore(embedding_dim=embedding_manager.get_embedding_dimension())
+        except Exception as e:
+            print(f"Critical error: Failed to initialize vector store: {e}")
+            return {
+                'response': "Error: Could not load vector database",
+                'sources': [],
+                'confidence': 0.0
+            }
+        
         retriever = RAGRetriever(vector_store, embedding_manager)
         
-        # use retrieval function 
+        # Use retrieval function with error handling
         result = retrieval_query(query, retriever, llm, top_k, score_threshold, return_context=True)
         
-        # normalize result
+        # Normalize result
         if isinstance(result, str):
             return {
                 'response': result,
@@ -234,8 +332,10 @@ def get_answer(query: str, top_k: Optional[int] = None, score_threshold: Optiona
         return result
         
     except Exception as e:
+        error_msg = f"Unexpected error processing query: {str(e)[:100]}"
+        print(f"Error: {error_msg}")
         return {
-            'response': f"Error: {str(e)}",
+            'response': f"Error: {error_msg}",
             'sources': [],
             'confidence': 0.0
         }

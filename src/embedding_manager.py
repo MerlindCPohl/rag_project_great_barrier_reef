@@ -1,8 +1,9 @@
 # embedding_manager.py
 
-from typing import List
+from typing import List, Optional
 import numpy as np
 from sentence_transformers import SentenceTransformer
+import time
 
 
 class EmbeddingManager:
@@ -23,16 +24,36 @@ class EmbeddingManager:
             print(f"Error loading model '{self.model_name}': {e}")
             raise
 
-    def generate_embeddings(self, texts: List[str]) -> np.ndarray:
-       
+    def generate_embeddings(self, texts: List[str], max_retries: int = 2) -> np.ndarray:
+        """
+        Generate embeddings for texts with retry logic.
+        
+        Args:
+            texts: List of text strings to embed
+            max_retries: Number of retries if embedding fails (default: 2)
+            
+        Returns:
+            numpy array of embeddings
+            
+        Raises:
+            ValueError: If model not loaded or all retries exhausted
+        """
         if not self.model:
             raise ValueError("Embedding model not loaded.")
-        try:
-            embeddings = self.model.encode(texts, show_progress_bar=True)
-            return np.array(embeddings)
-        except Exception as e:
-            print(f"Error during embedding: {e}")
-            raise
+        
+        for attempt in range(max_retries + 1):
+            try:
+                embeddings = self.model.encode(texts, show_progress_bar=True)
+                return np.array(embeddings)
+            except Exception as e:
+                if attempt < max_retries:
+                    wait_time = 2 ** attempt  # Exponential backoff: 1s, 2s, 4s
+                    print(f"Embedding error (attempt {attempt + 1}/{max_retries + 1}): {e}")
+                    print(f"Retrying in {wait_time}s...")
+                    time.sleep(wait_time)
+                else:
+                    print(f"Failed to generate embeddings after {max_retries + 1} attempts: {e}")
+                    raise RuntimeError(f"Embedding generation failed: {str(e)}")
 
     def get_embedding_dimension(self) -> int:
        
