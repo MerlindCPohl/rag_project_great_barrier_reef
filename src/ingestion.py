@@ -217,10 +217,12 @@ else:
     metadatas = [
         {
             "content": chunk.page_content, 
-            "source": chunk.metadata.get("source", ""), 
+            "source": chunk.metadata.get("source", ""),
+            "title": chunk.metadata.get("title", ""),
             "author": chunk.metadata.get("author", ""),
             "year": chunk.metadata.get("year", ""),
             "description": chunk.metadata.get("description", ""),
+            "categories": chunk.metadata.get("categories", []),
             "chunk_hash": get_chunk_hash(chunk.page_content)
         } 
         for chunk in chunks_to_add
@@ -324,9 +326,11 @@ def process_new_documents(pdf_directory: str = None, vector_store=None, embeddin
                     {
                         "content": chunk.page_content,
                         "source": document_metadata.get("source", os.path.basename(pdf_path)),
+                        "title": document_metadata.get("title", ""),
                         "author": document_metadata.get("author", ""),
                         "year": document_metadata.get("year", ""),
                         "description": document_metadata.get("description", ""),
+                        "categories": document_metadata.get("categories", []),
                         "chunk_hash": get_chunk_hash(chunk.page_content)
                     }
                     for chunk in chunks_to_add

@@ -1,8 +1,12 @@
 {
   "Access Economics 2007 Economic contribution of Great Barrier Reef Marine Park 2005-2006 Kopie.pdf": {
+    "title": "Measuring the economic & financial value of the Great Barrier Reef Marine Park, 2005-06",
     "author": "Great Barrier Reef Marine Park Authority",
-    "year": 2007,
     "description": "A comprehensive study on the economic contribution of the Great Barrier Reef Marine Park for the years 2005-2006.",
-    "pages": [5, 87]
+    "year": 2007,
+    "pages": [5, 87],
+    "categories": ["Economics", "Marine Conservation", "Tourism", "Environmental Science", "Great Barrier Reef"],
+    "source": "ESVD internal"
   }
 }
+

@@ -115,6 +115,7 @@ def retrieval_query(query: str, retriever: RAGRetriever, llm: OllamaLLM, top_k: 
     for doc in results:
         clean_preview = doc['content'][:150].replace('\n', ' ').strip()
         sources.append({
+            'title': doc['metadata'].get('title', 'Unknown'),
             'source': doc['source'],
             'score': round(float(doc['similarity_score']), 3),
             'preview': f"{clean_preview}..."

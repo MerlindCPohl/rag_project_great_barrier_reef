@@ -50,11 +50,15 @@ def get_chunk_hash(chunk_content: str) -> str:
 
 def load_metadata_from_config(filename: str, config_path: str = "../data/metadata.json") -> Dict[str, Any]:
    
+    # Default metadata structure - all fields with sensible defaults
     default_metadata = {
-        "source": filename,
+        "filename": filename,  
+        "source": "Unknown",   
+        "title": "Unknown",
         "author": "Unknown",
         "year": None,
-        "description": "Document processed for RAG"
+        "description": "Document processed for RAG",
+        "categories": []  
     }
     
     # Try to load from config file
