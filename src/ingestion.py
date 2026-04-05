@@ -42,7 +42,7 @@ metadata = load_metadata_from_config(filename)
 
 extract_text_from_pdf(pdf_path, selected_pages, document_output_path)
 
-print(f"PDF extraction complete")
+logger.info(f"PDF extraction complete")
 
 # %%
 # 3. Load text file with previously defined metadata
@@ -113,7 +113,7 @@ logger.info(f"Avg doc length: {statistics.mean(doc_lengths):,.0f} chars")
 logger.info(f"Min/Max doc length: {min(doc_lengths):,} / {max(doc_lengths):,} chars")
 
 # Extract meaningful keywords (filtered)
-print("\n=== Top 10 Keywords (filtered) ===")
+logger.info("\n=== Top 10 Keywords (filtered) ===")
 from nltk.corpus import stopwords
 stop_words = set(stopwords.words('english'))
 
@@ -126,17 +126,17 @@ keywords = [w for w in all_words if w not in stop_words]
 keyword_freq = Counter(keywords)
 top_keywords_count = config['data_exploration']['top_keywords_count']
 for word, count in keyword_freq.most_common(top_keywords_count):
-    print(f"  {word}: {count}")
+    logger.info(f"  {word}: {count}")
 
 # Check for very short documents (potential outliers)
-print("\n=== Potential Issues ===")
+logger.info("\n=== Potential Issues ===")
 short_threshold = config['data_exploration']['short_document_threshold']
 short_docs = [d for d in docs if len(d.page_content) < short_threshold]
 if short_docs:
-    print(f" Found {len(short_docs)} very short documents (< {short_threshold} chars)")
-    print(f"  First example: '{short_docs[0].page_content}'")
+    logger.info(f" Found {len(short_docs)} very short documents (< {short_threshold} chars)")
+    logger.info(f"  First example: '{short_docs[0].page_content}'")
 else:
-    print("No unusually short documents")
+    logger.info("No unusually short documents")
 
 # %%
 # 7. Semantic chunking - creates chunks via semantic sense
@@ -157,10 +157,10 @@ semantic_splitter = SemanticChunker(
 chunks = semantic_splitter.split_documents(docs)
 
 for i, chunk in enumerate(chunks):
-    print(f"Chunk {i}:")
-    print(f"  Content: {chunk.page_content[:200]}...")  # First 200 chars
-    print(f"  Metadata: {chunk.metadata}")
-    print()
+    logger.info(f"Chunk {i}:")
+    logger.info(f"  Content: {chunk.page_content[:200]}...")  # First 200 chars
+    logger.info(f"  Metadata: {chunk.metadata}")
+    logger.info()
 
 
 # %%
@@ -193,9 +193,9 @@ from sklearn.metrics.pairwise import cosine_similarity
 
 try:
     embedding_manager = EmbeddingManager()
-    print("EmbeddingManager initialized successfully")
+    logger.info("EmbeddingManager initialized successfully")
 except Exception as e:
-    print(f"Failed to initialize EmbeddingManager: {e}")
+    logger.error(f"Failed to initialize EmbeddingManager: {e}")
     embedding_manager = None
 
 
@@ -203,7 +203,7 @@ except Exception as e:
 # 12. Initialize vector store
 
 vector_store = FaissVectorStore(embedding_dim=embedding_manager.get_embedding_dimension())
-print("Vector store initialized successfully")
+logger.info("Vector store initialized successfully")
 
 # %%
 # 13. Check for duplicate chunks before embedding
