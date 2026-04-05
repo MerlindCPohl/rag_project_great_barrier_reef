@@ -25,19 +25,7 @@ class EmbeddingManager:
             raise
 
     def generate_embeddings(self, texts: List[str], max_retries: int = 2) -> np.ndarray:
-        """
-        Generate embeddings for texts with retry logic.
         
-        Args:
-            texts: List of text strings to embed
-            max_retries: Number of retries if embedding fails (default: 2)
-            
-        Returns:
-            numpy array of embeddings
-            
-        Raises:
-            ValueError: If model not loaded or all retries exhausted
-        """
         if not self.model:
             raise ValueError("Embedding model not loaded.")
         

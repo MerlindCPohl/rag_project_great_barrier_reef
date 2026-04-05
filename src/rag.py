@@ -120,21 +120,7 @@ llm = OllamaLLM(
 
 
 def invoke_llm_with_retry(llm: OllamaLLM, prompt: str, max_retries: int = 2, timeout: int = 60) -> str:
-    """
-    Invoke LLM with retry logic and timeout handling.
-    
-    Args:
-        llm: OllamaLLM instance
-        prompt: Prompt text for the LLM
-        max_retries: Number of retries if invocation fails (default: 2)
-        timeout: Timeout in seconds for each attempt (default: 60s)
-        
-    Returns:
-        LLM response string
-        
-    Raises:
-        RuntimeError: If all retries exhausted or timeout exceeded
-    """
+   
     for attempt in range(max_retries + 1):
         try:
             print(f"Invoking LLM (attempt {attempt + 1}/{max_retries + 1})...")
