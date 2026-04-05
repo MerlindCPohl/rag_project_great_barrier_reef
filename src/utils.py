@@ -52,7 +52,10 @@ def remove_duplicate_chunks(chunks: List[Document]) -> List[Document]:
     unique_chunks = []
     
     for chunk in chunks:
-        content_hash = hash(chunk.page_content)
+        # normalize content before hashing for better deduplication
+        normalized_content = " ".join(chunk.page_content.lower().split())
+        content_hash = get_chunk_hash(normalized_content)
+        
         if content_hash not in seen:
             seen.add(content_hash)
             unique_chunks.append(chunk)
