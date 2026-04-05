@@ -4,11 +4,11 @@ import os
 import faiss
 import pickle
 import numpy as np
-from typing import List, Dict, Any, Tuple
+from typing import List, Dict, Any, Tuple, Optional
 
 class FaissVectorStore:
 
-    def __init__(self, embedding_dim: int, persist_directory: str = None):
+    def __init__(self, embedding_dim: int, persist_directory: Optional[str] = None) -> None:
         self.embedding_dim = embedding_dim
 
         if persist_directory is None:
@@ -43,7 +43,7 @@ class FaissVectorStore:
             print("New index created.")
 
 
-    def normalize_embeddings(self, embeddings):
+    def normalize_embeddings(self, embeddings: np.ndarray) -> np.ndarray:
         
         embeddings = np.array(embeddings)
         
@@ -56,7 +56,7 @@ class FaissVectorStore:
         return embeddings / norms
     
 
-    def add_embeddings(self, embeddings, metadatas):
+    def add_embeddings(self, embeddings: np.ndarray, metadatas: List[Dict[str, Any]]) -> None:
         embeddings = self.normalize_embeddings(embeddings)
         
         # Validate dimensions before adding
@@ -80,7 +80,7 @@ class FaissVectorStore:
         print(f"{len(metadatas)} Chunks safed to {self.persist_directory}")
         
 
-    def search(self, query_embedding: np.ndarray, top_k: int = 5):
+    def search(self, query_embedding: np.ndarray, top_k: int = 5) -> List[Tuple[Dict[str, Any], float]]:
         
         query_embedding = self.normalize_embeddings(query_embedding)
         distances, indices = self.index.search(query_embedding.astype('float32'), top_k)

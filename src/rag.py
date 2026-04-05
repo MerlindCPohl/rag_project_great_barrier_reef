@@ -102,7 +102,7 @@ llm = OllamaLLM(model="llama3", temperature=0.1, top_p=0.1)
 #5. RAG function for information retrieval with minimal instructions
 
 
-def retrieval_query(query: str, retriever: RAGRetriever, llm: OllamaLLM, top_k: int = 5, score_threshold: float = 0.3, return_context=False):
+def retrieval_query(query: str, retriever: RAGRetriever, llm: OllamaLLM, top_k: int = 5, score_threshold: float = 0.3, return_context: bool = False) -> Dict[str, Any] | str:
 
     results = retriever.retrieve(query=query, top_k=top_k, score_threshold=score_threshold)
     

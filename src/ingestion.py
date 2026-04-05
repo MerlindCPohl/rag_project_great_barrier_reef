@@ -12,8 +12,7 @@ from langchain_text_splitters import RecursiveCharacterTextSplitter
 from langchain_core.documents import Document
 from langchain_community.document_loaders import TextLoader
 from langchain_community.vectorstores import FAISS
-from langchain_community.embeddings import HuggingFaceBgeEmbeddings
-from src.embedding_manager import EmbeddingManager
+from langchain_community.embeddings import HuggingFaceBgeEmbeddingsfrom typing import Optional, Dict, Anyfrom src.embedding_manager import EmbeddingManager
 from src.utils import extract_text_from_pdf, clean_text_for_bge, remove_duplicate_chunks, get_chunk_hash, load_metadata_from_config, detect_language
 from src.vector_store import FaissVectorStore
 
@@ -245,7 +244,7 @@ else:
 #15. Repeat steps 1 - 12 automaticallyin case that new documents are added 
 
 
-def process_new_documents(pdf_directory: str = None, vector_store=None, embedding_manager=None):
+def process_new_documents(pdf_directory: Optional[str] = None, vector_store: Optional[FaissVectorStore] = None, embedding_manager: Optional[EmbeddingManager] = None) -> Dict[str, Any]:
     
     if pdf_directory is None:
         # Use the data directory relative to script location
