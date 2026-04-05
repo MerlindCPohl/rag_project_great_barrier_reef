@@ -12,7 +12,7 @@ class FaissVectorStore:
         self.embedding_dim = embedding_dim
 
         if persist_directory is None:
-            base_path = os.path.dirname(os.path.abspath("__file__"))
+            base_path = os.path.dirname(os.path.abspath(__file__))
             self.persist_directory = os.path.join(base_path, "..", "data", "vector_store")
         else:
             self.persist_directory = persist_directory
