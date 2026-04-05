@@ -84,8 +84,11 @@ class FaissVectorStore:
         
 
     def search(self, query_embedding: np.ndarray, top_k: int = 5) -> List[Tuple[Dict[str, Any], float]]:
+        """Search for similar documents. Returns tuples of (metadata, similarity_score).
         
+        Note: IndexFlatIP with L2-normalized embeddings returns cosine similarity scores (0-1, higher = more similar).
+        """
         query_embedding = self.normalize_embeddings(query_embedding)
-        distances, indices = self.index.search(query_embedding.astype('float32'), top_k)
-        results = [(self.id_to_metadata[idx], distances[0][i]) for i, idx in enumerate(indices[0])]
+        similarities, indices = self.index.search(query_embedding.astype('float32'), top_k)
+        results = [(self.id_to_metadata[idx], similarities[0][i]) for i, idx in enumerate(indices[0])]
         return results

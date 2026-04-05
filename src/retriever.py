@@ -1,6 +1,4 @@
 from typing import List, Dict, Any
-import time
-
 from src.utils import setup_logger
 from src.faiss_vector_store import FaissVectorStore
 from src.embedding_manager import EmbeddingManager
@@ -15,7 +13,6 @@ class RAGRetriever:
 
     def retrieve(self, query: str, top_k: int = 5, score_threshold: float = 0.0) -> List[Dict[str, Any]]:
        
-        start_time = time.time()
         logger.debug(f"Retrieving documents for query: '{query}' with top_k={top_k} and score_threshold={score_threshold}")
         
         try:
@@ -36,9 +33,9 @@ class RAGRetriever:
             
             retrieved_docs = []
             
-            for rank, (metadata, distance) in enumerate(results, 1):
-                similarity_score = distance
+            for rank, (metadata, similarity_score) in enumerate(results, 1):
                 
+                # Note: similarity_score is cosine similarity (0-1, higher = more similar)
                 if similarity_score >= score_threshold:
                     retrieved_docs.append({
                         'id': rank,
@@ -50,9 +47,9 @@ class RAGRetriever:
                     })
             
             if retrieved_docs:
-                logger.info(f"Retrieved {len(retrieved_docs)} documents above threshold of {score_threshold}")
+                logger.info(f"Retrieved {len(retrieved_docs)} documents above similarity threshold {score_threshold}")
             else:
-                logger.debug(f"No documents above threshold {score_threshold}")
+                logger.debug(f"No documents above similarity threshold {score_threshold}")
             
             return retrieved_docs
             
