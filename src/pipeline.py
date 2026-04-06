@@ -157,8 +157,8 @@ def retrieval_query(query: str, retriever: RAGRetriever, top_k: Optional[int] = 
       
     prompt = f"""Use the following context to answer the question concisely and factually. 
 Do not say where the information comes from, just give the answer. 
-If the provided texts mention different numbers or information for the same topic, list them separately. 
-Do not perform any calculations or estimate numbers: if you cannot find the direct number or information in the context, say: 'I have no information on that.'
+If the provided texts mention different numbers or information for the same topic, list them separately.
+Only mention missing information if the user specifically asks about it. Do not add disclaimers about what you don't know.
 Keep the answer to 1–3 sentences.
 
 Context: {context}
@@ -271,7 +271,9 @@ def get_answer(query: str, top_k: Optional[int] = None, score_threshold: Optiona
         result = retrieval_query(query, retriever, top_k, score_threshold, return_context=True)
         
         result['is_greeting'] = False
-        result['skip_sources'] = result.get('confidence', 0.0) < score_threshold
+   
+        threshold = score_threshold if score_threshold is not None else config['retrieval']['score_threshold']
+        result['skip_sources'] = result.get('confidence', 0.0) < threshold
         
         logger.info(f"Query completed | confidence={result.get('confidence', 0):.3f}")
         return result
