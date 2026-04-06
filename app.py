@@ -1,7 +1,6 @@
 import streamlit as st
 import PIL.Image as Image
 from src import get_answer
-from src.pipeline import llm, invoke_llm_with_retry
 import time
 
 logo_img = Image.open("./assets/Park_Authority_Logo.png")
@@ -44,12 +43,9 @@ current_time = time.time()
 time_since_last_activity = current_time - st.session_state.last_activity_time
 
 if st.session_state.messages and time_since_last_activity > inactivity_timeout:
-    st.warning("⏱️ Your conversation has been inactive for 3 minutes and will be cleared shortly. Ask a new question to continue!")
-    time.sleep(3)
     st.session_state.messages = []
     st.session_state.last_activity_time = time.time()
     st.rerun()
-# works ???
 
 # previous messages
 for message in st.session_state.messages:
@@ -75,47 +71,15 @@ if prompt:
     with st.chat_message("user", avatar="🐠"):
         st.markdown(prompt)
     
-    # quick detection for greetings (skips retrieval)
-    greeting_keywords = ['hi', 'hello', 'hey', 'how are you', 'thanks', 'thank you', 'bye', "what's up", 'good morning', 'good afternoon', 'gday', 'g\'day', 'g\'day mate', 'greetings', 'welcome', 'nice to meet you', 'pleased to meet you', 'howdy', 'salutations', 'cheers', 'hiya', 'yo', 'sup', 'good evening', 'whats up', 'how are you doing', 'how are you today', 'how is it going', 'how have you been', 'long time no see', 'nice to see you', 'glad to see you', 'good to see you']
-    is_greeting = any(keyword in prompt.lower() for keyword in greeting_keywords)
-    
-    if is_greeting:
-        # returns a quick response without retrieval
-        response = "Hi there! Feel free to ask me anything about the Great Barrier Reef!"
-        sources = []
-        confidence = 0.0
-    else:
-        # LLM Classification: Is this question about the Great Barrier Reef?
-        classification_prompt = f"""Is this user question asking for information about the Great Barrier Reef, marine life, ocean ecosystems, conservation, tourism, fish, coral, or related topics?
-        Answer with only: YES or NO
+    # Get answer (all logic handled in backend)
+    with st.spinner("🐙 ReefGuide is thinking..."):
+        result = get_answer(prompt)
 
-        Question: {prompt}
-        Answer:"""
-                
-        try:
-            with st.spinner("🐙 ReefGuide is thinking..."):
-                classification = invoke_llm_with_retry(llm, classification_prompt).strip().lower()
-        except:
-            classification = "yes" 
-        
-        if "yes" in classification:
-            # if question is about GBR - do RAG retrieval
-            with st.spinner("🐙 ReefGuide is thinking..."):
-                result = get_answer(prompt)
-
-            # extract components
-            response = result['response']
-            sources = result.get('sources', [])
-            confidence = result.get('confidence', 0.0)
-            
-            # only display sources if confidence is high enough
-            if confidence < 0.5:
-                sources = []
-        else:
-            # Question is off-topic
-            response = "I'm specialized in answering questions about the Great Barrier Reef, marine life, and conservation. Feel free to ask me anything about those topics!"
-            sources = []
-            confidence = 0.0
+    # extract components
+    response = result['response']
+    sources = result.get('sources', [])
+    confidence = result.get('confidence', 0.0)
+    skip_sources = result.get('skip_sources', False)
 
     # save message
     st.session_state.messages.append({"role": "assistant", "content": response})
@@ -123,19 +87,20 @@ if prompt:
     # display answer
     with st.chat_message("assistant", avatar="🐙"):
         st.markdown(response)
-    
-    # button to clear conversation
-    if st.button(type="primary", label="Clear out conversation"):
-        st.session_state.messages = []
-        st.rerun()
 
-    # display sources only if they meet a confidence threshold
-    if sources and confidence >= 0.5:
+    # display sources only if backend says to show them
+    if sources and not skip_sources:
         st.markdown("Sources")
         for i, source in enumerate(sources, 1):
             with st.expander(f"Source {i}: {source['source']}"):
                 st.markdown(f"**Preview:** {source['preview']}")
 
+# button to clear conversation 
+if st.session_state.messages:
+    st.divider()
+    if st.button(type="primary", label="Clear out conversation"):
+        st.session_state.messages = []
+        st.rerun()
     
 st.markdown(
     """

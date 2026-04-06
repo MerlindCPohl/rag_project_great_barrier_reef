@@ -27,6 +27,45 @@ llm = OllamaLLM(
     top_p=config['llm']['top_p']
 )
 
+# %%
+# Detection functions
+
+def is_greeting(query: str) -> bool:
+    """Use LLM to classify if this is a casual greeting or friendly chat."""
+    greeting_prompt = f"""Is this a casual greetinng or chat, or polite interaction (NOT a question about GBR, marine life, or tourism)?
+    Examples of greetings: "hi", "how are you", "thanks", "bye", "good morning", "what's up"
+    Examples of non-greetings: "how long is the reef", "how many people work here", "tell me about coral bleaching"
+
+    Answer with only: YES or NO
+
+    Text: {query}
+    Answer:"""
+    
+    try:
+        result = invoke_llm_with_retry(llm, greeting_prompt).strip().lower()
+        is_greeting_result = "yes" in result or result.startswith("yes")
+        logger.debug(f"Greeting classification: {query[:50]}... -> {is_greeting_result}")
+        return is_greeting_result
+    except Exception as e:
+        logger.warning(f"Greeting classification failed: {e}, defaulting to False")
+        return False  
+
+
+def classify_gbr_question(query: str) -> bool:
+    """Use LLM to classify if question is about GBR."""
+    classification_prompt = f"""Is this user question asking for information about the Great Barrier Reef, GBR, marine life, ocean ecosystems, conservation, tourism, employment, infrastructure, fish, coral, or related topics?
+    Answer with only: YES or NO
+
+    Question: {query}
+    Answer:"""
+        
+    try:
+        classification = invoke_llm_with_retry(llm, classification_prompt).strip().lower()
+        return "yes" in classification or classification.startswith("yes")
+    except Exception as e:
+        logger.warning(f"Classification failed, defaulting to True: {e}")
+        return True  # Default to attempting retrieval
+
 
 # %%
 #2. RAG function for information retrieval with minimal instructions
@@ -108,9 +147,9 @@ def retrieval_query(query: str, retriever: RAGRetriever, top_k: Optional[int] = 
     Use the following context to answer the question concisely and factually. 
     Do not say where the information comes from, just give the answer. 
     If the provided texts mention different numbers or information for the same topic, list them separately. 
-    If the context does not contain the answer, say: "I have no information on that."
+    Do not perform any calculations or estimate numbers: if you cannot find the direct number or information in the context, say: 'I have no information on that.'
     Keep the answer to 1–3 sentences.
-    If the user is just saying hi or thanks, respond in a friendly way and ask if you can help without using the context.
+ 
 
         Context: {context}
 
@@ -148,6 +187,14 @@ _vector_store = None
 _retriever = None
 
 def get_answer(query: str, top_k: Optional[int] = None, score_threshold: Optional[float] = None) -> Dict[str, Any]:
+    """
+    Main orchestration function that handles the full pipeline:
+    1. Greeting detection (instant response, no retrieval)
+    2. GBR classification (check if question is on-topic)
+    3. RAG retrieval (if on-topic)
+    
+    Returns structured response with metadata for frontend.
+    """
     global _embedding_manager, _vector_store, _retriever
    
     # initialize just once and reuse to save time 
@@ -161,15 +208,39 @@ def get_answer(query: str, top_k: Optional[int] = None, score_threshold: Optiona
             return {
                 'response': "Error: Could not initialize system",
                 'sources': [],
-                'confidence': 0.0
+                'confidence': 0.0,
+                'is_greeting': False,
+                'skip_sources': True
             }
     
     logger.info(f"Query received | len={len(query)}")
     
+    # logic to avoid unnecessary retrieval for greetings and off-topic questions
+    # 1. check if it's a greeting
+    if is_greeting(query):
+        logger.info("Greeting detected - skipping retrieval")
+        return {
+            'response': "Hi there! Feel free to ask me anything about the Great Barrier Reef!",
+            'sources': [],
+            'confidence': 0.0,
+            'is_greeting': True,
+            'skip_sources': True
+        }
+    
+    # 2. classify if question is about GBR
+    if not classify_gbr_question(query):
+        logger.info("Question classified as off-topic")
+        return {
+            'response': "I'm specialized in answering questions about the Great Barrier Reef, marine life, and conservation. Feel free to ask me anything about those topics!",
+            'sources': [],
+            'confidence': 0.0,
+            'is_greeting': False,
+            'skip_sources': True
+        }
+    
+    # 3.retrieval for on-topic questions
     try:
         retriever = _retriever
-        
-        # Use retrieval function with error handling
         result = retrieval_query(query, retriever, top_k, score_threshold, return_context=True)
         
         # Normalize result
@@ -178,8 +249,14 @@ def get_answer(query: str, top_k: Optional[int] = None, score_threshold: Optiona
             return {
                 'response': result,
                 'sources': [],
-                'confidence': 0.0
+                'confidence': 0.0,
+                'is_greeting': False,
+                'skip_sources': True
             }
+        
+        # Add metadata flags for frontend
+        result['is_greeting'] = False
+        result['skip_sources'] = result.get('confidence', 0.0) < 0.5
         
         logger.info(f"Query completed | confidence={result.get('confidence', 0):.3f}")
         return result
@@ -190,7 +267,9 @@ def get_answer(query: str, top_k: Optional[int] = None, score_threshold: Optiona
         return {
             'response': f"Error: {error_msg}",
             'sources': [],
-            'confidence': 0.0
+            'confidence': 0.0,
+            'is_greeting': False,
+            'skip_sources': True
         }
 
 
