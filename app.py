@@ -1,9 +1,5 @@
 import streamlit as st
-import PIL.Image as Image
 from src import get_answer
-import time
-
-logo_img = Image.open("./assets/Park_Authority_Logo.png")
 
 st.set_page_config(page_title="ReefGuide", page_icon="🌊")
 
@@ -29,18 +25,9 @@ st.markdown(
     "Our ReefGuide provides clear, reliable answers to help you explore and understand this unique ecosystem."
 )
 
-# chat interface with session state to store messages and avatars
+# chat interface with session state to store messages
 if "messages" not in st.session_state:
     st.session_state.messages = []
-
-# initialize last activity timestamp for inactivity timeout
-if "last_activity_time" not in st.session_state:
-    st.session_state.last_activity_time = time.time()
-
-# check for inactivity timeout (3 min)
-inactivity_timeout = 180
-current_time = time.time()
-time_since_last_activity = current_time - st.session_state.last_activity_time
 
 # previous messages
 for message in st.session_state.messages:
@@ -56,14 +43,7 @@ for message in st.session_state.messages:
 prompt = st.chat_input("Ask me anything!")
 
 if prompt:
-    # If timeout was triggered and user is asking a new question, clear old messages first
-    if time_since_last_activity > inactivity_timeout:
-        st.session_state.messages = []
-        st.info("Your conversation was cleared due to 3 minutes of inactivity. Starting fresh with your new question!")
-    
-    # update last activity timestamp
-    st.session_state.last_activity_time = time.time()
-    
+
     # safe user message
     st.session_state.messages.append({"role": "user", "content": prompt})
 

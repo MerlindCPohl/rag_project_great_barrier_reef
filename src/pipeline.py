@@ -32,14 +32,14 @@ llm = OllamaLLM(
 
 def is_greeting(query: str) -> bool:
     """Use LLM to classify if this is a casual greeting or friendly chat."""
-    greeting_prompt = f"""Is this a casual greetinng or chat, or polite interaction (NOT a question about GBR, marine life, or tourism)?
-    Examples of greetings: "hi", "how are you", "thanks", "bye", "good morning", "what's up"
-    Examples of non-greetings: "how long is the reef", "how many people work here", "tell me about coral bleaching"
+    greeting_prompt = f"""Is this a casual greeting or chat, or polite interaction (NOT a question about GBR, marine life, or tourism)?
+Examples of greetings: "hi", "how are you", "thanks", "bye", "good morning", "what's up"
+Examples of non-greetings: "how long is the reef", "how many people work here", "tell me about coral bleaching"
 
-    Answer with only: YES or NO
+Answer with only: YES or NO
 
-    Text: {query}
-    Answer:"""
+Text: {query}
+Answer:"""
     
     try:
         result = invoke_llm_with_retry(llm, greeting_prompt).strip().lower()
@@ -54,10 +54,10 @@ def is_greeting(query: str) -> bool:
 def classify_gbr_question(query: str) -> bool:
     """Use LLM to classify if question is about GBR."""
     classification_prompt = f"""Is this user question asking for information about the Great Barrier Reef, GBR, marine life, ocean ecosystems, conservation, tourism, employment, infrastructure, fish, coral, or related topics?
-    Answer with only: YES or NO
+Answer with only: YES or NO
 
-    Question: {query}
-    Answer:"""
+Question: {query}
+Answer:"""
         
     try:
         classification = invoke_llm_with_retry(llm, classification_prompt).strip().lower()
@@ -143,19 +143,17 @@ def retrieval_query(query: str, retriever: RAGRetriever, top_k: Optional[int] = 
     context = "\n\n".join([doc['content'] for doc in results])
     
     # generate answer    
-    prompt = f"""
-    Use the following context to answer the question concisely and factually. 
-    Do not say where the information comes from, just give the answer. 
-    If the provided texts mention different numbers or information for the same topic, list them separately. 
-    Do not perform any calculations or estimate numbers: if you cannot find the direct number or information in the context, say: 'I have no information on that.'
-    Keep the answer to 1–3 sentences.
- 
+    prompt = f"""Use the following context to answer the question concisely and factually. 
+Do not say where the information comes from, just give the answer. 
+If the provided texts mention different numbers or information for the same topic, list them separately. 
+Do not perform any calculations or estimate numbers: if you cannot find the direct number or information in the context, say: 'I have no information on that.'
+Keep the answer to 1–3 sentences.
 
-        Context: {context}
+Context: {context}
 
-        Question: {query}
+Question: {query}
 
-        Answer:"""
+Answer:"""
     
     try:
         response = invoke_llm_with_retry(llm, prompt, max_retries=2)
