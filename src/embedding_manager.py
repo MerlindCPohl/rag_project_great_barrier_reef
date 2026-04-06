@@ -1,6 +1,12 @@
-# embedding_manager.py
+"""
+Embedding Manager for generating and managing text embeddings.
 
-from typing import List, Optional
+Uses SentenceTransformers (BAAI/bge-m3) to convert text documents into vector
+embeddings for similarity search in the RAG pipeline.
+"""
+
+
+from typing import List
 import numpy as np
 from sentence_transformers import SentenceTransformer
 import time
@@ -10,6 +16,10 @@ logger = setup_logger(__name__)
 
 
 class EmbeddingManager:
+    """
+    Manages text-to-embedding conversion using sentence transformer.
+    Loads the model,generate embeddings and gets their dimensions. 
+    """
   
     def __init__(self, model_name: str = "BAAI/bge-m3"):
         
@@ -27,24 +37,13 @@ class EmbeddingManager:
             logger.error(f"Error loading model '{self.model_name}': {e}")
             raise
 
-    def generate_embeddings(self, texts: List[str], max_retries: int = 2) -> np.ndarray:
+    def generate_embeddings(self, texts: List[str]) -> np.ndarray:
         
         if not self.model:
             raise ValueError("Embedding model not loaded.")
         
-        for attempt in range(max_retries + 1):
-            try:
-                embeddings = self.model.encode(texts, show_progress_bar=True)
-                return np.array(embeddings)
-            except Exception as e:
-                if attempt < max_retries:
-                    wait_time = 2 ** attempt  # Exponential backoff: 1s, 2s, 4s
-                    logger.warning(f"Embedding error (attempt {attempt + 1}/{max_retries + 1}): {str(e)[:100]}")
-                    logger.debug(f"Retrying embed in {wait_time}s...")
-                    time.sleep(wait_time)
-                else:
-                    logger.error(f"Embedding generation failed after {max_retries + 1} attempts: {e}")
-                    raise RuntimeError(f"Embedding generation failed: {str(e)}")
+        embeddings = self.model.encode(texts, show_progress_bar=True)
+        return np.array(embeddings)
 
     def get_embedding_dimension(self) -> int:
        
