@@ -4,11 +4,9 @@ Uses SentenceTransformers (BAAI/bge-m3) to convert text documents into vector
 embeddings for similarity search in the RAG pipeline.
 """
 
-
 from typing import List
 import numpy as np
 from sentence_transformers import SentenceTransformer
-import time
 from src.utils import setup_logger
 
 logger = setup_logger(__name__)
