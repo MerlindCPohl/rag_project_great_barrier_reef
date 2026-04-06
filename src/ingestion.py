@@ -56,13 +56,11 @@ for doc in docs:
 # Clean text (remove boilerplate, whitespace, URLs, emails, page numbers)
 # ============================================================================
 
-
 for doc in docs:
     doc.page_content = clean_text_for_bge(doc.page_content)
 
 test = "Text... © Great Barrier Reef Marine Park Authority Page 5 of 10"
 logger.info(clean_text_for_bge(test))
-
 
 # ============================================================================
 # Detect language for each document
