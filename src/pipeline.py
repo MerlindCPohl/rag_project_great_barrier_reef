@@ -108,8 +108,9 @@ def retrieval_query(query: str, retriever: RAGRetriever, top_k: Optional[int] = 
     Use the following context to answer the question concisely and factually. 
     Do not say where the information comes from, just give the answer. 
     If the provided texts mention different numbers or information for the same topic, list them separately. 
-    If the context does not contain the answer, say: "I don't know based on the provided context."
+    If the context does not contain the answer, say: "I have no information on that."
     Keep the answer to 1–3 sentences.
+    If the user is just saying hi or thanks, respond in a friendly way and ask if you can help without using the context.
 
         Context: {context}
 

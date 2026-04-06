@@ -7,8 +7,6 @@ logo_img = Image.open("./assets/Park_Authority_Logo.png")
 
 st.set_page_config(page_title="ReefGuide", page_icon="🌊")
 
-
-
 col_text, col_logo = st.columns([0.75, 0.25, ], gap="large")
 
 with col_logo:
@@ -42,7 +40,7 @@ if st.session_state.messages and time_since_last_activity > inactivity_timeout:
     st.session_state.messages = []
     st.session_state.last_activity_time = time.time()
     st.rerun()
-
+# works ???
 
 # previous messages
 for message in st.session_state.messages:
@@ -56,6 +54,9 @@ for message in st.session_state.messages:
 
 # input field (chat)
 prompt = st.chat_input("Ask me anything!")
+
+# disclaimer text 
+st.caption("ReefGuide is an AI-based tool that generates answers to your questions. While it aims to provide accurate information, responses may contain errors or be incomplete. Please verify important information using reliable sources. You can find the sources used for each answer at the end of the chat.")
 
 if prompt:
     # update last activity timestamp
@@ -85,7 +86,7 @@ if prompt:
         st.markdown(response)
     
     # button to clear conversation
-    if st.button(type="primary", label="Clear out conversation", icon_position="middle"):
+    if st.button(type="primary", label="Clear out conversation"):
         st.session_state.messages = []
         st.rerun()
 
@@ -95,5 +96,3 @@ if prompt:
         for i, source in enumerate(sources, 1):
             with st.expander(f"Source {i}: {source['source']}"):
                 st.markdown(f"**Preview:** {source['preview']}")
-    
-   
