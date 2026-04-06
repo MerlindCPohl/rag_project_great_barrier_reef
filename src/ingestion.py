@@ -1,7 +1,6 @@
 # %%
 # 1. Setup and Imports
 
-import pymupdf as pdf
 import os
 import sys
 sys.path.insert(0, '../')  

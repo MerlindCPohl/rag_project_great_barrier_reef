@@ -3,17 +3,6 @@ from src import get_answer
 
 st.set_page_config(page_title="ReefGuide", page_icon="🌊")
 
-
-USER_AVATAR = ["🐠"]
-BOT_AVATAR= ["🐙"]
-
-
-if "user_avatar" not in st.session_state:
-    st.session_state.user_avatar = USER_AVATAR
-
-if "bot_avatar" not in st.session_state:
-    st.session_state.bot_avatar = BOT_AVATAR
-
 # title and description
 st.title("G’day mate! 🪸 ")
 st.subheader("Curious about the Great Barrier Reef?")
@@ -22,16 +11,22 @@ st.markdown(
     "Our ReefGuide provides clear, reliable answers to help you explore and understand this unique ecosystem."
 )
 
-# chat interface
+# chat interface with session state to store messages and avatars
 if "messages" not in st.session_state:
     st.session_state.messages = []
 
+
 # previous messages
 for message in st.session_state.messages:
+    if message["role"] == "user":
+        avatar_user = "🐠"
+    else:
+        avatar_bot = "🐙"
     with st.chat_message(message["role"]):
         st.markdown(message["content"])
 
-# input field
+
+# input field (chat)
 prompt = st.chat_input("Ask me anything!")
 
 if prompt:
@@ -39,7 +34,7 @@ if prompt:
     st.session_state.messages.append({"role": "user", "content": prompt})
 
     # show user messages 
-    with st.chat_message("user"):
+    with st.chat_message("user", avatar="🐠"):
         st.markdown(prompt)
     
     #get answer with sources
@@ -54,7 +49,7 @@ if prompt:
     st.session_state.messages.append({"role": "assistant", "content": response})
 
     # display answer
-    with st.chat_message("assistant"):
+    with st.chat_message("assistant", avatar="🐙"):
         st.markdown(response)
     
     # display sources
@@ -62,7 +57,7 @@ if prompt:
         st.markdown("---")
         st.subheader("Sources")
         for i, source in enumerate(sources, 1):
-            with st.expander(f"Source {i}: {source['source']} (Score: {source['score']})"):
+            with st.expander(f"Source {i}: {source['source']}"):
                 st.markdown(f"**Preview:** {source['preview']}")
     
    
