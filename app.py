@@ -1,13 +1,24 @@
+"""
+ReefGuide Streamlit Frontend
+
+Chat interface for retrieval function (RAG) withmessage display and source visualization.
+"""
+
 import streamlit as st
 from src import get_answer
 
 st.set_page_config(page_title="ReefGuide", page_icon="🌊")
 
-# css for styling the app
+# ==========================
+# CSS styling and layout 
+# ==========================
+
 with open("style.css") as f:
     st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True)
 
-# fixed logo in top right using HTML container
+# ===============================
+# UI Layout: logo and header 
+# ===============================
 st.markdown(
     f"""
     <div class="fixed-logo">
@@ -17,7 +28,6 @@ st.markdown(
     unsafe_allow_html=True
 )
 
-# title and description
 st.title("G'day mate! 🪸 ")
 st.subheader("Curious about the Great Barrier Reef?")
 st.markdown(
@@ -25,11 +35,12 @@ st.markdown(
     "Our ReefGuide provides clear, reliable answers to help you explore and understand this unique ecosystem."
 )
 
-# chat interface with session state to store messages
+# ===============================
+# Chat interface with session state to store messages
+# ===============================
 if "messages" not in st.session_state:
     st.session_state.messages = []
 
-# previous messages
 for message in st.session_state.messages:
     if message["role"] == "user":
         avatar = "🐠"
@@ -38,50 +49,49 @@ for message in st.session_state.messages:
     with st.chat_message(message["role"], avatar=avatar):
         st.markdown(message["content"])
 
+# ===============================
+# Input Field and Responding Logic
+# ===============================
 
-# input field (chat)
+
 prompt = st.chat_input("Ask me anything!")
 
 if prompt:
 
-    # safe user message
     st.session_state.messages.append({"role": "user", "content": prompt})
 
-    # show user messages 
     with st.chat_message("user", avatar="🐠"):
         st.markdown(prompt)
     
-    # Get answer (all logic handled in backend)
     with st.spinner("🐙 ReefGuide is thinking..."):
         result = get_answer(prompt)
 
-    # extract components
     response = result['response']
     sources = result.get('sources', [])
     confidence = result.get('confidence', 0.0)
     skip_sources = result.get('skip_sources', False)
 
-    # save message
     st.session_state.messages.append({"role": "assistant", "content": response})
 
-    # display answer
     with st.chat_message("assistant", avatar="🐙"):
         st.markdown(response)
 
-    # display sources only if backend says to show them
     if sources and not skip_sources:
         st.markdown("Sources")
         for i, source in enumerate(sources, 1):
             with st.expander(f"Source {i}: {source['source']}"):
                 st.markdown(f"**Preview:** {source['preview']}")
 
-# button to clear conversation 
 if st.session_state.messages:
     st.divider()
     if st.button(type="primary", label="Clear out conversation"):
         st.session_state.messages = []
         st.rerun()
     
+# ===============================
+# Footer: AI disclaimer 
+# ===============================
+
 st.markdown(
     """
     <div class="custom-disclaimer">

@@ -40,8 +40,60 @@ language:
   default_language: "en"
   min_detection_length: 10
 
-# data eyploration settings
+# data exploration settings
 data_exploration:
   top_keywords_count: 10
   min_word_length: 2
   short_document_threshold: 100
+
+# greeting detection settings
+greeting:
+  keywords:
+    - "hi"
+    - "hello"
+    - "hi there"
+    - "hello there"
+    - "good day"
+    - "gday"
+    - "g'day"
+    - "greetings"
+    - "hey"
+    - "thanks"
+    - "thank you"
+    - "bye"
+    - "goodbye"
+    - "how are you"
+    - "how's it going"
+    - "what's up"
+    - "whats up"
+    - "good morning"
+    - "good afternoon"
+    - "good evening"
+    - "g'day mate"
+    - "howdy"
+    - "welcome"
+    - "see ya"
+    - "see you soon"
+    - "take care"
+    - "have a nice day"
+    - "yo"
+    - "sup"
+    - "cheers"
+    - "see you"
+    - "see you later"
+    - "talk to you later"
+    - "aha"
+    - "hmm"
+    - "uh"
+    - "huh"
+    - "nice"
+    - "great"
+    - "awesome"
+    - "well done"
+    - "congratulations"
+    - "congrats"
+    - "bravo"
+
+
+    
+
