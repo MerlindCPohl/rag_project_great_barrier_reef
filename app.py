@@ -1,6 +1,7 @@
 import streamlit as st
 import PIL.Image as Image
 from src import get_answer
+from src.pipeline import llm, invoke_llm_with_retry
 import time
 
 logo_img = Image.open("./assets/Park_Authority_Logo.png")
@@ -74,14 +75,47 @@ if prompt:
     with st.chat_message("user", avatar="🐠"):
         st.markdown(prompt)
     
-    #get answer with sources
-    with st.spinner("🐙 ReefGuide is thinking..."):
-        result = get_answer(prompt)
+    # quick detection for greetings (skips retrieval)
+    greeting_keywords = ['hi', 'hello', 'hey', 'how are you', 'thanks', 'thank you', 'bye', "what's up", 'good morning', 'good afternoon', 'gday', 'g\'day', 'g\'day mate', 'greetings', 'welcome', 'nice to meet you', 'pleased to meet you', 'howdy', 'salutations', 'cheers', 'hiya', 'yo', 'sup', 'good evening', 'whats up', 'how are you doing', 'how are you today', 'how is it going', 'how have you been', 'long time no see', 'nice to see you', 'glad to see you', 'good to see you']
+    is_greeting = any(keyword in prompt.lower() for keyword in greeting_keywords)
+    
+    if is_greeting:
+        # returns a quick response without retrieval
+        response = "Hi there! Feel free to ask me anything about the Great Barrier Reef!"
+        sources = []
+        confidence = 0.0
+    else:
+        # LLM Classification: Is this question about the Great Barrier Reef?
+        classification_prompt = f"""Is this user question asking for information about the Great Barrier Reef, marine life, ocean ecosystems, conservation, tourism, fish, coral, or related topics?
+        Answer with only: YES or NO
 
-    # extract components
-    response = result['response']
-    sources = result.get('sources', [])
-    confidence = result.get('confidence', 0.0)
+        Question: {prompt}
+        Answer:"""
+                
+        try:
+            with st.spinner("🐙 ReefGuide is thinking..."):
+                classification = invoke_llm_with_retry(llm, classification_prompt).strip().lower()
+        except:
+            classification = "yes" 
+        
+        if "yes" in classification:
+            # if question is about GBR - do RAG retrieval
+            with st.spinner("🐙 ReefGuide is thinking..."):
+                result = get_answer(prompt)
+
+            # extract components
+            response = result['response']
+            sources = result.get('sources', [])
+            confidence = result.get('confidence', 0.0)
+            
+            # only display sources if confidence is high enough
+            if confidence < 0.5:
+                sources = []
+        else:
+            # Question is off-topic
+            response = "I'm specialized in answering questions about the Great Barrier Reef, marine life, and conservation. Feel free to ask me anything about those topics!"
+            sources = []
+            confidence = 0.0
 
     # save message
     st.session_state.messages.append({"role": "assistant", "content": response})
@@ -95,8 +129,8 @@ if prompt:
         st.session_state.messages = []
         st.rerun()
 
-    # display sources
-    if sources:
+    # display sources only if they meet a confidence threshold
+    if sources and confidence >= 0.5:
         st.markdown("Sources")
         for i, source in enumerate(sources, 1):
             with st.expander(f"Source {i}: {source['source']}"):
