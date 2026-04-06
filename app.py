@@ -7,18 +7,26 @@ logo_img = Image.open("./assets/Park_Authority_Logo.png")
 
 st.set_page_config(page_title="ReefGuide", page_icon="🌊")
 
-col_text, col_logo = st.columns([0.75, 0.25, ], gap="large")
+# css for styling the app
+with open("style.css") as f:
+    st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True)
 
-with col_logo:
-    st.image(logo_img)
+# fixed logo in top right using HTML container
+st.markdown(
+    f"""
+    <div class="fixed-logo">
+        <img src="data:image/png;base64,{__import__('base64').b64encode(open('./assets/Park_Authority_Logo.png', 'rb').read()).decode()}" width="100%">
+    </div>
+    """,
+    unsafe_allow_html=True
+)
 
-with col_text:
-    # title and description
-    st.title("G’day mate! 🪸 ")
-    st.subheader("Curious about the Great Barrier Reef?")
-    st.markdown(
-        "Ask me anything — from marine life and conservation to travel tips and local insights!  \n"
-        "Our ReefGuide provides clear, reliable answers to help you explore and understand this unique ecosystem."
+# title and description
+st.title("G'day mate! 🪸 ")
+st.subheader("Curious about the Great Barrier Reef?")
+st.markdown(
+    "Ask me anything — from marine life and conservation to travel tips and local insights!  \n"
+    "Our ReefGuide provides clear, reliable answers to help you explore and understand this unique ecosystem."
 )
 
 # chat interface with session state to store messages and avatars
@@ -54,9 +62,6 @@ for message in st.session_state.messages:
 
 # input field (chat)
 prompt = st.chat_input("Ask me anything!")
-
-# disclaimer text 
-st.caption("ReefGuide is an AI-based tool that generates answers to your questions. While it aims to provide accurate information, responses may contain errors or be incomplete. Please verify important information using reliable sources. You can find the sources used for each answer at the end of the chat.")
 
 if prompt:
     # update last activity timestamp
@@ -96,3 +101,16 @@ if prompt:
         for i, source in enumerate(sources, 1):
             with st.expander(f"Source {i}: {source['source']}"):
                 st.markdown(f"**Preview:** {source['preview']}")
+
+    
+st.markdown(
+    """
+    <div class="custom-disclaimer">
+        ReefGuide is an AI-based tool that generates answers to your questions.<br>
+        While it aims to provide accurate information, responses may contain errors or be incomplete.<br>
+        Please verify important information using reliable sources.<br>
+        You can find the sources used for each answer at the end of the chat.
+    </div>
+    """,
+    unsafe_allow_html=True
+)
