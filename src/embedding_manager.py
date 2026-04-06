@@ -13,10 +13,6 @@ logger = setup_logger(__name__)
 
 
 class EmbeddingManager:
-    """
-    Manages conversion from text to embeddings using sentence transformer.
-    Loads the model, generates embeddings and gets their dimensions. 
-    """
   
     def __init__(self, model_name: str = "BAAI/bge-m3"):
         
