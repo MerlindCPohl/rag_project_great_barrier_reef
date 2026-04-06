@@ -1,7 +1,7 @@
 
 """
 FAISS Vector Store for semantic search.
-Stores document embeddings in a local FAISS index and retrieves top-k most
+Stores document embeddings with metadata in a local FAISS index and retrieves top-k most
 similar documents using cosine similarity search.
 """
 
@@ -16,11 +16,6 @@ logger = setup_logger(__name__)
 
 
 class FaissVectorStore:
-    """
-    Vector store using FAISS for similarity search.
-    Stores embeddings with metadata and enables retrieval of top-k
-    similar documents for a given query embedding.
-    """
 
     def __init__(self, embedding_dim: int, persist_directory: Optional[str] = None) -> None:
         self.embedding_dim = embedding_dim
