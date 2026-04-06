@@ -12,7 +12,6 @@ Provides utilities for:
 """
 
 import re
-import hashlib
 import json
 import os
 import yaml
