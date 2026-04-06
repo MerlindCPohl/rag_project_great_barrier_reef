@@ -1,4 +1,15 @@
-# utility class and functions for PDF text extraction, cleaning, and duplicate removal for BGE embedding preparation
+"""
+Utility functions for data pipeline processing.
+
+Provides utilities for:
+- Configuration loading from YAML
+- PDF text extraction and page selection
+- Text cleaning and preprocessing
+- Language detection
+- Duplicate chunk detection and removal
+- Logging setup
+- Document metadata handling
+"""
 
 import re
 import hashlib
@@ -31,9 +42,7 @@ logger = setup_logger(__name__)
 
 def load_config(config_path: str = "config.yaml") -> Dict[str, Any]:
 
-    # Try to find config.yaml
     if not os.path.exists(config_path):
-        # Try relative to project root
         project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
         config_path = os.path.join(project_root, "config.yaml")
     
@@ -41,13 +50,14 @@ def load_config(config_path: str = "config.yaml") -> Dict[str, Any]:
         return yaml.safe_load(f)
 
 def extract_text_from_pdf(pdf_path: str, selected_pages: List[int], output_file: str) -> None:
-    
+   
     doc = pdf.open(pdf_path)
     with open(output_file, "wb") as out:
         for page_num in selected_pages:
             if page_num < len(doc):
                 page = doc[page_num]
                 text = page.get_text()
+                # Normalize whitespace
                 text = " ".join(text.split()) 
                 out.write(text.encode("utf8"))
                 out.write(b"\n\n")
@@ -57,7 +67,7 @@ def extract_text_from_pdf(pdf_path: str, selected_pages: List[int], output_file:
 
 
 def clean_text_for_bge(text: str) -> str:
-   
+    
     text = re.sub(r'[^\x00-\x7F\u00A0-\uFFFF]', ' ', text)
     text = re.sub(r'http[s]?://[^\s]+|www\.[^\s]+', '', text)
     text = re.sub(r'page?\s*\d+\s*(of\s*)?\d+', '', text, flags=re.IGNORECASE)
@@ -69,12 +79,6 @@ def clean_text_for_bge(text: str) -> str:
     text = " ".join(text.split())
     
     return text.strip()
-
-
-
-def get_chunk_hash(chunk_content: str) -> str:
-
-    return hashlib.md5(chunk_content.encode()).hexdigest()
 
 
 def load_metadata_from_config(filename: str, config_path: str = "../data/metadata.json") -> Dict[str, Any]:
@@ -89,7 +93,6 @@ def load_metadata_from_config(filename: str, config_path: str = "../data/metadat
         "categories": []  
     }
     
-    # load from config file
     config_file = os.path.join(os.path.dirname(os.path.dirname(__file__)), "data", "metadata.json")
     
     if os.path.exists(config_file):
@@ -107,12 +110,12 @@ def load_metadata_from_config(filename: str, config_path: str = "../data/metadat
 
 
 def remove_duplicate_chunks(chunks: List[Document]) -> List[Document]:
-
+    
     seen = set()
     unique_chunks = []
     
     for chunk in chunks:
-        # normalize content before hashing for better deduplication
+
         normalized_content = " ".join(chunk.page_content.lower().split())
         content_hash = get_chunk_hash(normalized_content)
         
@@ -125,16 +128,15 @@ def remove_duplicate_chunks(chunks: List[Document]) -> List[Document]:
 
 
 def detect_language(text: str, default_language: str = "en") -> str:
-   
+    
     if not text or len(text.strip()) < 10:
         return default_language
     
     try:
-        # uses the first 300 chars for quicker detection
         detected_lang = detect(text[:300])
         return detected_lang
     except LangDetectException:
-        # if detection fails 
+      
         return default_language
     except Exception as e:
         logger.warning(f"Language detection error: {e}")

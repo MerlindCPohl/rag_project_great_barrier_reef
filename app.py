@@ -9,16 +9,18 @@ from src import get_answer
 
 st.set_page_config(page_title="ReefGuide", page_icon="🌊")
 
-# ==========================
+# ============================================================================
 # CSS styling and layout 
-# ==========================
+# ============================================================================
+
 
 with open("style.css") as f:
     st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True)
 
-# ===============================
+# ============================================================================
 # UI Layout: logo and header 
-# ===============================
+# ============================================================================
+
 st.markdown(
     f"""
     <div class="fixed-logo">
@@ -35,9 +37,10 @@ st.markdown(
     "Our ReefGuide provides clear, reliable answers to help you explore and understand this unique ecosystem."
 )
 
-# ===============================
+# ============================================================================
 # Chat interface with session state to store messages
-# ===============================
+# ============================================================================
+
 if "messages" not in st.session_state:
     st.session_state.messages = []
 
@@ -49,10 +52,9 @@ for message in st.session_state.messages:
     with st.chat_message(message["role"], avatar=avatar):
         st.markdown(message["content"])
 
-# ===============================
+# ============================================================================
 # Input Field and Responding Logic
-# ===============================
-
+# ============================================================================
 
 prompt = st.chat_input("Ask me anything!")
 
@@ -88,9 +90,9 @@ if st.session_state.messages:
         st.session_state.messages = []
         st.rerun()
     
-# ===============================
+# ============================================================================
 # Footer: AI disclaimer 
-# ===============================
+# ============================================================================
 
 st.markdown(
     """

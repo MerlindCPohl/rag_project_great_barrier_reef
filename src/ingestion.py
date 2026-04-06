@@ -16,7 +16,7 @@ import shutil
 sys.path.insert(0, '../')  
 from langchain_community.document_loaders import TextLoader
 from src.embedding_manager import EmbeddingManager
-from src.utils import extract_text_from_pdf, clean_text_for_bge, remove_duplicate_chunks, get_chunk_hash, load_metadata_from_config, detect_language, load_config, setup_logger
+from src.utils import extract_text_from_pdf, clean_text_for_bge, remove_duplicate_chunks,load_metadata_from_config, detect_language, load_config, setup_logger
 from src.faiss_vector_store import FaissVectorStore
 
 logger = setup_logger(__name__)
@@ -196,7 +196,6 @@ metadatas = [
         "description": chunk.metadata.get("description", ""),  
         "categories": chunk.metadata.get("categories", []),  
         "language": chunk.metadata.get("language", "en"), 
-        "chunk_hash": get_chunk_hash(chunk.page_content) 
     } 
     for chunk in chunks
 ]
