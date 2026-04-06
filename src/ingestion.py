@@ -3,11 +3,10 @@
 Handling of:
 1. PDF extraction and text loading
 2. Text cleaning and preprocessing
-3. Language detection
-4. Data exploration and validation
-5. Semantic chunking
-6. Embedding generation
-7. Vector store persistence
+3. Data exploration and validation
+4. Semantic chunking
+5. Embedding generation
+6. Vector store persistence
 """
 
 import os
@@ -16,7 +15,7 @@ import shutil
 sys.path.insert(0, '../')  
 from langchain_community.document_loaders import TextLoader
 from src.embedding_manager import EmbeddingManager
-from src.utils import extract_text_from_pdf, clean_text_for_bge, remove_duplicate_chunks,load_metadata_from_config, detect_language, load_config, setup_logger
+from src.utils import extract_text_from_pdf, clean_text_for_bge, remove_duplicate_chunks, load_metadata_from_config, load_config, setup_logger
 from src.faiss_vector_store import FaissVectorStore
 
 logger = setup_logger(__name__)
@@ -61,18 +60,6 @@ for doc in docs:
 
 test = "Text... © Great Barrier Reef Marine Park Authority Page 5 of 10"
 logger.info(clean_text_for_bge(test))
-
-# ============================================================================
-# Detect language for each document
-# ============================================================================
-
-language_counts = {}
-for doc in docs:
-    language = detect_language(doc.page_content)
-    doc.metadata['language'] = language
-    language_counts[language] = language_counts.get(language, 0) + 1
-
-logger.info(f"Language detection complete. Distribution={language_counts}")
 
 # ============================================================================
 # Data exploration: Analyze dataset statistics, word frequency, and identify potential issues

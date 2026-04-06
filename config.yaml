@@ -24,10 +24,6 @@ llm:
   top_p: 0.1
   max_tokens: 512
 
-language:
-  default_language: "en"
-  min_detection_length: 10
-
 data_exploration:
   top_keywords_count: 10
   min_word_length: 2

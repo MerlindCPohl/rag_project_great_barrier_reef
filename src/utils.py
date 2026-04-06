@@ -5,7 +5,7 @@ Provides utilities for:
 - Configuration loading from YAML
 - PDF text extraction and page selection
 - Text cleaning and preprocessing
-- Language detection
+
 - Duplicate chunk detection and removal
 - Logging setup
 - Document metadata handling
