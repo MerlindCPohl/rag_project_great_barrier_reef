@@ -31,10 +31,10 @@ if "messages" not in st.session_state:
 # previous messages
 for message in st.session_state.messages:
     if message["role"] == "user":
-        avatar_user = "🐠"
+        avatar = "🐠"
     else:
-        avatar_bot = "🐙"
-    with st.chat_message(message["role"]):
+        avatar = "🐙"
+    with st.chat_message(message["role"], avatar=avatar):
         st.markdown(message["content"])
 
 
@@ -42,7 +42,7 @@ for message in st.session_state.messages:
 prompt = st.chat_input("Ask me anything!")
 
 if prompt:
-    # safe user megssage 
+    # safe user message
     st.session_state.messages.append({"role": "user", "content": prompt})
 
     # show user messages 
@@ -50,7 +50,8 @@ if prompt:
         st.markdown(prompt)
     
     #get answer with sources
-    result = get_answer(prompt)
+    with st.spinner("🐙 ReefGuide is thinking..."):
+        result = get_answer(prompt)
 
     # extract components
     response = result['response']
@@ -64,6 +65,11 @@ if prompt:
     with st.chat_message("assistant", avatar="🐙"):
         st.markdown(response)
     
+    # button to clear conversation
+    if st.button(type="primary", label="Clear out conversation"):
+        st.session_state.messages = []
+        st.rerun()
+
     # display sources
     if sources:
         st.markdown("---")
