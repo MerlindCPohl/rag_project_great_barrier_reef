@@ -22,9 +22,9 @@ config = load_config()
 
 logger = setup_logger(__name__)
 
-# ==========================
+# ============================================================================
 # LLM integration
-# ==========================
+# ============================================================================
 
 from langchain_ollama import OllamaLLM
 from dotenv import load_dotenv
@@ -36,9 +36,9 @@ llm = OllamaLLM(
     top_p=config['llm']['top_p']
 )
 
-# ==========================
+# ============================================================================
 # Detection functions
-# ==========================
+# ============================================================================
 
 def is_greeting(query: str, keywords: List[str]) -> bool:
     """
@@ -68,7 +68,7 @@ def is_greeting(query: str, keywords: List[str]) -> bool:
 
 def classify_gbr_question(query: str) -> bool:
     """
-    Classifys if user question is about GBR topics.
+    Classifies if user question is about GBR topics.
     Off-topic questions do not trigger retrieval.
     
     Args:
@@ -85,16 +85,14 @@ Answer:"""
         
     try:
         classification = llm.invoke(classification_prompt).strip().lower()
-        return "yes" in classification or classification.startswith("yes")
+        return "yes" in classification
     except Exception as e:
         logger.warning(f"Classification failed, defaulting to True: {e}")
         return True 
 
-
-# ==========================
-# Rag pipeline functions
-# ==========================
-
+# ============================================================================
+# RAG pipeline functions
+# ============================================================================
 
 def retrieval_query(query: str, retriever: RAGRetriever, top_k: Optional[int] = None, score_threshold: Optional[float] = None, return_context: bool = False) -> Dict[str, Any]:
     """
@@ -150,7 +148,7 @@ def retrieval_query(query: str, retriever: RAGRetriever, top_k: Optional[int] = 
     
     if confidence < score_threshold:
         return {
-            'response': "The found documents are not sufficiently relevant. I refuse to answer to avoid errors.",
+            'response': "Unfortunately the documents I found aren't relevant enough to provide an accurate answer.",
             'sources': sources,
             'confidence': round(float(confidence), 3)
         }
@@ -190,9 +188,9 @@ Answer:"""
     
     return output
 
-# ==========================
+# ============================================================================
 # Orchestration function
-# ==========================
+# ============================================================================
 
 _embedding_manager = None
 _vector_store = None
@@ -273,7 +271,7 @@ def get_answer(query: str, top_k: Optional[int] = None, score_threshold: Optiona
         result = retrieval_query(query, retriever, top_k, score_threshold, return_context=True)
         
         result['is_greeting'] = False
-        result['skip_sources'] = result.get('confidence', 0.0) < 0.5
+        result['skip_sources'] = result.get('confidence', 0.0) < score_threshold
         
         logger.info(f"Query completed | confidence={result.get('confidence', 0):.3f}")
         return result
