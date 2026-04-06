@@ -1,14 +1,26 @@
 import streamlit as st
+import PIL.Image as Image
 from src import get_answer
+
+logo_img = Image.open("./assets/Park_Authority_Logo.png")
 
 st.set_page_config(page_title="ReefGuide", page_icon="🌊")
 
-# title and description
-st.title("G’day mate! 🪸 ")
-st.subheader("Curious about the Great Barrier Reef?")
-st.markdown(
-    "Ask me anything — from marine life and conservation to travel tips and local insights!  \n"
-    "Our ReefGuide provides clear, reliable answers to help you explore and understand this unique ecosystem."
+
+
+col_text, col_logo = st.columns([0.75, 0.25, ], gap="large")
+
+with col_logo:
+ 
+    st.image(logo_img)
+
+with col_text:
+    # title and description
+    st.title("G’day mate! 🪸 ")
+    st.subheader("Curious about the Great Barrier Reef?")
+    st.markdown(
+        "Ask me anything — from marine life and conservation to travel tips and local insights!  \n"
+        "Our ReefGuide provides clear, reliable answers to help you explore and understand this unique ecosystem."
 )
 
 # chat interface with session state to store messages and avatars

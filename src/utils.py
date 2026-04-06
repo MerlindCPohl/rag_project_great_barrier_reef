@@ -11,8 +11,8 @@ from langchain_core.documents import Document
 from langdetect import detect, LangDetectException
 import logging
 
-
 def setup_logger(name: str, level: int = logging.INFO) -> logging.Logger:
+
     logger = logging.getLogger(name)
     logger.setLevel(level)
     
@@ -27,11 +27,10 @@ def setup_logger(name: str, level: int = logging.INFO) -> logging.Logger:
     
     return logger
 
-
 logger = setup_logger(__name__)
 
-
 def load_config(config_path: str = "config.yaml") -> Dict[str, Any]:
+
     # Try to find config.yaml
     if not os.path.exists(config_path):
         # Try relative to project root
@@ -141,19 +140,5 @@ def detect_language(text: str, default_language: str = "en") -> str:
         logger.warning(f"Language detection error: {e}")
         return default_language
     
-def setup_logger(name: str, level: int = logging.INFO) -> logging.Logger:
 
-    logger = logging.getLogger(name)
-    logger.setLevel(level)
-    
-    if not logger.handlers:
-        handler = logging.StreamHandler()
-        formatter = logging.Formatter(
-            fmt='%(asctime)s | %(name)-20s | %(levelname)-8s | %(message)s',
-            datefmt='%Y-%m-%d %H:%M:%S'
-        )
-        handler.setFormatter(formatter)
-        logger.addHandler(handler)
-    
-    return logger
 

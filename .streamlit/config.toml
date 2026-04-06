@@ -1,0 +1,9 @@
+[theme]
+
+base="light"
+backgroundColor="#ebf4ef"
+secondaryBackgroundColor="ghostwhite"
+primaryColor="#f8b7b7"     #sent sign
+showWidgetBorder = false
+borderColor = "#E0F2F1"
+baseRadius="full"
