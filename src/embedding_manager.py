@@ -1,6 +1,5 @@
 """
 Embedding Manager for generating and managing text embeddings.
-
 Uses SentenceTransformers (BAAI/bge-m3) to convert text documents into vector
 embeddings for similarity search in the RAG pipeline.
 """
@@ -17,8 +16,8 @@ logger = setup_logger(__name__)
 
 class EmbeddingManager:
     """
-    Manages text-to-embedding conversion using sentence transformer.
-    Loads the model,generate embeddings and gets their dimensions. 
+    Manages conversion from text to embeddings using sentence transformer.
+    Loads the model, generates embeddings and gets their dimensions. 
     """
   
     def __init__(self, model_name: str = "BAAI/bge-m3"):
