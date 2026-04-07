@@ -59,36 +59,27 @@ for message in st.session_state.messages:
 prompt = st.chat_input("Ask me anything!")
 
 if prompt:
-
     st.session_state.messages.append({"role": "user", "content": prompt})
-
-    with st.chat_message("user", avatar="🐠"):
-        st.markdown(prompt)
     
     with st.spinner("🐙 ReefGuide is thinking..."):
         result = get_answer(prompt)
-
-    response = result['response']
-    sources = result.get('sources', [])
-    confidence = result.get('confidence', 0.0)
-    skip_sources = result.get('skip_sources', False)
-
-    st.session_state.messages.append({"role": "assistant", "content": response})
-
-    with st.chat_message("assistant", avatar="🐙"):
-        st.markdown(response)
-
-    if sources and not skip_sources:
-        st.markdown("Sources")
-        for i, source in enumerate(sources, 1):
-            with st.expander(f"Source {i}: {source['source']}"):
-                st.markdown(f"**Preview:** {source['preview']}")
+    
+    st.session_state.messages.append({"role": "assistant", "content": result['response']})
+    st.session_state.last_sources = result.get('sources', [])
+    st.session_state.last_skip_sources = result.get('skip_sources', False)
+    st.rerun()
 
 if st.session_state.messages:
     st.divider()
     if st.button(type="primary", label="Clear out conversation"):
         st.session_state.messages = []
         st.rerun()
+
+if hasattr(st.session_state, 'last_sources') and st.session_state.last_sources and not st.session_state.last_skip_sources:
+    st.markdown("### Sources")
+    for i, source in enumerate(st.session_state.last_sources, 1):
+        with st.expander(f"Source {i}: {source['source']}"):
+            st.markdown(f"**Preview:** {source['preview']}")
     
 # ============================================================================
 # Footer: AI disclaimer 
