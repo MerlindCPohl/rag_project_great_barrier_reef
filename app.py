@@ -59,15 +59,22 @@ for message in st.session_state.messages:
 prompt = st.chat_input("Ask me anything!")
 
 if prompt:
+    # Add user message to session state and display it
     st.session_state.messages.append({"role": "user", "content": prompt})
+    with st.chat_message("user", avatar="🐠"):
+        st.markdown(prompt)
     
-    with st.spinner("🐙 Diiiiving for your answer..."):
-        result = get_answer(prompt)
+    # Display assistant message with spinner
+    with st.chat_message("assistant", avatar="🐙"):
+        with st.spinner("🐙 Diiiiving for your answer..."):
+            result = get_answer(prompt)
+        
+        # Add assistant message to session state and display it
+        st.session_state.messages.append({"role": "assistant", "content": result['response']})
+        st.markdown(result['response'])
     
-    st.session_state.messages.append({"role": "assistant", "content": result['response']})
     st.session_state.last_sources = result.get('sources', [])
     st.session_state.last_skip_sources = result.get('skip_sources', False)
-    st.rerun()
 
 if st.session_state.messages:
     st.divider()
