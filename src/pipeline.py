@@ -1,13 +1,16 @@
 """
-ReefGuide RAG Pipeline.
+ReefGuide RAG Pipeline: Main orchestration and question-answering logic.
 
-Orchestrates the question-answering pipeline:
-1. Greeting detection - returns response without retrieval 
-2. GBR topic classification - filters off-topic questions
-3. Document retrieval - searches vector database
-4. Answer generation - produces answer with sources
+Handling of:
+1. is_greeting(): Detects casual greetings using keyword matching
+2. classify_gbr_question(): LLM-based topic classification (GBR vs off-topic)
+3. format_sources(): Formats retrieval results for UI display
+4. init_components(): Lazy initialization of RAG components
+5. retrieval_query(): Core RAG pipeline (retrieve → format → generate answer)
+6. get_answer(): Main entry point and orchestrator
 
-Uses Ollama LLM and FAISS for vector search.
+Uses Ollama LLM and FAISS (via RAGRetriever) for vector search.
+All user-facing messages externalized to config.yaml
 """
 
 from typing import List, Dict, Any, Optional
@@ -94,50 +97,11 @@ Answer:"""
         return True 
 
 # ============================================================================
-# RAG pipeline functions
+# Helper functions
 # ============================================================================
 
-def retrieval_query(query: str, retriever: RAGRetriever, top_k: Optional[int] = None, score_threshold: Optional[float] = None, return_context: bool = False) -> Dict[str, Any]:
-    """
-    RAG Pipeline: Search vector database and generate answer.
-    Used by get_answer() after query classification.
-    
-    Main functions:
-    1. Searches in vector DB for relevant documents
-    2. Checks confidence score against threshold
-    3. Generates and returns answer with sources 
-    
-    Args:
-        query: User question
-        retriever: RAGRetriever instance
-        top_k: Number of top documents to retrieve (uses config default if None)
-        score_threshold: Minimum similarity score (uses config default if None)
-        return_context: Whether to include raw context in response
-    
-    Returns:
-        Dict containing:
-            - response: Generated answer text
-            - sources: List of source documents with metadata
-            - confidence: Highest similarity score
-            - context: Raw context (if return_context=True)
-    """
-
-    if top_k is None:
-        top_k = config['retrieval']['top_k']
-    if score_threshold is None:
-        score_threshold = config['retrieval']['score_threshold']
-
-    results = retriever.retrieve(query=query, top_k=top_k, score_threshold=score_threshold)
-    
-    if not results:
-        return {
-            'response': "No relevant documents found to answer the question.",
-            'sources': [],
-            'confidence': 0.0
-        }
-
-    confidence = max(doc['similarity_score'] for doc in results)
-
+def format_sources(results: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
+    """Format retrieval results into source metadata."""
     sources = []
     for doc in results:
         clean_preview = doc['content'][:150].replace('\n', ' ').strip()
@@ -148,18 +112,68 @@ def retrieval_query(query: str, retriever: RAGRetriever, top_k: Optional[int] = 
             'score': round(float(doc['similarity_score']), 3),
             'preview': f"{clean_preview}..."
         })
+    return sources
+
+
+def init_components() -> None:
+    """Initialize RAG components (lazy loading)."""
+    global _embedding_manager, _vector_store, _retriever
     
+    try:
+        _embedding_manager = EmbeddingManager()
+        _vector_store = FaissVectorStore(embedding_dim=_embedding_manager.get_embedding_dimension())
+        _retriever = RAGRetriever(_vector_store, _embedding_manager)
+        logger.info("RAG components initialized successfully")
+    except Exception as e:
+        logger.critical(f"Failed to initialize RAG components: {e}")
+        raise
+
+
+
+# ============================================================================
+# RAG Pipeline
+# ============================================================================
+
+def retrieval_query(query: str, retriever: RAGRetriever, top_k: int, 
+                   score_threshold: float) -> Dict[str, Any]:
+    """
+    Core RAG pipeline: retrieve documents, format sources, generate answer. 
+    
+    Args:
+        query: User question
+        retriever: RAGRetriever instance
+        top_k: Number of documents to retrieve
+        score_threshold: Minimum similarity score
+    
+    Returns:
+        Dict with response, sources, confidence, skip_sources
+    """
+
+    results = retriever.retrieve(query=query, top_k=top_k, score_threshold=score_threshold)
+    
+    if not results:
+        return {
+            'response': config['messages']['no_documents_found'],
+            'sources': [],
+            'confidence': 0.0,
+            'skip_sources': True
+        }
+
+    confidence = max(doc['similarity_score'] for doc in results)
+    sources = format_sources(results)
+    
+
     if confidence < score_threshold:
         return {
-            'response': "Unfortunately the documents I found aren't relevant enough to provide an accurate answer.",
+            'response': config['messages']['low_confidence'],
             'sources': sources,
-            'confidence': round(float(confidence), 3)
+            'confidence': round(float(confidence), 3),
+            'skip_sources': True
         }
     
     context = "\n\n".join([doc['content'] for doc in results])
-      
-    prompt = f"""
-You are ReefGuide, a chat assistant at the Great Barrier Reef Marine Park visitor center in Queensland, Australia.
+    
+    prompt = f"""You are ReefGuide, a chat assistant at the Great Barrier Reef Marine Park visitor center in Queensland, Australia.
 When someone says "here", they refer to the Great Barrier Reef region. 
 Use the following context to answer the question concisely and factually. 
 Do not say where the information comes from, just give the answer. 
@@ -175,24 +189,20 @@ Answer:"""
     
     try:
         response = llm.invoke(prompt)
+        return {
+            'response': response,
+            'sources': sources,
+            'confidence': round(float(confidence), 3),
+            'skip_sources': False
+        }
     except Exception as e:
         logger.error(f"LLM invocation failed: {e}")
         return {
-            'response': f"Error generating answer: {str(e)}",
+            'response': config['messages']['error_generating_answer'],
             'sources': sources,
-            'confidence': round(float(confidence), 3)
+            'confidence': round(float(confidence), 3),
+            'skip_sources': True
         }
-
-    output = {
-        'response': response,
-        'sources': sources,
-        'confidence': round(float(confidence), 3)
-    }
-    
-    if return_context:
-        output['context'] = context
-    
-    return output
 
 # ============================================================================
 # Orchestration function
@@ -202,46 +212,34 @@ _embedding_manager = None
 _vector_store = None
 _retriever = None
 
-def get_answer(query: str, top_k: Optional[int] = None, score_threshold: Optional[float] = None) -> Dict[str, Any]:
+def get_answer(query: str, top_k: Optional[int] = None, 
+               score_threshold: Optional[float] = None) -> Dict[str, Any]:
     """
-    Returns user's answer.
-    
-    Main orchestration function that:
-    1. Detects greetings
-    2. Classifies if question is about GBR 
-    3. Retrieves relevant documents (vector search)
-    4. Generates and returns answer with metadata
-
+    Main entry point: orchestrates greeting detection → classification → RAG → response.
     
     Args:
-        query: User input text or question
-        top_k: Number of top documents to retrieve (uses config default if None)
+        query: User input
+        top_k: Number of documents to retrieve (uses config default if None)
         score_threshold: Minimum similarity score (uses config default if None)
     
     Returns:
-        Dict with keys:
-            - response: Generated answer text
-            - sources: List of source documents (empty for non-RAG queries)
-            - confidence: Similarity score
-            - is_greeting: True if input was a greeting
-            - skip_sources: True if sources should not be displayed
-    
+        Dict with response, sources, confidence, skip_sources, is_greeting
     """
-    global _embedding_manager, _vector_store, _retriever
-   
+    global _retriever
+    
     logger.info(f"Query received | len={len(query)}")
     
-    greeting_keywords = list(config.get('greeting', {}).get('keywords', []))
-    logger.debug(f"Loaded {len(greeting_keywords)} greeting keywords: {greeting_keywords[:5]}...")
+    if _retriever is None:
+        init_components()
     
-    is_greeting_result = is_greeting(query, greeting_keywords)
-    logger.info(f"is_greeting('{query}') = {is_greeting_result}")
+    top_k = top_k or config['retrieval']['top_k']
+    score_threshold = score_threshold or config['retrieval']['score_threshold']
+    greeting_keywords = config.get('greeting', {}).get('keywords', [])
     
-    if is_greeting_result:
+    if is_greeting(query, greeting_keywords):
         logger.info("Greeting detected - skipping retrieval")
         return {
-            'response': "Hi there! Feel free to ask me anything about the Great Barrier Reef!",
-            'sources': [],
+            'response': config['messages']['greeting_response'],
             'confidence': 0.0,
             'is_greeting': True,
             'skip_sources': True
@@ -250,45 +248,21 @@ def get_answer(query: str, top_k: Optional[int] = None, score_threshold: Optiona
     if not classify_gbr_question(query):
         logger.info("Question classified as off-topic")
         return {
-            'response': "I'm specialized in answering questions about the Great Barrier Reef, marine life, and conservation. Feel free to ask me anything about those topics!",
+            'response': config['messages']['off_topic'],
             'sources': [],
             'confidence': 0.0,
             'is_greeting': False,
             'skip_sources': True
         }
-    
-    if _embedding_manager is None:
-        try:
-            _embedding_manager = EmbeddingManager()
-            _vector_store = FaissVectorStore(embedding_dim=_embedding_manager.get_embedding_dimension())
-            _retriever = RAGRetriever(_vector_store, _embedding_manager)
-        except Exception as e:
-            logger.critical(f"Failed to initialize components: {e}")
-            return {
-                'response': "Error: Could not initialize system",
-                'sources': [],
-                'confidence': 0.0,
-                'is_greeting': False,
-                'skip_sources': True
-            }
-    
     try:
-        retriever = _retriever
-        result = retrieval_query(query, retriever, top_k, score_threshold, return_context=True)
-        
+        result = retrieval_query(query, _retriever, top_k, score_threshold)
         result['is_greeting'] = False
-   
-        threshold = score_threshold if score_threshold is not None else config['retrieval']['score_threshold']
-        result['skip_sources'] = result.get('confidence', 0.0) < threshold
-        
         logger.info(f"Query completed | confidence={result.get('confidence', 0):.3f}")
         return result
-        
     except Exception as e:
-        error_msg = f"Unexpected error: {str(e)[:100]}"
-        logger.error(error_msg)
+        logger.error(f"Unexpected error: {str(e)[:100]}")
         return {
-            'response': f"Error: {error_msg}",
+            'response': config['messages']['system_error'],
             'sources': [],
             'confidence': 0.0,
             'is_greeting': False,
