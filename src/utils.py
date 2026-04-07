@@ -2,13 +2,12 @@
 Utility functions for data pipeline processing.
 
 Provides utilities for:
+- Logging setup
 - Configuration loading from YAML
 - PDF text extraction and page selection
 - Text cleaning and preprocessing
-
-- Duplicate chunk detection and removal
-- Logging setup
 - Document metadata handling
+- Duplicate chunk detection and removal
 """
 
 import re
