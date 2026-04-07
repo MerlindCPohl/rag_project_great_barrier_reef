@@ -18,8 +18,8 @@ import yaml
 import pymupdf as pdf
 from typing import List, Dict, Any
 from langchain_core.documents import Document
-from langdetect import detect, LangDetectException
 import logging
+
 
 def setup_logger(name: str, level: int = logging.INFO) -> logging.Logger:
 
@@ -109,37 +109,22 @@ def load_metadata_from_config(filename: str, config_path: str = "../data/metadat
 
 
 def remove_duplicate_chunks(chunks: List[Document]) -> List[Document]:
-    
+
     seen = set()
     unique_chunks = []
     
     for chunk in chunks:
 
         normalized_content = " ".join(chunk.page_content.lower().split())
-        content_hash = get_chunk_hash(normalized_content)
         
-        if content_hash not in seen:
-            seen.add(content_hash)
+        if normalized_content not in seen:
+            seen.add(normalized_content)
             unique_chunks.append(chunk)
     
-    logger.info(f"Removed {len(chunks) - len(unique_chunks)} duplicates. {len(unique_chunks)} chunks remain.")
+    removed_count = len(chunks) - len(unique_chunks)
+    logger.info(f"Removed {removed_count} duplicate chunks. {len(unique_chunks)} unique chunks remain.")
     return unique_chunks
 
-
-def detect_language(text: str, default_language: str = "en") -> str:
-    
-    if not text or len(text.strip()) < 10:
-        return default_language
-    
-    try:
-        detected_lang = detect(text[:300])
-        return detected_lang
-    except LangDetectException:
-      
-        return default_language
-    except Exception as e:
-        logger.warning(f"Language detection error: {e}")
-        return default_language
     
 
 
