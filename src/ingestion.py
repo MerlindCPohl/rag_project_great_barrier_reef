@@ -12,7 +12,7 @@ Handling of:
 import os
 import sys
 import shutil
-sys.path.insert(0, '../')  
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from langchain_community.document_loaders import TextLoader
 from src.embedding_manager import EmbeddingManager
 from src.utils import extract_text_from_pdf, clean_text_for_bge, remove_duplicate_chunks, load_metadata_from_config, load_config, setup_logger
@@ -26,8 +26,11 @@ config = load_config()
 # Configure paths and metadata
 # ============================================================================
 
-pdf_path = "../data/Measuring_the_economic_financial_value_of_the_Great_Barrier_Reef_Marine_Park_2005-06.pdf"
-document_output_path = "gbr_extracted_text.txt"
+script_dir = os.path.dirname(os.path.abspath(__file__))
+project_root = os.path.dirname(script_dir)
+
+pdf_path = os.path.join(project_root, "data/Measuring_the_economic_financial_value_of_the_Great_Barrier_Reef_Marine_Park_2005-06.pdf")
+document_output_path = os.path.join(project_root, "data/gbr_extracted_text.txt")
 
 selected_pages = list(range(5, 87))
 
@@ -134,7 +137,7 @@ except Exception as e:
 from langchain_experimental.text_splitter import SemanticChunker
 
 semantic_splitter = SemanticChunker(
-    embedding_manager.model,
+    embedding_manager,
     breakpoint_threshold_type=config['ingestion']['breakpoint_threshold_type'],
     breakpoint_threshold_amount=config['ingestion']['breakpoint_threshold_amount']
 )
