@@ -9,8 +9,11 @@ A Practice-Oriented Approach to Developing AI Applications** held by Elisabeth S
 ## Features
 
 - **RAG Pipeline:** uses semantic search over scientific documents 
+
 - **Semantic chunking** of provided data sources
+
 - **Intent-aware filtering:** to distinguish casual conversation from knowledge-seeking questions 
+
 - **Modern UI:** with Streamlit, including chat history, chat clear-out function, source visibility, and a reef-themed design  
 
 
@@ -30,8 +33,8 @@ A Practice-Oriented Approach to Developing AI Applications** held by Elisabeth S
 ## Project Structure
 ```text
 Code/
-├──.streamlit                       # Streamlit configuration
-│   ├── config.toml
+├──.streamlit                      
+│   ├── config.toml                 # Streamlit configuration
 ├── assets/                         # UI Logo
 ├── data/
 │   ├── evaluation/                 # Evaluation files
@@ -86,6 +89,29 @@ Code/
 
 6. **Open the Local URL**
    Click `http://localhost:8501` in your local terminal. 
+
+
+## Configuration
+
+The system's behavior can be adjusted in the following files:
+
+### config.yaml (Core RAG Logic)
+
+- **ingestion: breakpoint_threshold_amount**: Controls semantic chunking (higher = bigger chunks, lower = more granular segments).
+
+- **embedding: model_name**: The model used to vectorize text (currently "BAAI/bge-m3"). Change this if you switch your embedding provider.
+
+- **retrieval: top_k**: Number of relevant document snippets retrieved from the vector store (default is 5). 
+
+- **retrieval: score_threshold**: The minimum similarity score required for a document to be considered (currently 0.3). This prevents the AI from using irrelevant information.
+
+- **llm: model**: The specific local model used via Ollama (currently llama3).
+
+- **llm: temperature**: Controls the "creativity" of the response (0.1 = highly deterministic and fact-based, higher values allow for more varied phrasing).
+
+### .streamlit/config.toml (UI Theme)
+Primary Color & Backgrounds:
+Customizes the reef-themed colors.
 
 
 ## Screenshots of Example Usage
