@@ -8,6 +8,7 @@ Provides utilities for:
 - Text cleaning and preprocessing
 - Document metadata handling
 - Duplicate chunk detection and removal
+- Prompt loading from YAML
 """
 
 import re
@@ -125,5 +126,12 @@ def remove_duplicate_chunks(chunks: List[Document]) -> List[Document]:
     return unique_chunks
 
     
-
+def load_prompts(prompts_path: str = "prompts.yaml") -> Dict[str, Any]:
+    
+    if not os.path.exists(prompts_path):
+        project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+        prompts_path = os.path.join(project_root, "prompts.yaml")
+    
+    with open(prompts_path, 'r', encoding='utf-8') as f:
+        return yaml.safe_load(f)
 

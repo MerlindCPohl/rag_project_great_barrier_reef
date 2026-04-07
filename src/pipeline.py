@@ -17,11 +17,11 @@ from typing import List, Dict, Any, Optional
 from src.embedding_manager import EmbeddingManager
 from src.faiss_vector_store import FaissVectorStore
 from src.retriever import RAGRetriever
-from src.utils import load_config
-from src.utils import setup_logger
+from src.utils import load_config, setup_logger, load_prompts
 import re
 
 config = load_config()
+prompts = load_prompts() 
 
 logger = setup_logger(__name__)
 
@@ -44,16 +44,7 @@ llm = OllamaLLM(
 # ============================================================================
 
 def is_greeting(query: str, keywords: List[str]) -> bool:
-    """
-    Check if user input is a casual greeting using keyword list.
     
-    Args:
-        query: User input text to classify
-        keywords: List of greeting keywords/phrases from config
-    
-    Returns:
-        True if input matches greeting keywords, otherwise False
-    """
     clean_query = re.sub(r'[^\w\s]', '', query.lower())
     words = clean_query.split()
     
@@ -70,24 +61,9 @@ def is_greeting(query: str, keywords: List[str]) -> bool:
 
 
 def classify_gbr_question(query: str) -> bool:
-    """
-    Classifies if user question is about GBR topics.
-    Off-topic questions do not trigger retrieval.
-    
-    Args:
-        query: User question text
-    
-    Returns:
-        True if question is GBR-related, False if off-topic
-    """
-    classification_prompt = f"""You are ReefGuide, deployed at the Great Barrier Reef Marine Park visitor center in Queensland, Australia.
-When someone says "here" or "local" or "this place", they refer to the Great Barrier Reef.
-Is this user question asking for information about the Great Barrier Reef, GBR, marine life, ocean ecosystems, conservation, tourism, employment, infrastructure, fish, coral, or related topics?
 
-Answer with only: YES or NO
-
-Question: {query}
-Answer:"""
+    prompt_template = prompts['classification']
+    classification_prompt = prompt_template.format(query=query)
         
     try:
         classification = llm.invoke(classification_prompt).strip().lower()
@@ -101,7 +77,7 @@ Answer:"""
 # ============================================================================
 
 def format_sources(results: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-    """Format retrieval results into source metadata."""
+
     sources = []
     for doc in results:
         clean_preview = doc['content'][:150].replace('\n', ' ').strip()
@@ -116,7 +92,7 @@ def format_sources(results: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
 
 
 def init_components() -> None:
-    """Initialize RAG components (lazy loading)."""
+
     global _embedding_manager, _vector_store, _retriever
     
     try:
@@ -136,19 +112,7 @@ def init_components() -> None:
 
 def retrieval_query(query: str, retriever: RAGRetriever, top_k: int, 
                    score_threshold: float) -> Dict[str, Any]:
-    """
-    Core RAG pipeline: retrieve documents, format sources, generate answer. 
-    
-    Args:
-        query: User question
-        retriever: RAGRetriever instance
-        top_k: Number of documents to retrieve
-        score_threshold: Minimum similarity score
-    
-    Returns:
-        Dict with response, sources, confidence, skip_sources
-    """
-
+   
     results = retriever.retrieve(query=query, top_k=top_k, score_threshold=score_threshold)
     
     if not results:
@@ -173,19 +137,8 @@ def retrieval_query(query: str, retriever: RAGRetriever, top_k: int,
     
     context = "\n\n".join([doc['content'] for doc in results])
     
-    prompt = f"""You are ReefGuide, a chat assistant at the Great Barrier Reef Marine Park visitor center in Queensland, Australia.
-When someone says "here", they refer to the Great Barrier Reef region. 
-Use the following context to answer the question concisely and factually. 
-Do not say where the information comes from, just give the answer. 
-If the provided texts mention different numbers or information for the same topic, list them separately.
-Only mention missing information if the user specifically asks about it. Do not add disclaimers about what you don't know.
-Keep the answer to 1–3 sentences.
-
-Context: {context}
-
-Question: {query}
-
-Answer:"""
+    prompt_template = prompts['answer_generation']
+    prompt = prompt_template.format(context=context, query=query)   
     
     try:
         response = llm.invoke(prompt)
@@ -214,17 +167,7 @@ _retriever = None
 
 def get_answer(query: str, top_k: Optional[int] = None, 
                score_threshold: Optional[float] = None) -> Dict[str, Any]:
-    """
-    Main entry point: orchestrates greeting detection → classification → RAG → response.
     
-    Args:
-        query: User input
-        top_k: Number of documents to retrieve (uses config default if None)
-        score_threshold: Minimum similarity score (uses config default if None)
-    
-    Returns:
-        Dict with response, sources, confidence, skip_sources, is_greeting
-    """
     global _retriever
     
     logger.info(f"Query received | len={len(query)}")
