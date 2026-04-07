@@ -77,7 +77,10 @@ def classify_gbr_question(query: str) -> bool:
     Returns:
         True if question is GBR-related, False if off-topic
     """
-    classification_prompt = f"""Is this user question asking for information about the Great Barrier Reef, GBR, marine life, ocean ecosystems, conservation, tourism, employment, infrastructure, fish, coral, or related topics?
+    classification_prompt = f"""You are ReefGuide, deployed at the Great Barrier Reef Marine Park visitor center in Queensland, Australia.
+When someone says "here" or "local" or "this place", they refer to the Great Barrier Reef.
+Is this user question asking for information about the Great Barrier Reef, GBR, marine life, ocean ecosystems, conservation, tourism, employment, infrastructure, fish, coral, or related topics?
+
 Answer with only: YES or NO
 
 Question: {query}
@@ -155,7 +158,10 @@ def retrieval_query(query: str, retriever: RAGRetriever, top_k: Optional[int] = 
     
     context = "\n\n".join([doc['content'] for doc in results])
       
-    prompt = f"""Use the following context to answer the question concisely and factually. 
+    prompt = f"""
+You are ReefGuide, a chat assistant at the Great Barrier Reef Marine Park visitor center in Queensland, Australia.
+When someone says "here", they refer to the Great Barrier Reef region. 
+Use the following context to answer the question concisely and factually. 
 Do not say where the information comes from, just give the answer. 
 If the provided texts mention different numbers or information for the same topic, list them separately.
 Only mention missing information if the user specifically asks about it. Do not add disclaimers about what you don't know.
