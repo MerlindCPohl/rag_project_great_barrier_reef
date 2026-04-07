@@ -61,7 +61,7 @@ prompt = st.chat_input("Ask me anything!")
 if prompt:
     st.session_state.messages.append({"role": "user", "content": prompt})
     
-    with st.spinner("🐙 ReefGuide is thinking..."):
+    with st.spinner("🐙 Diiiiving for your answer..."):
         result = get_answer(prompt)
     
     st.session_state.messages.append({"role": "assistant", "content": result['response']})
