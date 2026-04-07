@@ -11,7 +11,7 @@ A Practice-Oriented Approach to Developing AI Applications** held by Elisabeth S
 - **RAG Pipeline:** uses semantic search over scientific documents 
 - **Semantic chunking** of provided data sources
 - **Intent-aware filtering:** to distinguish casual conversation from knowledge-seeking questions 
-- **Modern UI:** with Streamlit, including chat history, source visibility, and a reef-themed design  
+- **Modern UI:** with Streamlit, including chat history, chat clear-out function, source visibility, and a reef-themed design  
 
 
 ## Tech Stack
@@ -54,25 +54,25 @@ Code/
 
 ## Installation (Local Setup)
 
-1. **Clone the repository**
+1. **Clone the Repository**
  ```bash
    git clone https://github.com/MerlindCPohl/rag_project_great_barrier_reef.git
    cd Code
    ```
 
-2. **Create and activate a virtual environment** (macOS)
+2. **Create and Activate a Virtual Environment** (macOS)
 ```bash
    python3.10 -m venv .venv
    source .venv/bin/activate
    ```
 
-3. **Install Python dependencies**
+3. **Install Python Dependencies**
  ```bash
    pip install --upgrade pip
    pip install -r requirements.txt
    ```
 
-4. **Install and start Ollama**  
+4. **Install and Start Ollama**  
    Install from: https://ollama.com/download  
    Then pull the model:
    ```bash
@@ -84,13 +84,28 @@ Code/
    streamlit run app.py
    ```
 
-6. **Open the local URL**<br>
+6. **Open the Local URL**
    Click `http://localhost:8501` in your local terminal. 
 
 
-## Screenshots
+## Screenshots of Example Usage
 
-![App Screenshot](https://dummyimage.com/468x300?text=App+Screenshot+Here)
+<img width="1440" height="772" alt="Bildschirmfoto 2026-04-07 um 19 14 56" src="https://github.com/user-attachments/assets/380eb3eb-61e0-42c6-8888-6a9d3f83a9b4" />
+
+
+<img width="1440" height="768" alt="Bildschirmfoto 2026-04-07 um 20 21 19" src="https://github.com/user-attachments/assets/f7692fdd-f178-4681-927f-ce055ab71926" />
+
+
+<img width="1440" height="767" alt="Bildschirmfoto 2026-04-07 um 20 23 54" src="https://github.com/user-attachments/assets/217bed4d-708c-433a-97a8-c0e3d7d9898b" />
+
+
+## Dislaimer
+
+Note that ReefGuide is an **AI-based tool** that generates answers to your questions.
+While it aims to provide accurate information, **responses may contain errors or be incomplete.**
+Please verify important information using reliable sources.
+Please note that the Marine Park Authority branding is **fictional and for illustrative purposes only.** 
+This project is **not** affiliated with, endorsed by, or connected to the actual Great Barrier Reef Marine Park Authority.
 
 
 ## Authors 🐠
