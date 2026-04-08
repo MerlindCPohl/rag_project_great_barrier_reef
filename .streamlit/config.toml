@@ -7,3 +7,6 @@ primaryColor="#f8b7b7"
 showWidgetBorder = false
 borderColor = "#E0F2F1"
 baseRadius="full"
+
+[server]
+fileWatcherType = "none"
