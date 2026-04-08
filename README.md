@@ -126,7 +126,7 @@ Customizes the reef-themed colors.
 <img width="1440" height="767" alt="Bildschirmfoto 2026-04-07 um 20 23 54" src="https://github.com/user-attachments/assets/217bed4d-708c-433a-97a8-c0e3d7d9898b" />
 
 
-## Dislaimer
+## Disclaimer
 
 Note that ReefGuide is an **AI-based tool** that generates answers to your questions.
 While it aims to provide accurate information, **responses may contain errors or be incomplete.**
