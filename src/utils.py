@@ -98,9 +98,10 @@ def load_metadata_from_config(filename: str, config_path: str = "../data/metadat
         try:
             with open(config_file, 'r', encoding='utf-8') as f:
                 config = json.load(f)
-                if filename in config:
+                lookup_key = os.path.splitext(filename)[0]
+                if lookup_key in config:
                     metadata = default_metadata.copy()
-                    metadata.update(config[filename])
+                    metadata.update(config[lookup_key])
                     return metadata
         except Exception as e:
             logger.warning(f"Could not load metadata config: {e}")

@@ -149,7 +149,7 @@ logger.info(f"Created {len(chunks)} chunks via semantic chunking")
 # Clean up old vector store before re-embedding
 # ============================================================================
 
-vector_store_path = "../data/vector_store"
+vector_store_path = os.path.join(project_root, "data", "vector_store")
 if os.path.exists(vector_store_path):
     shutil.rmtree(vector_store_path)
     logger.info(f"Deleted old vector store at {vector_store_path}")
