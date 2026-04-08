@@ -3,7 +3,7 @@
 
 **ReefGuide** is an Al-based chat tool that is specialized in information about the Great Barrier Reef in Australia (Queensland). 
 It was developed during the university class **Large Language Models & Retrieval-Augmented Generation: 
-A Practice-Oriented Approach to Developing AI Applications** held by Elisabeth Steffen. 
+A Practice-Oriented Approach to Developing AI Applications** at HTW Berlin, held by Elisabeth Steffen. 
 
 
 ## Features
@@ -27,7 +27,7 @@ A Practice-Oriented Approach to Developing AI Applications** held by Elisabeth S
 
 **Embeddings:** SentenceTransformers (Hugging Face)
 
-**Language:** Python 3.10+
+**Language:** Python 3.9+
 
 
 ## Project Structure
@@ -56,18 +56,27 @@ Code/
 └── style.css                       # Streamlit styling    
 ```
 
+## Prerequisites
+
+- Python 3.9+ (Download: [python.org](https://www.python.org/))
+  
+- Ollama (Download: [ollama.com](https://ollama.com/download  ))
+
+
 ## Installation (Local Setup)
 
 1. **Clone the Repository**
  ```bash
    git clone https://github.com/MerlindCPohl/rag_project_great_barrier_reef.git
-   cd Code
+   cd rag_project_great_barrier_reef
    ```
 
 2. **Create and Activate a Virtual Environment** (macOS)
 ```bash
-   python3.10 -m venv .venv
-   source .venv/bin/activate
+   python3 -m venv .venv
+
+   source .venv/bin/activate   # macOS/Linux
+   .\.venv\Scripts\activate    # Windows
    ```
 
 3. **Install Python Dependencies**
@@ -76,17 +85,15 @@ Code/
    pip install -r requirements.txt
    ```
 
-4. **Install and Start Ollama**  
-   Install from: https://ollama.com/download  
-   Then pull the model:
-   ```bash
+4. **Start Ollama**  
+ ```bash
    ollama pull llama3
-   ```
+ ```
 
 5. **Run ReefGuide Interface 🪸**
-   ```bash
+ ```bash
    streamlit run app.py
-   ```
+ ```
 
 6. **Open the Local URL**
    Click `http://localhost:8501` in your local terminal. 
@@ -96,19 +103,30 @@ Code/
 
 The system's behavior can be adjusted in the following files:
 
+
 ### config.yaml (Core RAG Logic)
 
 - **ingestion: breakpoint_threshold_amount**: Controls semantic chunking (higher = bigger chunks, lower = more granular segments).
 
-- **embedding: model_name**: The model used to vectorize text (currently "BAAI/bge-m3"). Change this if you switch your embedding provider.
+- **embedding: model_name**: Model used to vectorize text (currently "BAAI/bge-m3"). 
 
-- **retrieval: top_k**: Number of relevant document snippets retrieved from the vector store (default is 5). 
+- **retrieval: top_k**: Number of relevant document snippets retrieved from vector store (default = 5). 
 
-- **retrieval: score_threshold**: The minimum similarity score required for a document to be considered (currently 0.3). This prevents the AI from using irrelevant information.
+- **retrieval: score_threshold**: Minimum similarity score required for a document to be considered (currently 0.3). Prevents from using irrelevant information.
 
 - **llm: model**: The specific local model used via Ollama (currently llama3).
 
-- **llm: temperature**: Controls the "creativity" of the response (0.1 = highly deterministic and fact-based, higher values allow for more varied phrasing).
+- **llm: temperature**: Controls the "creativity" of the response (higher values allow more varied phrasing).
+
+
+### prompts.yaml (Prompts and direct UI Messages)
+
+- **system_prompts**: Instructions for classification (reef vs. off-topic) and answer_generation (AI behaviour).
+
+- **greetings**: Contains a keyword list to detect casual conversation.
+
+- **messages**: Predefined responses.
+
 
 ### .streamlit/config.toml (UI Theme)
 Primary Color & Backgrounds:
