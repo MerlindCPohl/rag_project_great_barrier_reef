@@ -10,7 +10,7 @@ Handling of:
 6. get_answer(): Main entry point and orchestrator
 
 Uses Ollama LLM and FAISS (via RAGRetriever) for vector search.
-All user-facing messages externalized to config.yaml
+All user-facing messages and prompts externalized to prompts.yaml
 """
 
 from typing import List, Dict, Any, Optional
@@ -62,7 +62,7 @@ def is_greeting(query: str, keywords: List[str]) -> bool:
 
 def classify_gbr_question(query: str) -> bool:
 
-    prompt_template = prompts['classification']
+    prompt_template = prompts['system_prompts']['classification']
     classification_prompt = prompt_template.format(query=query)
         
     try:
@@ -117,7 +117,7 @@ def retrieval_query(query: str, retriever: RAGRetriever, top_k: int,
     
     if not results:
         return {
-            'response': config['messages']['no_documents_found'],
+            'response': prompts['messages']['no_documents_found'],
             'sources': [],
             'confidence': 0.0,
             'skip_sources': True
@@ -129,7 +129,7 @@ def retrieval_query(query: str, retriever: RAGRetriever, top_k: int,
 
     if confidence < score_threshold:
         return {
-            'response': config['messages']['low_confidence'],
+            'response': prompts['messages']['low_confidence'],
             'sources': sources,
             'confidence': round(float(confidence), 3),
             'skip_sources': True
@@ -137,7 +137,7 @@ def retrieval_query(query: str, retriever: RAGRetriever, top_k: int,
     
     context = "\n\n".join([doc['content'] for doc in results])
     
-    prompt_template = prompts['answer_generation']
+    prompt_template = prompts['system_prompts']['answer_generation']
     prompt = prompt_template.format(context=context, query=query)   
     
     try:
@@ -151,7 +151,7 @@ def retrieval_query(query: str, retriever: RAGRetriever, top_k: int,
     except Exception as e:
         logger.error(f"LLM invocation failed: {e}")
         return {
-            'response': config['messages']['error_generating_answer'],
+            'response': prompts['messages']['error_generating_answer'],
             'sources': sources,
             'confidence': round(float(confidence), 3),
             'skip_sources': True
@@ -177,12 +177,12 @@ def get_answer(query: str, top_k: Optional[int] = None,
     
     top_k = top_k or config['retrieval']['top_k']
     score_threshold = score_threshold or config['retrieval']['score_threshold']
-    greeting_keywords = config.get('greeting', {}).get('keywords', [])
+    greeting_keywords = prompts['greetings']['keywords']
     
     if is_greeting(query, greeting_keywords):
         logger.info("Greeting detected - skipping retrieval")
         return {
-            'response': config['messages']['greeting_response'],
+            'response': prompts['greetings']['response'],
             'confidence': 0.0,
             'is_greeting': True,
             'skip_sources': True
@@ -191,7 +191,7 @@ def get_answer(query: str, top_k: Optional[int] = None,
     if not classify_gbr_question(query):
         logger.info("Question classified as off-topic")
         return {
-            'response': config['messages']['off_topic'],
+            'response': prompts['messages']['off_topic'],
             'sources': [],
             'confidence': 0.0,
             'is_greeting': False,
@@ -205,7 +205,7 @@ def get_answer(query: str, top_k: Optional[int] = None,
     except Exception as e:
         logger.error(f"Unexpected error: {str(e)[:100]}")
         return {
-            'response': config['messages']['system_error'],
+            'response': prompts['messages']['system_error'],
             'sources': [],
             'confidence': 0.0,
             'is_greeting': False,
