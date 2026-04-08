@@ -68,10 +68,10 @@ if prompt:
             result = get_answer(prompt)
         
         st.session_state.messages.append({"role": "assistant", "content": result['response']})
-        st.markdown(result['response'])
-    
-    st.session_state.last_sources = result.get('sources', [])
-    st.session_state.last_skip_sources = result.get('skip_sources', False)
+        st.session_state.last_sources = result.get('sources', [])
+        st.session_state.last_skip_sources = result.get('skip_sources', False)
+
+    st.rerun()
 
 if st.session_state.messages:
     st.divider()
