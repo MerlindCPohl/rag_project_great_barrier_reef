@@ -50,7 +50,8 @@ Code/
 │   └── utils.py                    # Shared helper functions    
 │         
 ├── app.py                          # Streamlit app     
-├── config.yaml                     # Project/model configuration    
+├── config.yaml                     # Project/model configuration
+├── prompts.yaml                    # Prompt configuration and direct UI messages
 ├── requirements.txt                # Python dependencies
 └── style.css                       # Streamlit styling    
 ```
