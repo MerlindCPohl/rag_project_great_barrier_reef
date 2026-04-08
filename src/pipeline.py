@@ -182,7 +182,7 @@ def get_answer(query: str, top_k: Optional[int] = None,
     if is_greeting(query, greeting_keywords):
         logger.info("Greeting detected - skipping retrieval")
         return {
-            'response': prompts['greetings']['response'],
+            'response': prompts['messages']['greeting_response'],
             'confidence': 0.0,
             'is_greeting': True,
             'skip_sources': True
