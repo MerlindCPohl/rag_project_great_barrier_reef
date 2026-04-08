@@ -2,6 +2,11 @@
 Embedding Manager for generating and managing text embeddings.
 Uses SentenceTransformers (BAAI/bge-m3) to convert text documents into vector
 embeddings for similarity search in the RAG pipeline.
+Provides methods:
+Load the model, generate embeddings for a list of texts (FAISS), 
+an adapter that translates internal NumPy-based embeddings into the standard list format 
+(required by the LangChain framework)
+and retrieve the embedding dimension for vector store initialization.
 """
 
 from typing import List
@@ -37,6 +42,15 @@ class EmbeddingManager:
         
         embeddings = self.model.encode(texts, show_progress_bar=True)
         return np.array(embeddings)
+
+    def embed_documents(self, texts: List[str]) -> List[List[float]]:
+        
+        if not self.model:
+            raise ValueError("Embedding model not loaded.")
+        
+        embeddings = self.model.encode(texts, show_progress_bar=False)
+        return embeddings.tolist()   
+
 
     def get_embedding_dimension(self) -> int:
        
