@@ -27,7 +27,7 @@ A Practice-Oriented Approach to Developing AI Applications** at HTW Berlin, held
 
 **Embeddings:** SentenceTransformers (Hugging Face)
 
-**Language:** Python 3.9+
+**Language:** Python 3.10+
 
 
 ## Project Structure
@@ -58,7 +58,7 @@ Code/
 
 ## Prerequisites
 
-- Python 3.9+ (Download: [python.org](https://www.python.org/))
+- Python 3.10+ (Download: [python.org](https://www.python.org/))
   
 - Ollama (Download: [ollama.com](https://ollama.com/download  ))
 
