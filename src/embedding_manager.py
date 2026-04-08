@@ -38,14 +38,6 @@ class EmbeddingManager:
         embeddings = self.model.encode(texts, show_progress_bar=True)
         return np.array(embeddings)
 
-    def embed_documents(self, texts: List[str]) -> List[List[float]]:
-        """LangChain-compatible method for embedding documents."""
-        if not self.model:
-            raise ValueError("Embedding model not loaded.")
-        
-        embeddings = self.model.encode(texts, show_progress_bar=False)
-        return embeddings.tolist()
-
     def get_embedding_dimension(self) -> int:
        
         if not self.model:
