@@ -119,7 +119,7 @@ The system's behavior can be adjusted in the following files:
 - **llm: temperature**: Controls the "creativity" of the response (higher values allow more varied phrasing).
 
 
-### prompts.yaml (Prompts and direct UI messages)
+### prompts.yaml (Prompts and direct UI Messages)
 
 - **system_prompts**: Instructions for classification (reef vs. off-topic) and answer_generation (AI behaviour).
 
